@@ -3,9 +3,9 @@
 
 int main(void)
 {
-int height = get_int("Height:\n");
-for(int i = 0; i<height;i++)
-{
-printf("%i\n", i);
-}
+    int height = get_int("Height:\n");
+    for (int i = 0; i < height; i++)
+    {
+        printf("#\n");
+    }
 }
