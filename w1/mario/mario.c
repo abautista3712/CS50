@@ -11,8 +11,13 @@ int main(void)
     // Print Row = n
     for (int i = 0; i < n; i++)
     {
-        // Print Column = (i + 1)
-        for (int j = 0; j < i + 1; j++)
+        // Print Column: "."
+        for (int j = n; j > i; j--)
+        {
+            printf(".");
+        }
+        // Print Column: "#"
+        for (int k = 0; k < i + 1; k++)
         {
             printf("#");
         }
