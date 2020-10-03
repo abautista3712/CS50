@@ -14,7 +14,7 @@ int main(void)
     // Print Row
     for (int i = 0; i < n; i++)
     {
-        // Print Left Column Spacer: "."
+        // Print Left Column Spacer
         for (int j = n - 1; j > i; j--)
         {
             printf(" ");
@@ -23,6 +23,7 @@ int main(void)
         for (int k = 0; k < i + 1; k++)
         {
             printf("#");
+            // Print In-Between Pyramid Spacer
             if (k == i)
             {
                 printf("  ");
