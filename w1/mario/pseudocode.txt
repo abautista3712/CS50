@@ -1,5 +1,5 @@
-1) Prompt user for height
-2) Input value is saved to a variable
-3) Function will printf "#" character
+X 1) Prompt user for height
+X 2) Input value is saved to a variable
+X 3) Function will printf "#" character
 4) Loop adds one line and one extra "#"
 5) Loop stops when equal to input value
