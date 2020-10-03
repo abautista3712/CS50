@@ -23,6 +23,10 @@ int main(void)
         for (int k = 0; k < i + 1; k++)
         {
             printf("#");
+            if (k == i)
+            {
+                printf("  ");
+            }
         }
         // Print Right Pyramid: "#"
         for (int l = 0; l < i + 1; l++)
