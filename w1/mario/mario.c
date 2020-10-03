@@ -14,7 +14,7 @@ int main(void)
         // Print Column: "."
         for (int j = n; j > i; j--)
         {
-            printf(".");
+            printf(" ");
         }
         // Print Column: "#"
         for (int k = 0; k < i + 1; k++)
