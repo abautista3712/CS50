@@ -3,9 +3,17 @@
 
 int main(void)
 {
-    int height = get_int("Height:\n");
-    for (int i = 0; i < height; i++)
+    int n;
+    do
     {
-        printf("#\n");
+        n = get_int("Height: ");
+    } while (n < 1);
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            printf("#");
+        }
+        printf("\n");
     }
 }
