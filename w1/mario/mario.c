@@ -9,12 +9,12 @@ int main(void)
         n = get_int("Height: ");
     }
 
-    while (n < 1);
+    while (n < 1 || n > 8);
     // Print Row = n
     for (int i = 0; i < n; i++)
     {
         // Print Column: "."
-        for (int j = n; j > i; j--)
+        for (int j = n - 1; j > i; j--)
         {
             printf(" ");
         }
