@@ -3,5 +3,7 @@
 
 int main(void)
 {
-    printf("Test\n");
+    float n;
+    n = get_float("Input total change owed: ");
+    printf("%.2f\n", n);
 }
