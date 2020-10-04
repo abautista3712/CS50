@@ -3,12 +3,13 @@
 
 int main(void)
 {
-    float n;
+    float change;
     do
     {
-        n = get_float("Input total change owed: ");
-    } while (n < 1);
+        change = get_float("Input total change owed: ");
+    } while (change <= 0);
     {
-        printf("%.2f\n", n);
+        int cents = change * 100;
+        printf("%i\n", cents);
     }
 }
