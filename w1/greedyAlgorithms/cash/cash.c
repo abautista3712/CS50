@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <cs50.h>
+#include <math.h>
 
 int main(void)
 {
@@ -7,9 +8,11 @@ int main(void)
     do
     {
         change = get_float("Input total change owed: ");
-    } while (change <= 0);
+    }
+
+    while (change <= 0);
     {
-        int cents = change * 100;
+        int cents = round(change * 100);
         printf("%i\n", cents);
     }
 }
