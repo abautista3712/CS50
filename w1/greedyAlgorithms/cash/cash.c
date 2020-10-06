@@ -15,17 +15,16 @@ int main(void)
     while (change <= 0);
     {
         cents = round(change * 100);
-        int quarters = cents / 25;
-        if (cents % 25 == 0)
+        if (cents >= 25)
         {
-            numCoins = quarters;
-        }
-        else
-        {
-            for (int i = 0; i < quarters; i++)
+            int quarters = cents / 25;
+            if (cents % 25 == 0)
             {
-                // cents = cents - 25;
-                cents = cents - (25 * i);
+                numCoins = quarters;
+            }
+            else
+            {
+                cents = cents - 25 * quarters;
                 numCoins = cents;
             }
         }
