@@ -3,5 +3,14 @@
 
 int main(void)
 {
-    printf("Test\n");
+    long creditNum;
+    do
+    {
+        creditNum = get_long("Input CC number to see if valid: ");
+    }
+
+    while (creditNum <= 0);
+    {
+        printf("%li\n", creditNum);
+    }
 }
