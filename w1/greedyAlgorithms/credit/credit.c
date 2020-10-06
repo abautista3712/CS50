@@ -11,6 +11,14 @@ int main(void)
 
     while (creditNum <= 0);
     {
-        printf("%li\n", creditNum);
+        // Check number of digits
+        int countDigits = 0;
+        long digitsNum = creditNum;
+        while (digitsNum != 0)
+        {
+            digitsNum = digitsNum / 10;
+            countDigits++;
+        }
+        printf("%i\n", countDigits);
     }
 }
