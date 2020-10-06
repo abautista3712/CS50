@@ -15,18 +15,10 @@ int main(void)
     while (change <= 0);
     {
         cents = round(change * 100);
-        if (cents >= 25)
+        int quarters = cents / 25;
+        for (int i = 0; i < quarters; i++)
         {
-            int quarters = cents / 25;
-            if (cents % 25 == 0)
-            {
-                numCoins = quarters;
-            }
-            else
-            {
-                cents = cents - 25 * quarters;
-                numCoins = cents;
-            }
+            numCoins++;
         }
         printf("%i\n", numCoins);
     }
