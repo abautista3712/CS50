@@ -16,13 +16,18 @@ int main(void)
     {
         cents = round(change * 100);
         int quarters = cents / 25;
-        int dimes = cents / 10;
-        int nickels = cents / 5;
         for (int i = 0; i < quarters; i++)
         {
             cents = cents - 25;
             numCoins++;
         }
+        int dimes = cents / 10;
+        for (int j = 0; j < dimes; j++)
+        {
+            cents = cents - 10;
+            numCoins++;
+        }
+        int nickels = cents / 5;
         printf("%i\n", numCoins);
     }
 }
