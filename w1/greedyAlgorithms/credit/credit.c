@@ -19,6 +19,18 @@ int main(void)
             digitsNum = digitsNum / 10;
             countDigits++;
         }
+        if (countDigits == 13)
+        {
+            printf("VISA\n");
+        }
+        else if (countDigits == 15)
+        {
+            printf("AMEX\n");
+        }
+        else if (countDigits == 16)
+        {
+            printf("MASTERCARD or VISA\n");
+        }
         printf("%i\n", countDigits);
     }
 }
