@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <cs50.h>
+#include <math.h>
 
 int main(void)
 {
@@ -29,7 +30,12 @@ int main(void)
         }
         else if (countDigits == 16)
         {
-            printf("MASTERCARD or VISA\n");
+            if (floor(creditNum / (1 * pow(10, 15))) == 4)
+            {
+                printf("VISA\n");
+            }
+            else
+                (printf("MASTERCARD\n"));
         }
         printf("%i\n", countDigits);
     }
