@@ -33,6 +33,7 @@ int main(void)
             cents = cents - 5;
             numCoins++;
         }
+        numCoins = numCoins + cents;
         printf("%i\n", numCoins);
     }
 }
