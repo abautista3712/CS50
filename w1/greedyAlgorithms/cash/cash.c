@@ -28,6 +28,11 @@ int main(void)
             numCoins++;
         }
         int nickels = cents / 5;
+        for (int k = 0; k < nickels; k++)
+        {
+            cents = cents - 5;
+            numCoins++;
+        }
         printf("%i\n", numCoins);
     }
 }
