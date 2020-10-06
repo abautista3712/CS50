@@ -2,6 +2,8 @@
 #include <cs50.h>
 #include <math.h>
 
+void test(void);
+
 int main(void)
 {
     long creditNum;
@@ -44,8 +46,14 @@ int main(void)
         // Any other combination of numbers are invalid
         else
         {
-            printf("INVALID\n")
+            printf("INVALID\n");
         }
         printf("%i\n", countDigits);
+        test();
     }
+}
+
+void test(void)
+{
+    printf("test\n");
 }
