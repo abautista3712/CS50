@@ -2,7 +2,8 @@
 #include <cs50.h>
 #include <math.h>
 
-void luhnCheck(long ccNum, int countDigits);
+int countDigits(long numberToCount);
+void luhnCheck(long ccNum, int counterDigits);
 void parseDigits(long numberToParse);
 
 int main(void)
@@ -16,32 +17,26 @@ int main(void)
     while (creditNum <= 0);
     {
         // Check number of digits
-        int countDigits = 0;
-        long digitsNum = creditNum;
-        while (digitsNum != 0)
-        {
-            digitsNum = digitsNum / 10;
-            countDigits++;
-        }
+        int counterDigits = countDigits(creditNum);
         // Cards with 13 digits are VISA
-        if (countDigits == 13)
+        if (counterDigits == 13)
         {
             printf("VISA\n");
-            luhnCheck(creditNum, countDigits);
+            luhnCheck(creditNum, counterDigits);
         }
         // Cards with 15 digits are VISA
-        else if (countDigits == 15)
+        else if (counterDigits == 15)
         {
             printf("AMEX\n");
         }
         // Cards with 16 digits are either VISA or Mastercard
-        else if (countDigits == 16)
+        else if (counterDigits == 16)
         {
             // Cards starting with 4 as the first digit are VISA
             if (floor(creditNum / (1 * pow(10, 15))) == 4)
             {
                 printf("VISA\n");
-                luhnCheck(creditNum, countDigits);
+                luhnCheck(creditNum, counterDigits);
             }
             else
                 (printf("MASTERCARD\n"));
@@ -54,11 +49,22 @@ int main(void)
     }
 }
 
-void luhnCheck(long ccNum, int countDigits)
+int countDigits(long numberToCount)
+{
+    int counterDigits = 0;
+    while (numberToCount != 0)
+    {
+        numberToCount = numberToCount / 10;
+        counterDigits++;
+    }
+    return counterDigits;
+}
+
+void luhnCheck(long ccNum, int counterDigits)
 {
     bool x = false;
     int checksum = 0;
-    for (int i = 0; i < countDigits; i++)
+    for (int i = 0; i < counterDigits; i++)
     {
         if (x == true)
         {
