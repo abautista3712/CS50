@@ -60,11 +60,11 @@ int countDigits(long numberToCount)
     return counterDigits;
 }
 
-void luhnCheck(long ccNum, int counterDigits)
+void luhnCheck(long ccNum, int ccNumDigits)
 {
     bool x = false;
     int checksum = 0;
-    for (int i = 0; i < counterDigits; i++)
+    for (int i = 0; i < ccNumDigits; i++)
     {
         if (x == true)
         {
@@ -74,7 +74,8 @@ void luhnCheck(long ccNum, int counterDigits)
             printf("Digit Check: %i\n", digitValue);
             int doubleSum = digitValue * 2;
             printf("%i\n", doubleSum);
-            if (doubleSum / 100 > 0)
+            int counterDigits = countDigits(doubleSum);
+            if (counterDigits < 2)
             {
                 checksum = checksum + doubleSum;
             }
