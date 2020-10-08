@@ -56,7 +56,11 @@ int main(void)
 
 void luhnCheck(long ccNum, int countDigits)
 {
-    int digitValue = ccNum % 10;
-    printf("%i\n", digitValue);
-    printf("%i\n", countDigits);
+    for (int i = 0; i < countDigits; i++)
+    {
+        int digitValue = ccNum % 10;
+        printf("%i\n", digitValue);
+        ccNum = ccNum / 10;
+    }
+    // printf("%i\n", countDigits);
 }
