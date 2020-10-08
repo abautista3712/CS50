@@ -40,12 +40,16 @@ int main(void)
                 luhnCheck(creditNum, counterDigits);
             }
             else
+            {
                 (printf("MASTERCARD\n"));
-            luhnCheck(creditNum, counterDigits);
+                luhnCheck(creditNum, counterDigits);
+            }
         }
         // Any other combination of numbers are invalid
         else
+
         {
+
             printf("INVALID\n");
         }
     }
