@@ -28,6 +28,7 @@ int main(void)
         else if (counterDigits == 15)
         {
             printf("AMEX\n");
+            luhnCheck(creditNum, counterDigits);
         }
         // Cards with 16 digits are either VISA or Mastercard
         else if (counterDigits == 16)
@@ -40,6 +41,7 @@ int main(void)
             }
             else
                 (printf("MASTERCARD\n"));
+            luhnCheck(creditNum, counterDigits);
         }
         // Any other combination of numbers are invalid
         else
@@ -74,10 +76,10 @@ void luhnCheck(long ccNum, int ccNumDigits)
             // Read Digit Value
             int digitValue = ccNum % 10;
             ccNum = ccNum / 10;
-            printf("Digit Check: %i\n", digitValue);
+            // printf("Digit Check: %i\n", digitValue);
             // Multiply Digit by 2
             int doubleSum = digitValue * 2;
-            printf("%i\n", doubleSum);
+            // printf("%i\n", doubleSum);
             int counterDigits = countDigits(doubleSum);
             // If product of digitValue has more than one digit, sum digits
             if (counterDigits < 2)
@@ -92,7 +94,7 @@ void luhnCheck(long ccNum, int ccNumDigits)
                     doubleSum = doubleSum / 10;
                 }
             }
-            printf("---checkSum1---\n%i\n", checkSum1);
+            // printf("---checkSum1---\n%i\n", checkSum1);
         }
         else
         {
@@ -104,19 +106,12 @@ void luhnCheck(long ccNum, int ccNumDigits)
         }
     }
     finalSum = checkSum1 + checkSum2;
-    printf("finalSum = %i\n", finalSum);
+    // printf("finalSum = %i\n", finalSum);
     int digitValue = ccNum % 10;
     ccNum = ccNum / 10;
-    printf("%i\n", digitValue);
+    // printf("%i\n",digitValue);
     if (digitValue != 0)
     {
         printf("INVALID\n");
     }
 }
-
-// void parseDigits(long numberToParse)
-// {
-//     int digitValue = numberToParse % 10;
-//     numberToParse = numberToParse / 10;
-//     printf("%i\n", digitValue);
-// }
