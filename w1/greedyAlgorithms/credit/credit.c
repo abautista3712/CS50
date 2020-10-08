@@ -4,7 +4,7 @@
 
 int countDigits(long numberToCount);
 void luhnCheck(long ccNum, int counterDigits);
-void parseDigits(long numberToParse);
+// void parseDigits(long numberToParse);
 
 int main(void)
 {
@@ -63,38 +63,54 @@ int countDigits(long numberToCount)
 void luhnCheck(long ccNum, int ccNumDigits)
 {
     bool x = false;
-    int checksum = 0;
+    int checkSum1 = 0;
+    int checkSum2 = 0;
+    int finalSum = 0;
     for (int i = 0; i < ccNumDigits; i++)
     {
         if (x == true)
         {
             x = false;
+            // Read Digit Value
             int digitValue = ccNum % 10;
             ccNum = ccNum / 10;
             printf("Digit Check: %i\n", digitValue);
+            // Multiply Digit by 2
             int doubleSum = digitValue * 2;
             printf("%i\n", doubleSum);
             int counterDigits = countDigits(doubleSum);
+            // If product of digitValue has more than one digit, sum digits
             if (counterDigits < 2)
             {
-                checksum = checksum + doubleSum;
+                checkSum1 = checkSum1 + doubleSum;
             }
             else
             {
                 for (int j = 0; j < counterDigits; j++)
                 {
-                    checksum = checksum + (doubleSum % 10);
+                    checkSum1 = checkSum1 + (doubleSum % 10);
                     doubleSum = doubleSum / 10;
                 }
             }
-            printf("---CHECKSUM---\n%i\n", checksum);
+            printf("---checkSum1---\n%i\n", checkSum1);
         }
         else
         {
             x = true;
+            // Read Digit Value
             int digitValue = ccNum % 10;
             ccNum = ccNum / 10;
+            checkSum2 = checkSum2 + digitValue;
         }
+    }
+    finalSum = checkSum1 + checkSum2;
+    printf("finalSum = %i\n", finalSum);
+    int digitValue = ccNum % 10;
+    ccNum = ccNum / 10;
+    printf("%i\n", digitValue);
+    if (digitValue != 0)
+    {
+        printf("INVALID\n");
     }
 }
 
