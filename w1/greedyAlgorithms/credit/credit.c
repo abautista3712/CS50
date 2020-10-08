@@ -81,9 +81,13 @@ void luhnCheck(long ccNum, int ccNumDigits)
             }
             else
             {
-                printf("There are two digits in doubleSum\n");
+                for (int j = 0; j < counterDigits; j++)
+                {
+                    checksum = checksum + (doubleSum % 10);
+                    doubleSum = doubleSum / 10;
+                }
             }
-            // printf("---CHECKSUM---\n%i\n", checksum);
+            printf("---CHECKSUM---\n%i\n", checksum);
         }
         else
         {
