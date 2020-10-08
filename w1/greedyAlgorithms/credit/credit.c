@@ -2,7 +2,7 @@
 #include <cs50.h>
 #include <math.h>
 
-void luhnCheck(long ccNum);
+void luhnCheck(long ccNum, int countDigits);
 
 int main(void)
 {
@@ -26,7 +26,7 @@ int main(void)
         if (countDigits == 13)
         {
             printf("VISA\n");
-            luhnCheck(creditNum);
+            luhnCheck(creditNum, countDigits);
         }
         // Cards with 15 digits are VISA
         else if (countDigits == 15)
@@ -54,8 +54,9 @@ int main(void)
     }
 }
 
-void luhnCheck(long ccNum)
+void luhnCheck(long ccNum, int countDigits)
 {
     int digitValue = ccNum % 10;
     printf("%i\n", digitValue);
+    printf("%i\n", countDigits);
 }
