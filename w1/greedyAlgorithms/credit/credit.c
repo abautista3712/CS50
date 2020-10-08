@@ -3,6 +3,7 @@
 #include <math.h>
 
 void luhnCheck(long ccNum, int countDigits);
+void parseDigits(long numberToParse);
 
 int main(void)
 {
@@ -40,6 +41,7 @@ int main(void)
             if (floor(creditNum / (1 * pow(10, 15))) == 4)
             {
                 printf("VISA\n");
+                luhnCheck(creditNum, countDigits);
             }
             else
                 (printf("MASTERCARD\n"));
@@ -49,24 +51,32 @@ int main(void)
         {
             printf("INVALID\n");
         }
-        // printf("%i\n", countDigits);
-        // test();
     }
 }
 
 void luhnCheck(long ccNum, int countDigits)
 {
     bool x = false;
+    int checksum = 0;
     for (int i = 0; i < countDigits; i++)
     {
-        // printf("i = %i\n", i);
-        // printf("%s\n", x ? "true" : "false");
         if (x == true)
         {
             x = false;
             int digitValue = ccNum % 10;
-            printf("%i\n", digitValue);
             ccNum = ccNum / 10;
+            printf("Digit Check: %i\n", digitValue);
+            int doubleSum = digitValue * 2;
+            printf("%i\n", doubleSum);
+            if (doubleSum / 100 > 0)
+            {
+                checksum = checksum + doubleSum;
+            }
+            else
+            {
+                printf("There are two digits in doubleSum\n");
+            }
+            // printf("---CHECKSUM---\n%i\n", checksum);
         }
         else
         {
@@ -75,5 +85,11 @@ void luhnCheck(long ccNum, int countDigits)
             ccNum = ccNum / 10;
         }
     }
-    // printf("%i\n", countDigits);
 }
+
+// void parseDigits(long numberToParse)
+// {
+//     int digitValue = numberToParse % 10;
+//     numberToParse = numberToParse / 10;
+//     printf("%i\n", digitValue);
+// }
