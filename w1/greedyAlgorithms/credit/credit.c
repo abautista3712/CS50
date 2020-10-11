@@ -3,7 +3,7 @@
 #include <math.h>
 
 int countDigits(long numberToCount);
-void amExCheck(long ccNum, int counterDigits);
+void verifyCC(long ccNum, int counterDigits);
 void luhnCheck(long ccNum, int counterDigits);
 // void parseDigits(long numberToParse);
 
@@ -28,24 +28,25 @@ int main(void)
         // Cards with 15 digits are AmEx
         else if (counterDigits == 15)
         {
-            printf("AMEX\n");
-            amExCheck(creditNum, counterDigits);
+            // printf("AMEX\n");
+            verifyCC(creditNum, counterDigits);
             luhnCheck(creditNum, counterDigits);
         }
         // Cards with 16 digits are either VISA or Mastercard
         else if (counterDigits == 16)
         {
-            // Cards starting with 4 as the first digit are VISA
-            if (floor(creditNum / (1 * pow(10, 15))) == 4)
-            {
-                printf("VISA\n");
-                luhnCheck(creditNum, counterDigits);
-            }
-            else
-            {
-                (printf("MASTERCARD\n"));
-                luhnCheck(creditNum, counterDigits);
-            }
+            verifyCC(creditNum, counterDigits);
+            // // Cards starting with 4 as the first digit are VISA
+            // if (floor(creditNum / (1 * pow(10, 15))) == 4)
+            // {
+            //     printf("VISA\n");
+            //     luhnCheck(creditNum, counterDigits);
+            // }
+            // else
+            // {
+            //     (printf("MASTERCARD\n"));
+            //     luhnCheck(creditNum, counterDigits);
+            // }
         }
         // Any other combination of numbers are invalid
         else
@@ -68,9 +69,17 @@ int countDigits(long numberToCount)
     return counterDigits;
 }
 
-void amExCheck(long ccNum, int ccNumDigits)
+void verifyCC(long ccNum, int ccNumDigits)
 {
-    printf("AmEx Check Test\n");
+    int firstTwoCheck = floor(ccNum / (1 * pow(10, ccNumDigits - 2)));
+    if (firstTwoCheck == 34 | firstTwoCheck == 37)
+    {
+        printf("AmEx\n");
+    }
+    //  else if
+    //  {
+
+    //  }
 }
 
 void luhnCheck(long ccNum, int ccNumDigits)
