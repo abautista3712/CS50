@@ -4,7 +4,7 @@
 
 int countDigits(long numberToCount);
 void verifyCC(long ccNum, int counterDigits);
-void luhnCheck(long ccNum, int counterDigits);
+bool luhnCheck(long ccNum, int counterDigits);
 
 int main(void)
 {
@@ -51,39 +51,33 @@ int countDigits(long numberToCount)
 
 void verifyCC(long ccNum, int ccNumDigits)
 {
-    // AMEX Verification: First Two Numbers
-    int firstTwoCheck = floor(ccNum / (1 * pow(10, ccNumDigits - 2)));
-    if (firstTwoCheck == 34 | firstTwoCheck == 37)
+    if (luhnCheck(ccNum, ccNumDigits) == false)
     {
-        // Luhn CheckSum
-        luhnCheck(ccNum, ccNumDigits);
-        printf("AMEX\n");
-    }
-    // MASTERCARD Verification: First Two Numbers
-    else if (firstTwoCheck == 51 | firstTwoCheck == 52 | firstTwoCheck == 53 | firstTwoCheck == 54 | firstTwoCheck == 55)
-    {
-        // Luhn CheckSum
-        luhnCheck(ccNum, ccNumDigits);
-        printf("MASTERCARD\n");
-    }
-    // VISA: First Number
-    else if (floor(ccNum / (1 * pow(10, ccNumDigits - 1))) == 4)
-    {
-        // Luhn CheckSum
-        luhnCheck(ccNum, ccNumDigits);
-        printf("VISA\n");
-    }
-    // Any other combination numbers are invalid
-    else
-
-    {
-
         printf("INVALID\n");
+    }
+    else
+    {
+        // AMEX Verification: First Two Numbers
+        int firstTwoCheck = floor(ccNum / (1 * pow(10, ccNumDigits - 2)));
+        if (firstTwoCheck == 34 | firstTwoCheck == 37)
+        {
+            printf("AMEX\n");
+        }
+        // MASTERCARD Verification: First Two Numbers
+        else if (firstTwoCheck == 51 | firstTwoCheck == 52 | firstTwoCheck == 53 | firstTwoCheck == 54 | firstTwoCheck == 55)
+        {
+            printf("MASTERCARD\n");
+        }
+        // VISA: First Number
+        else if (floor(ccNum / (1 * pow(10, ccNumDigits - 1))) == 4)
+        {
+            printf("VISA\n");
+        }
     }
 }
 
 // CheckSum Algorithm
-void luhnCheck(long ccNum, int ccNumDigits)
+bool luhnCheck(long ccNum, int ccNumDigits)
 {
     bool x = false;
     int checkSum1 = 0;
@@ -116,7 +110,6 @@ void luhnCheck(long ccNum, int ccNumDigits)
                     doubleSum = doubleSum / 10;
                 }
             }
-            // printf("checkSum1 in calc = %i\n", checkSum1);
         }
         // Calculate checkSum2
         else
@@ -126,16 +119,18 @@ void luhnCheck(long ccNum, int ccNumDigits)
             int digitValue = ccNum % 10;
             ccNum = ccNum / 10;
             checkSum2 = checkSum2 + digitValue;
-            // printf("checkSum2 in calc = %i\n", checkSum2);
         }
     }
     // finalSum Check
     finalSum = checkSum1 + checkSum2;
     int digitValue = finalSum % 10;
     finalSum = finalSum / 10;
-    printf("digitValue = %i\n", digitValue);
-    if (digitValue != 0)
+    if (digitValue == 0)
     {
-        printf("INVALID\n");
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
