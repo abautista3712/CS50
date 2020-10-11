@@ -3,8 +3,8 @@
 #include <math.h>
 
 int countDigits(long numberToCount);
-void verifyCC(long ccNum, int counterDigits);
 bool luhnCheck(long ccNum, int counterDigits);
+void verifyCC(long ccNum, int counterDigits);
 
 int main(void)
 {
@@ -72,6 +72,10 @@ void verifyCC(long ccNum, int ccNumDigits)
         else if (floor(ccNum / (1 * pow(10, ccNumDigits - 1))) == 4)
         {
             printf("VISA\n");
+        }
+        else
+        {
+            printf("INVALID\n");
         }
     }
 }
