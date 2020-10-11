@@ -73,6 +73,13 @@ void verifyCC(long ccNum, int ccNumDigits)
         luhnCheck(ccNum, ccNumDigits);
         printf("VISA\n");
     }
+    // Any other combination numbers are invalid
+    else
+
+    {
+
+        printf("INVALID\n");
+    }
 }
 
 // CheckSum Algorithm
@@ -90,6 +97,8 @@ void luhnCheck(long ccNum, int ccNumDigits)
             x = false;
             // Read Digit Value
             int digitValue = ccNum % 10;
+            // printf("checkSum1 %i\n", checkSum1);
+            // printf("checkSum1 digitValue %i\n", digitValue);
             ccNum = ccNum / 10;
             // Multiply Digit by 2
             int doubleSum = digitValue * 2;
@@ -107,6 +116,7 @@ void luhnCheck(long ccNum, int ccNumDigits)
                     doubleSum = doubleSum / 10;
                 }
             }
+            // printf("checkSum1 in calc = %i\n", checkSum1);
         }
         // Calculate checkSum2
         else
@@ -116,12 +126,14 @@ void luhnCheck(long ccNum, int ccNumDigits)
             int digitValue = ccNum % 10;
             ccNum = ccNum / 10;
             checkSum2 = checkSum2 + digitValue;
+            // printf("checkSum2 in calc = %i\n", checkSum2);
         }
     }
     // finalSum Check
     finalSum = checkSum1 + checkSum2;
-    int digitValue = ccNum % 10;
-    ccNum = ccNum / 10;
+    int digitValue = finalSum % 10;
+    finalSum = finalSum / 10;
+    printf("digitValue = %i\n", digitValue);
     if (digitValue != 0)
     {
         printf("INVALID\n");
