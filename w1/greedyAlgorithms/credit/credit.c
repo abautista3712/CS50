@@ -5,7 +5,6 @@
 int countDigits(long numberToCount);
 void verifyCC(long ccNum, int counterDigits);
 void luhnCheck(long ccNum, int counterDigits);
-// void parseDigits(long numberToParse);
 
 int main(void)
 {
@@ -19,34 +18,10 @@ int main(void)
     {
         // Check number of digits
         int counterDigits = countDigits(creditNum);
-        // Cards with 13 digits are VISA
-        if (counterDigits == 13)
-        {
-            printf("VISA\n");
-            luhnCheck(creditNum, counterDigits);
-        }
-        // Cards with 15 digits are AmEx
-        else if (counterDigits == 15)
-        {
-            // printf("AMEX\n");
-            verifyCC(creditNum, counterDigits);
-            luhnCheck(creditNum, counterDigits);
-        }
-        // Cards with 16 digits are either VISA or Mastercard
-        else if (counterDigits == 16)
+        // Cards with 13, 15, 16 digits are VALID
+        if (counterDigits == 13 | counterDigits == 15 | counterDigits == 16)
         {
             verifyCC(creditNum, counterDigits);
-            // // Cards starting with 4 as the first digit are VISA
-            // if (floor(creditNum / (1 * pow(10, 15))) == 4)
-            // {
-            //     printf("VISA\n");
-            //     luhnCheck(creditNum, counterDigits);
-            // }
-            // else
-            // {
-            //     (printf("MASTERCARD\n"));
-            //     luhnCheck(creditNum, counterDigits);
-            // }
         }
         // Any other combination of numbers are invalid
         else
@@ -71,15 +46,24 @@ int countDigits(long numberToCount)
 
 void verifyCC(long ccNum, int ccNumDigits)
 {
+    // AmEx Check First Two Numbers
     int firstTwoCheck = floor(ccNum / (1 * pow(10, ccNumDigits - 2)));
     if (firstTwoCheck == 34 | firstTwoCheck == 37)
     {
-        printf("AmEx\n");
+        luhnCheck(ccNum, ccNumDigits);
+        printf("AMEX\n");
     }
-    //  else if
-    //  {
-
-    //  }
+    //  MasterCard Check First Two Numbers
+    else if (firstTwoCheck == 51 | firstTwoCheck == 52 | firstTwoCheck == 53 | firstTwoCheck == 54 | firstTwoCheck == 55)
+    {
+        luhnCheck(ccNum, ccNumDigits);
+        printf("MASTERCARD\n");
+    }
+    else if (floor(ccNum / (1 * pow(10, ccNumDigits - 1))) == 4)
+    {
+        luhnCheck(ccNum, ccNumDigits);
+        printf("VISA\n");
+    }
 }
 
 void luhnCheck(long ccNum, int ccNumDigits)
@@ -96,10 +80,8 @@ void luhnCheck(long ccNum, int ccNumDigits)
             // Read Digit Value
             int digitValue = ccNum % 10;
             ccNum = ccNum / 10;
-            // printf("Digit Check: %i\n", digitValue);
             // Multiply Digit by 2
             int doubleSum = digitValue * 2;
-            // printf("%i\n", doubleSum);
             int counterDigits = countDigits(doubleSum);
             // If product of digitValue has more than one digit, sum digits
             if (counterDigits < 2)
@@ -114,7 +96,6 @@ void luhnCheck(long ccNum, int ccNumDigits)
                     doubleSum = doubleSum / 10;
                 }
             }
-            // printf("---checkSum1---\n%i\n", checkSum1);
         }
         else
         {
@@ -126,10 +107,8 @@ void luhnCheck(long ccNum, int ccNumDigits)
         }
     }
     finalSum = checkSum1 + checkSum2;
-    // printf("finalSum = %i\n", finalSum);
     int digitValue = ccNum % 10;
     ccNum = ccNum / 10;
-    // printf("%i\n",digitValue);
     if (digitValue != 0)
     {
         printf("INVALID\n");
