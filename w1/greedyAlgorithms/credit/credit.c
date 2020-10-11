@@ -3,6 +3,7 @@
 #include <math.h>
 
 int countDigits(long numberToCount);
+void amExCheck(long ccNum, int counterDigits);
 void luhnCheck(long ccNum, int counterDigits);
 // void parseDigits(long numberToParse);
 
@@ -24,10 +25,11 @@ int main(void)
             printf("VISA\n");
             luhnCheck(creditNum, counterDigits);
         }
-        // Cards with 15 digits are VISA
+        // Cards with 15 digits are AmEx
         else if (counterDigits == 15)
         {
             printf("AMEX\n");
+            amExCheck(creditNum, counterDigits);
             luhnCheck(creditNum, counterDigits);
         }
         // Cards with 16 digits are either VISA or Mastercard
@@ -64,6 +66,11 @@ int countDigits(long numberToCount)
         counterDigits++;
     }
     return counterDigits;
+}
+
+void amExCheck(long ccNum, int ccNumDigits)
+{
+    printf("AmEx Check Test\n");
 }
 
 void luhnCheck(long ccNum, int ccNumDigits)
