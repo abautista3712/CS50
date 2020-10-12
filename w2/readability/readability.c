@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <cs50.h>
 
 int main(void)
 {
-    printf("Test\n");
+    string inputText = get_string("Text: ");
+    printf("%s\n", input);
 }
