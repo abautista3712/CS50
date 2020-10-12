@@ -1,21 +1,24 @@
 #include <cs50.h>
 #include <ctype.h>
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 
-void countLetters(string inputText);
-void countWords(string inputText);
-void countSentences(string inputText);
+int countLetters(string inputText);
+int countWords(string inputText);
+int countSentences(string inputText);
+void colemanLiauIndex(int letters, int words, int sentences);
 
 int main(void)
 {
     string inputText = get_string("Text: ");
-    countLetters(inputText);
-    countWords(inputText);
-    countSentences(inputText);
+    int letters = countLetters(inputText);
+    int words = countWords(inputText);
+    int sentences = countSentences(inputText);
+    colemanLiauIndex(letters, words, sentences);
 }
 
-void countLetters(string inputText)
+int countLetters(string inputText)
 {
     int letters = 0;
     for (int i = 0, n = strlen(inputText); i < n; i++)
@@ -26,9 +29,10 @@ void countLetters(string inputText)
         }
     }
     printf("Letters: %i\n", letters);
+    return letters;
 }
 
-void countWords(string inputText)
+int countWords(string inputText)
 {
     int words = 0;
     if (isalnum(inputText[0]))
@@ -43,9 +47,10 @@ void countWords(string inputText)
         }
     }
     printf("Words: %i\n", words);
+    return words;
 }
 
-void countSentences(string inputText)
+int countSentences(string inputText)
 {
     int sentences = 0;
     for (int i = 0, n = strlen(inputText); i < n; i++)
@@ -56,4 +61,13 @@ void countSentences(string inputText)
         }
     }
     printf("Sentences: %i\n", sentences);
+    return sentences;
+}
+
+void colemanLiauIndex(int letters, int words, int sentences)
+{
+    float L = (letters / (float)words) * 100;
+    float S = (sentences / (float)words) * 100;
+    int index = round(0.0588 * L - 0.296 * S - 15.8);
+    printf("Grade %i\n", index);
 }
