@@ -18,7 +18,7 @@ void countLetters(string inputText)
     int letters = 0;
     for (int i = 0, n = strlen(inputText); i < n; i++)
     {
-        if (isalpha(inputText[i]) | isdigit(inputText[i]))
+        if (isalnum(inputText[i]))
         {
             letters++;
         }
