@@ -28,7 +28,7 @@ int countLetters(string inputText)
             letters++;
         }
     }
-    printf("Letters: %i\n", letters);
+    // printf("Letters: %i\n", letters);
     return letters;
 }
 
@@ -46,7 +46,7 @@ int countWords(string inputText)
             words++;
         }
     }
-    printf("Words: %i\n", words);
+    // printf("Words: %i\n", words);
     return words;
 }
 
@@ -60,7 +60,7 @@ int countSentences(string inputText)
             sentences++;
         }
     }
-    printf("Sentences: %i\n", sentences);
+    // printf("Sentences: %i\n", sentences);
     return sentences;
 }
 
@@ -69,5 +69,16 @@ void colemanLiauIndex(int letters, int words, int sentences)
     float L = (letters / (float)words) * 100;
     float S = (sentences / (float)words) * 100;
     int index = round(0.0588 * L - 0.296 * S - 15.8);
-    printf("Grade %i\n", index);
+    if (index >= 16)
+    {
+        printf("Grade 16+\n");
+    }
+    else if (index < 1)
+    {
+        printf("Before Grade 1\n");
+    }
+    else
+    {
+        printf("Grade %i\n", index);
+    }
 }
