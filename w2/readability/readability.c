@@ -5,12 +5,14 @@
 
 void countLetters(string inputText);
 void countWords(string inputText);
+void countSentences(string inputText);
 
 int main(void)
 {
     string inputText = get_string("Text: ");
     countLetters(inputText);
     countWords(inputText);
+    countSentences(inputText);
 }
 
 void countLetters(string inputText)
@@ -41,4 +43,17 @@ void countWords(string inputText)
         }
     }
     printf("Words: %i\n", words);
+}
+
+void countSentences(string inputText)
+{
+    int sentences = 0;
+    for (int i = 0, n = strlen(inputText); i < n; i++)
+    {
+        if (inputText[i] == '.' | inputText[i] == '!' | inputText[i] == '?')
+        {
+            sentences++;
+        }
+    }
+    printf("Sentences: %i\n", sentences);
 }
