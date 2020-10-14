@@ -15,14 +15,17 @@ int main(int argc, string argv[])
     // Produce error if argv[1] contains anything but digit characters
     for (int i = 0, n = strlen(argv[1]); i < n; i++)
     {
-        if (isdigit(argv[1][i]))
-        {
-            printf("Success\n");
-        }
-        else
+        if (!isdigit(argv[1][i]))
         {
             printf("Usage: ./caesar key\n");
             return 1;
         }
+    }
+    int key = atoi(argv[1]);
+    printf("Key = %i\n", key);
+    string inputText = get_string("plaintext: ");
+    for (int j = 0, m = strlen(inputText); j < m; j++)
+    {
+        printf("%c\n", inputText[j]);
     }
 }
