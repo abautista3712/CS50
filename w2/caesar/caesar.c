@@ -21,11 +21,21 @@ int main(int argc, string argv[])
             return 1;
         }
     }
-    int key = atoi(argv[1]);
+    int key = atoi(argv[1]) % 26;
     printf("Key = %i\n", key);
-    string inputText = get_string("plaintext: ");
-    for (int j = 0, m = strlen(inputText); j < m; j++)
+    string strPlaintext = get_string("plaintext: ");
+    for (int j = 0, m = strlen(strPlaintext); j < m; j++)
     {
-        printf("%i\n", (int)inputText[j]);
+        int intCiphertext = (int)strPlaintext[j] + key;
+        if (intCiphertext > 122)
+        {
+            intCiphertext = 96 + (122 - (int)strPlaintext[j]) + key;
+            printf("%c", (char)intCiphertext);
+        }
+        else
+        {
+            printf("%c", (char)intCiphertext);
+        }
     }
+    printf("\n");
 }
