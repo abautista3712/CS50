@@ -12,10 +12,14 @@ int main(int argc, string argv[])
         printf("Usage: ./caesar key\n");
         return 1;
     }
-    // Produce error if argv[1] contains alphabetical characters
+    // Produce error if argv[1] contains anything but digit characters
     for (int i = 0, n = strlen(argv[1]); i < n; i++)
     {
-        if (isalpha(argv[1][i]))
+        if (isdigit(argv[1][i]))
+        {
+            printf("Success\n");
+        }
+        else
         {
             printf("Usage: ./caesar key\n");
             return 1;
