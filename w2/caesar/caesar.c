@@ -26,6 +26,6 @@ int main(int argc, string argv[])
     string inputText = get_string("plaintext: ");
     for (int j = 0, m = strlen(inputText); j < m; j++)
     {
-        printf("%c\n", inputText[j]);
+        printf("%i\n", (int)inputText[j]);
     }
 }
