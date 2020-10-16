@@ -43,6 +43,10 @@ int main(int argc, string argv[])
         {
             handleCase(96, 122, key, strPlaintext, j);
         }
+        else
+        {
+            printf("%c", (char)((int)strPlaintext[j]));
+        }
     }
     printf("\n");
 }
