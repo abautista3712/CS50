@@ -54,7 +54,7 @@ void handleCase(int lowerbound, int upperbound, int key, string strPlaintext, in
     // If intPlaintext + key = character ASCII code past z, start from a
     if (intCiphertext > upperbound)
     {
-        intCiphertext = lowerbound + (upperbound - intPlaintext) + key;
+        intCiphertext = lowerbound + key - (upperbound - intPlaintext);
         printf("%c", (char)intCiphertext);
     }
     // Else use intPlaintext + key
