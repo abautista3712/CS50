@@ -49,6 +49,7 @@ int main(int argc, string argv[])
         }
     }
     printf("\n");
+    return 0;
 }
 
 void handleCase(int lowerbound, int upperbound, int key, string strPlaintext, int j)
