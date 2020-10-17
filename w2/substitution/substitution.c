@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
+void handleCipher(string plaintext);
+
 int main(int argc, string argv[])
 {
     if (argc != 2)
@@ -24,5 +26,14 @@ int main(int argc, string argv[])
         }
     }
     string plaintext = get_string("plaintext: ");
-    printf("%s\n", plaintext);
+    handleCipher(plaintext);
+}
+
+void handleCipher(string plaintext)
+{
+    for (int j = 0, o = strlen(plaintext); j < o; j++)
+    {
+        int intPlaintext = (int)plaintext[j];
+        printf("%i\n", intPlaintext);
+    }
 }
