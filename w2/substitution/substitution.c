@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
-void handleCipher(string plaintext);
+int caseInsensitive(int intSearchTerm);
+void handleCipher(string plaintext, string key);
 
 int main(int argc, string argv[])
 {
@@ -25,15 +26,39 @@ int main(int argc, string argv[])
             return 1;
         }
     }
+
+    string key = argv[1];
     string plaintext = get_string("plaintext: ");
-    handleCipher(plaintext);
+    handleCipher(plaintext, key);
 }
 
-void handleCipher(string plaintext)
+int caseInsensitive(int intSearchTerm)
+{
+    if (intSearchTerm >= 97 && intSearchTerm <= 122)
+    {
+        intSearchTerm -= 97;
+    }
+    else if (intSearchTerm >= 65 && intSearchTerm <= 90)
+    {
+        intSearchTerm -= 65;
+    }
+    return intSearchTerm;
+}
+
+// int intKeyPosition (string key)
+// {
+//     for (int j = 0; j < 26; j++)
+//     {
+//         int keyPosition = (int) key[j]
+//     }
+// }
+
+void handleCipher(string plaintext, string key)
 {
     for (int j = 0, o = strlen(plaintext); j < o; j++)
     {
         int intPlaintext = (int)plaintext[j];
+        intPlaintext = caseInsensitive(intPlaintext);
         printf("%i\n", intPlaintext);
     }
 }
