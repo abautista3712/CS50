@@ -23,5 +23,6 @@ int main(int argc, string argv[])
             return 1;
         }
     }
-    printf("End of Test\n");
+    string plaintext = get_string("plaintext: ");
+    printf("%s\n", plaintext);
 }
