@@ -37,9 +37,16 @@ void handleCipher(string plaintext, string key)
 {
     for (int j = 0, o = strlen(plaintext); j < o; j++)
     {
-        int intPlaintext = (int)plaintext[j];
-        int intCiphertext = encryptPlaintext(intPlaintext, key);
-        printf("%c", (char)intCiphertext);
+        if (isalpha(plaintext[j]))
+        {
+            int intPlaintext = (int)plaintext[j];
+            int intCiphertext = encryptPlaintext(intPlaintext, key);
+            printf("%c", (char)intCiphertext);
+        }
+        else
+        {
+            printf("%c", (char)plaintext[j]);
+        }
     }
     printf("\n");
 }
