@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 
 void handleCipher(string plaintext, string key);
 int caseInsensitive(int intSearchTerm);
@@ -15,6 +16,7 @@ int main(int argc, string argv[])
         printf("Usage: ./substitution key\n");
         return 1;
     }
+    int quickUniqueCheckCounter = 0;
     // Specifications on second command-line argument
     for (int i = 0, n = strlen(argv[1]); i < n; i++)
     {
@@ -30,6 +32,13 @@ int main(int argc, string argv[])
             printf("Key must contain 26 characters.\n");
             return 1;
         }
+        int intUniqueKeyCheck = caseInsensitive((int)argv[1][i]);
+        quickUniqueCheckCounter += intUniqueKeyCheck;
+        if (i == 25 && quickUniqueCheckCounter != 325)
+        {
+            printf("Key must contain all unique characters.\n");
+            return 1;
+        }
     }
     // Set variables for key and plaintext
     string key = argv[1];
@@ -38,6 +47,7 @@ int main(int argc, string argv[])
     printf("ciphertext: ");
     // Run handleCipher function
     handleCipher(plaintext, key);
+    return 0;
 }
 
 // Function to handle looping through plaintext characters
