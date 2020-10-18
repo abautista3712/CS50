@@ -16,7 +16,7 @@ int main(int argc, string argv[])
         printf("Usage: ./substitution key\n");
         return 1;
     }
-    int quickUniqueCheckCounter = 0;
+    // int quickUniqueCheckCounter = 0;
     // Specifications on second command-line argument
     for (int i = 0, n = strlen(argv[1]); i < n; i++)
     {
@@ -32,12 +32,22 @@ int main(int argc, string argv[])
             printf("Key must contain 26 characters.\n");
             return 1;
         }
-        int intUniqueKeyCheck = caseInsensitive((int)argv[1][i]);
-        quickUniqueCheckCounter += intUniqueKeyCheck;
-        if (i == 25 && quickUniqueCheckCounter != 325)
+        int uniqueChar[n];
+        uniqueChar[i] = 0;
+        int positionUniqueChar = caseInsensitive((int)argv[1][i]);
+        uniqueChar[positionUniqueChar]++;
+        if (i == (n - 1))
         {
-            printf("Key must contain all unique characters.\n");
-            return 1;
+            int uniqueCharCount = 0;
+            for (int k = 0; k < 26; k++)
+            {
+                uniqueCharCount += uniqueChar[k];
+                if (k == 25 && uniqueCharCount != 26)
+                {
+                    printf("Key must contain all unique characters.\n");
+                    return 1;
+                }
+            }
         }
     }
     // Set variables for key and plaintext
