@@ -59,7 +59,14 @@ int caseInsensitive(int intSearchTerm)
 
 int encryptPlaintext(int intPlaintext, string key)
 {
+    bool isPlaintextUppercase = false;
+    if (intPlaintext >= 65 && intPlaintext <= 90)
+    {
+        isPlaintextUppercase = true;
+    }
     int ci_intPlaintext = caseInsensitive(intPlaintext);
-    int ci_intCiphertext = key[ci_intPlaintext];
-    return ci_intCiphertext;
+    int ci_intCiphertext = caseInsensitive(key[ci_intPlaintext]);
+    int intCiphertext = ci_intCiphertext;
+    isPlaintextUppercase ? (intCiphertext += 65) : (intCiphertext += 97);
+    return intCiphertext;
 }
