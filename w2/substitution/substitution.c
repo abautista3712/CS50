@@ -25,22 +25,24 @@ int main(int argc, string argv[])
             printf("Usage: ./substitution key\n");
             return 1;
         }
-        // If key is not 26 characters long, give error
+        // Key must be 26 characters long
         else if (n == 26)
         {
-            printf("i = %i\n", i);
+            // Initialize array with 26 spaces
             int uniqueChar[26];
+            // Initialize variable to notate position in array. Character equal to ASCII letter value put through caseInsensitive function.
             int positionUniqueChar = caseInsensitive((int)argv[1][i]);
+            // Each time a unique characters appears, change the array value to 1.
             uniqueChar[positionUniqueChar] = 1;
-            printf("uniqueChar[%i] = %i\n", positionUniqueChar, uniqueChar[positionUniqueChar]);
+            // Run following function once all key characters have been analyzed
             if (i == (n - 1))
             {
+                // Function to sum all array positions
                 int uniqueCharCount = 0;
                 for (int l = 0; l < 26; l++)
                 {
                     uniqueCharCount += uniqueChar[l];
-                    printf("uniqueChar[%i] = %i\n", l, uniqueChar[l]);
-                    printf("uniqueCharCount = %i\n", uniqueCharCount);
+                    // If 26-character key does not equal 26, there are duplicate values
                     if (l == 25 && uniqueCharCount != 26)
                     {
                         printf("Key must contain all unique characters.\n");
@@ -49,6 +51,7 @@ int main(int argc, string argv[])
                 }
             }
         }
+        // If key is not 26 characters long, give error
         else
         {
             printf("Key must contain 26 characters.\n");
