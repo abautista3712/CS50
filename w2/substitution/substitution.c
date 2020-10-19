@@ -16,7 +16,6 @@ int main(int argc, string argv[])
         printf("Usage: ./substitution key\n");
         return 1;
     }
-    // int quickUniqueCheckCounter = 0;
     // Specifications on second command-line argument
     for (int i = 0, n = strlen(argv[1]); i < n; i++)
     {
@@ -27,27 +26,33 @@ int main(int argc, string argv[])
             return 1;
         }
         // If key is not 26 characters long, give error
-        else if (n != 26)
+        else if (n == 26)
+        {
+            printf("i = %i\n", i);
+            int uniqueChar[26];
+            int positionUniqueChar = caseInsensitive((int)argv[1][i]);
+            uniqueChar[positionUniqueChar] = 1;
+            printf("uniqueChar[%i] = %i\n", positionUniqueChar, uniqueChar[positionUniqueChar]);
+            if (i == (n - 1))
+            {
+                int uniqueCharCount = 0;
+                for (int l = 0; l < 26; l++)
+                {
+                    uniqueCharCount += uniqueChar[l];
+                    printf("uniqueChar[%i] = %i\n", l, uniqueChar[l]);
+                    printf("uniqueCharCount = %i\n", uniqueCharCount);
+                    if (l == 25 && uniqueCharCount != 26)
+                    {
+                        printf("Key must contain all unique characters.\n");
+                        return 1;
+                    }
+                }
+            }
+        }
+        else
         {
             printf("Key must contain 26 characters.\n");
             return 1;
-        }
-        int uniqueChar[n];
-        uniqueChar[i] = 0;
-        int positionUniqueChar = caseInsensitive((int)argv[1][i]);
-        uniqueChar[positionUniqueChar]++;
-        if (i == (n - 1))
-        {
-            int uniqueCharCount = 0;
-            for (int k = 0; k < 26; k++)
-            {
-                uniqueCharCount += uniqueChar[k];
-                if (k == 25 && uniqueCharCount != 26)
-                {
-                    printf("Key must contain all unique characters.\n");
-                    return 1;
-                }
-            }
         }
     }
     // Set variables for key and plaintext
