@@ -65,10 +65,13 @@ int main(int argc, string argv[])
 // Update vote totals given a new vote
 bool vote(string name)
 {
+    // Cycle through all candidates
     for (int i = 0; i < candidate_count; i++)
     {
+        // Check to see if vote cast matches registered candidate
         if (strcmp(candidates[i].name, name) == 0)
         {
+            // Add 1 to candidate vote count
             candidates[i].votes++;
             printf("Successful vote for %s registered!\n", name);
             return true;
@@ -80,6 +83,17 @@ bool vote(string name)
 // Print the winner (or winners) of the election
 void print_winner(void)
 {
-    printf("Printed winner\n");
+    string winner = NULL;
+    int max_votes = 0;
+    // Cycle through all candidates
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (max_votes < candidates[i].votes)
+        {
+            winner = candidates[i].name;
+            max_votes = candidates[i].votes;
+        }
+    }
+    printf("%s\n", winner);
     return;
 }
