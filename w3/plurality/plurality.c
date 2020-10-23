@@ -69,6 +69,7 @@ bool vote(string name)
     {
         if (strcmp(candidates[i].name, name) == 0)
         {
+            candidates[i].votes++;
             printf("Successful vote for %s registered!\n", name);
             return true;
         }
@@ -79,6 +80,6 @@ bool vote(string name)
 // Print the winner (or winners) of the election
 void print_winner(void)
 {
-    // TODO
+    printf("Printed winner\n");
     return;
 }
