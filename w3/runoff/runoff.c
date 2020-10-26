@@ -20,7 +20,7 @@ typedef struct
 // Array of candidates
 candidate candidates[MAX_CANDIDATES];
 
-// Numbers of voters and candidates
+// Numbers of vonters and candidates
 int voter_count;
 int candidate_count;
 
@@ -143,10 +143,14 @@ void tabulate(void)
 {
     for (int i = 0; i < voter_count; i++)
     {
-        printf("i = %i\n", i);
-        printf("preferences[%i][0] = %i\n", i, preferences[i][0]);
-        candidates[preferences[i][0]].votes++;
-        printf("candidates[%i].votes = %i\n", preferences[i][0], candidates[preferences[i][0]].votes);
+        if (candidates[preferences[i][0]].eliminated == true)
+        {
+            return;
+        }
+        else
+        {
+            candidates[preferences[i][0]].votes++;
+        }
     }
     return;
 }
@@ -154,8 +158,23 @@ void tabulate(void)
 // Print the winner of the election, if there is one
 bool print_winner(void)
 {
-    // TODO
-    return true;
+    int totalVotes = 0;
+    for (int i = 0; i < candidate_count; i++)
+    {
+        totalVotes += candidates[i].votes;
+        if (i == candidate_count - 1)
+        {
+            for (int j = 0; j < candidate_count; j++)
+            {
+                if (candidates[j].votes > (totalVotes / 2))
+                {
+                    printf("%s\n", candidates[j].name);
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 // Return the minimum number of votes any remaining candidate has
