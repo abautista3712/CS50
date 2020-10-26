@@ -171,6 +171,7 @@ bool print_winner(void)
                     printf("%s\n", candidates[j].name);
                     return true;
                 }
+                return false;
             }
         }
     }
