@@ -141,7 +141,13 @@ bool vote(int voter, int rank, string name)
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
 {
-    // TODO
+    for (int i = 0; i < voter_count; i++)
+    {
+        printf("i = %i\n", i);
+        printf("preferences[%i][0] = %i\n", i, preferences[i][0]);
+        candidates[preferences[i][0]].votes++;
+        printf("candidates[%i].votes = %i\n", preferences[i][0], candidates[preferences[i][0]].votes);
+    }
     return;
 }
 
@@ -149,7 +155,7 @@ void tabulate(void)
 bool print_winner(void)
 {
     // TODO
-    return false;
+    return true;
 }
 
 // Return the minimum number of votes any remaining candidate has
