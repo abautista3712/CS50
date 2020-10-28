@@ -182,21 +182,36 @@ bool print_winner(void)
 int find_min(void)
 {
     int min_votes = candidates[0].votes;
+    printf("min_votes BEFORE loop = %i\n", min_votes);
     for (int i = 0; i < candidate_count; i++)
     {
+        printf("candidates[%i].votes = %i\n", i, candidates[i].votes);
         if (candidates[i].votes < min_votes)
         {
             min_votes = candidates[i].votes;
+            printf("min_votes = %i\n", min_votes);
             return min_votes;
         }
     }
-    return 0;
+    return min_votes;
 }
 
 // Return true if the election is tied between all candidates, false otherwise
 bool is_tie(int min)
 {
-    // TODO
+    int candidates_tied = 0;
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes == min)
+        {
+            candidates_tied++;
+        }
+        if (candidates_tied == candidate_count)
+        {
+            printf("ALL CANDIDATES ARE TIED\n");
+            return true;
+        }
+    }
     return false;
 }
 
