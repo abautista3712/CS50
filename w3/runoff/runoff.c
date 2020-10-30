@@ -142,25 +142,23 @@ bool vote(int voter, int rank, string name)
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
 {
+    printf("---New Round---\n");
     int j = 0;
-    for (int i = 0; i < candidate_count; i++)
-    {
-        if (candidates[i].eliminated == true)
-        {
-            j++;
-        }
-    }
-    printf("---Round %i---\n", j);
     printf("Tabulating...\n");
     for (int i = 0; i < voter_count; i++)
     {
         if (candidates[preferences[i][j]].eliminated == false)
         {
             candidates[preferences[i][j]].votes++;
-            printf("%s Votes = %i\n", candidates[preferences[i][j]].name, candidates[preferences[i][j]].votes);
+            printf("/%s Votes = %i\n", candidates[preferences[i][j]].name, candidates[preferences[i][j]].votes);
+        }
+        if (candidates[preferences[i][j]].eliminated == true)
+        {
+            j++;
+            candidates[preferences[i][j]].votes++;
+            printf("/%s Votes AFTER Second Round = %i\n", candidates[preferences[i][j]].name, candidates[preferences[i][j]].votes);
         }
     }
-    j++;
     return;
 }
 
@@ -181,10 +179,12 @@ bool print_winner(void)
                     printf("%s\n", candidates[j].name);
                     return true;
                 }
+                printf("/No winner\n");
                 return false;
             }
         }
     }
+    printf("/No winner\n");
     return false;
 }
 
@@ -199,17 +199,21 @@ int find_min(void)
         {
             i++;
         }
+        else
+        {
+            min_votes = candidates[i].votes;
+        }
     }
     for (int j = 0; j < candidate_count; j++)
     {
         if (candidates[j].votes < min_votes)
         {
             min_votes = candidates[j].votes;
-            printf("min = %i\n", min_votes);
+            printf("/min = %i\n", min_votes);
             return min_votes;
         }
     }
-    printf("min = %i\n", min_votes);
+    printf("/min = %i\n", min_votes);
     return min_votes;
 }
 
@@ -238,6 +242,7 @@ bool is_tie(int min)
             return true;
         }
     }
+    printf("/No ties found\n");
     return false;
 }
 
@@ -247,16 +252,13 @@ void eliminate(int min)
     printf("Eliminating...\n");
     for (int i = 0; i < candidate_count; i++)
     {
-        if (candidates[i].eliminated == true)
-        {
-            i++;
-        }
         if (candidates[i].votes == min)
         {
             candidates[i].eliminated = true;
             printf("Eliminated %s\n", candidates[i].name);
         }
     }
+    printf("/No further eliminations\n");
     printf("///End of round///\n");
     return;
 }
