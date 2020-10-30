@@ -145,13 +145,12 @@ void tabulate(void)
     printf("Tabulating...\n");
     for (int i = 0; i < voter_count; i++)
     {
-        if (candidates[preferences[i][0]].eliminated == true)
+        for (int j = 0; j < candidate_count; j++)
         {
-            return;
-        }
-        else
-        {
-            candidates[preferences[i][0]].votes++;
+            if (candidates[preferences[i][j]].eliminated == false)
+            {
+                candidates[preferences[i][j]].votes++;
+            }
         }
     }
     return;
@@ -185,13 +184,18 @@ bool print_winner(void)
 int find_min(void)
 {
     printf("Finding min...\n");
-    int min_votes = candidates[0].votes;
+    int min_votes = 0;
     for (int i = 0; i < candidate_count; i++)
     {
-        if (candidates[i].eliminated == true)
+        if (!candidates[i].eliminated)
+        {
+            min_votes = candidates[i].votes;
+        }
+        else
         {
             i++;
         }
+
         if (candidates[i].votes < min_votes)
         {
             min_votes = candidates[i].votes;
