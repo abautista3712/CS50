@@ -143,21 +143,25 @@ bool vote(int voter, int rank, string name)
 void tabulate(void)
 {
     printf("---New Round---\n");
-    int j = 0;
     printf("Tabulating...\n");
     for (int i = 0; i < voter_count; i++)
     {
+        int j = 0;
         if (candidates[preferences[i][j]].eliminated == false)
         {
             candidates[preferences[i][j]].votes++;
+            printf("/i = %i\n", i);
             printf("/%s Votes = %i\n", candidates[preferences[i][j]].name, candidates[preferences[i][j]].votes);
         }
         if (candidates[preferences[i][j]].eliminated == true)
         {
+            printf("/i = %i\n", i);
+            printf("/%s is eliminated: looking at second option = %s\n", candidates[preferences[i][j]].name, candidates[preferences[i][1]].name);
             j++;
             candidates[preferences[i][j]].votes++;
             printf("/%s Votes AFTER Second Round = %i\n", candidates[preferences[i][j]].name, candidates[preferences[i][j]].votes);
         }
+        j = 0;
     }
     return;
 }
