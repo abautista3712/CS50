@@ -142,17 +142,25 @@ bool vote(int voter, int rank, string name)
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
 {
+    int j = 0;
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].eliminated == true)
+        {
+            j++;
+        }
+    }
+    printf("---Round %i---\n", j);
     printf("Tabulating...\n");
     for (int i = 0; i < voter_count; i++)
     {
-        for (int j = 0; j < candidate_count; j++)
+        if (candidates[preferences[i][j]].eliminated == false)
         {
-            if (candidates[preferences[i][j]].eliminated == false)
-            {
-                candidates[preferences[i][j]].votes++;
-            }
+            candidates[preferences[i][j]].votes++;
+            printf("%s Votes = %i\n", candidates[preferences[i][j]].name, candidates[preferences[i][j]].votes);
         }
     }
+    j++;
     return;
 }
 
@@ -187,21 +195,21 @@ int find_min(void)
     int min_votes = 0;
     for (int i = 0; i < candidate_count; i++)
     {
-        if (!candidates[i].eliminated)
-        {
-            min_votes = candidates[i].votes;
-        }
-        else
+        if (candidates[i].eliminated)
         {
             i++;
         }
-
-        if (candidates[i].votes < min_votes)
+    }
+    for (int j = 0; j < candidate_count; j++)
+    {
+        if (candidates[j].votes < min_votes)
         {
-            min_votes = candidates[i].votes;
+            min_votes = candidates[j].votes;
+            printf("min = %i\n", min_votes);
             return min_votes;
         }
     }
+    printf("min = %i\n", min_votes);
     return min_votes;
 }
 
@@ -239,10 +247,16 @@ void eliminate(int min)
     printf("Eliminating...\n");
     for (int i = 0; i < candidate_count; i++)
     {
+        if (candidates[i].eliminated == true)
+        {
+            i++;
+        }
         if (candidates[i].votes == min)
         {
             candidates[i].eliminated = true;
+            printf("Eliminated %s\n", candidates[i].name);
         }
     }
+    printf("///End of round///\n");
     return;
 }
