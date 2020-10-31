@@ -156,7 +156,8 @@ void tabulate(void)
         if (candidates[preferences[i][j]].eliminated == true)
         {
             printf("/i = %i\n", i);
-            printf("/%s is eliminated: looking at second option = %s\n", candidates[preferences[i][j]].name, candidates[preferences[i][1]].name);
+            printf("/%s is eliminated: looking at second option = %s\n", candidates[preferences[i][j]].name,
+                   candidates[preferences[i][1]].name);
             j++;
             candidates[preferences[i][j]].votes++;
             printf("/%s Votes AFTER Second Round = %i\n", candidates[preferences[i][j]].name, candidates[preferences[i][j]].votes);
@@ -195,15 +196,18 @@ int find_min(void)
 {
     printf("Finding min...\n");
     int min_votes = 0;
-    for (int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < voter_count; i++)
     {
-        if (candidates[i].eliminated)
+        for (int j = 0; j < candidate_count; j++)
         {
-            i++;
-        }
-        else
-        {
-            min_votes = candidates[i].votes;
+            if (candidates[preferences[i][j]].eliminated)
+            {
+                j++;
+            }
+            else
+            {
+                min_votes = candidates[preferences[i][j]].votes;
+            }
         }
     }
     for (int j = 0; j < candidate_count; j++)
