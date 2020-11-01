@@ -200,23 +200,24 @@ int find_min(void)
     {
         for (int j = 0; j < candidate_count; j++)
         {
-            if (candidates[preferences[i][j]].eliminated)
+            while (candidates[preferences[i][j]].eliminated)
             {
                 j++;
             }
-            else
-            {
-                min_votes = candidates[preferences[i][j]].votes;
-            }
+            min_votes = candidates[preferences[i][j]].votes;
         }
     }
-    for (int j = 0; j < candidate_count; j++)
+
+    for (int i = 0; i < candidate_count; i++)
     {
-        if (candidates[j].votes < min_votes)
+        while (candidates[i].eliminated)
         {
-            min_votes = candidates[j].votes;
+            i++;
+        }
+        if (candidates[i].votes < min_votes)
+        {
+            min_votes = candidates[i].votes;
             printf("/min = %i\n", min_votes);
-            return min_votes;
         }
     }
     printf("/min = %i\n", min_votes);
