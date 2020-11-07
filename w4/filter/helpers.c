@@ -87,27 +87,30 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
     // Calculate blur average value
-    int blurAvgR = 0;
     // int blurAvgG = 0;
     // int blurAvgB = 0;
 
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i <= 6; i++)
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j <= 6; j++)
         {
             printf("%i ", image[i][j].rgbtRed);
-            blurAvgR += image[i][j].rgbtRed;
-
-            // for (int k = 0; k <= 2; k++)
-            // {
-            //     blurAvgR += image[0][j].rgbtRed;
-            // }
-
-            // printf("blurAvgR = %i\n", blurAvgR);
-            // blurAvgG += image[i][j].rgbtGreen;
-            // blurAvgB += image[i][j].rgbtBlue;
+            if (i == 0 || i == 6 || j == 0 || j == 6)
+            {
+                printf("[] ");
+            }
+            else
+            {
+                int blurAvgR = 0;
+                for (int k = (j - 1); k <= (j + 1); k++)
+                {
+                    blurAvgR += image[i][k].rgbtRed;
+                }
+                printf("[%i] ", blurAvgR);
+            }
         }
-        printf("= %i", blurAvgR);
+
+        // printf("= %i", blurAvgR);
         printf("\n");
     }
     return;
