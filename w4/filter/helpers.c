@@ -87,24 +87,38 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
     // Calculate blur average value
+    // int blurAvgR = 0;
     // int blurAvgG = 0;
     // int blurAvgB = 0;
 
+    // Column Number
     for (int i = 0; i <= 6; i++)
     {
+        // Row Number
         for (int j = 0; j <= 6; j++)
         {
             printf("%i ", image[i][j].rgbtRed);
-            if (i == 0 || i == 6 || j == 0 || j == 6)
+            // Edge Cases
+            if (j == 0 || j == 6)
             {
-                printf("[] ");
+                // printf("[] ");
             }
+            // Sum One Row Value Before and One Row Value After
             else
             {
                 int blurAvgR = 0;
-                for (int k = (j - 1); k <= (j + 1); k++)
+                if (i == 0 || i == 6)
                 {
-                    blurAvgR += image[i][k].rgbtRed;
+                }
+                else
+                {
+                    for (int k = (i - 1); k <= (i + 1); k++)
+                    {
+                        for (int l = (j - 1); l <= (j + 1); l++)
+                        {
+                            blurAvgR += image[k][l].rgbtRed;
+                        }
+                    }
                 }
                 printf("[%i] ", blurAvgR);
             }
