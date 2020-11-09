@@ -91,29 +91,146 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     // int blurAvgG = 0;
     // int blurAvgB = 0;
 
-    // Column Number
     for (int i = 0; i <= 6; i++)
     {
-        // Row Number
         for (int j = 0; j <= 6; j++)
         {
             printf("%i ", image[i][j].rgbtRed);
-            // Edge Cases
-            if (j == 0 || j == 6)
+            // --- Column Edge Cases ---
+            // Edge Case 1: COLUMN 1
+            if (j == 0)
             {
-                // printf("[] ");
+                int blurAvgR = 0;
+                // --- Row Edge Cases ---
+                // Row Edge Case 1: COLUMN 1, ROW 1
+                if (i == 0)
+                {
+                    // Average current row and one row after
+                    for (int k = i; k <= (i + 1); k++)
+                    {
+                        // Average current column and one column after
+                        for (int l = j; l <= (j + 1); l++)
+                        {
+                            blurAvgR += image[k][l].rgbtRed;
+                        }
+                    }
+                }
+                // Row Edge Case 2: COLUMN 1, ROW 6
+                else if (i == 6)
+                {
+                    // Average one row before and current row
+                    for (int k = (i - 1); k <= i; k++)
+                    {
+                        // Average current column and one column after
+                        for (int l = j; l <= (j + 1); l++)
+                        {
+                            blurAvgR += image[k][l].rgbtRed;
+                        }
+                    }
+                }
+                // --- All Other Row Cases ---
+                // COLUMN 1, ROWS 2-5
+                else
+                {
+                    // Average one row before, current row, and one row after
+                    for (int k = (i - 1); k <= (i + 1); k++)
+                    {
+                        // Average current column and one column after
+                        for (int l = j; l <= (j + 1); l++)
+                        {
+                            blurAvgR += image[k][l].rgbtRed;
+                        }
+                    }
+                }
+                printf("[%i] ", blurAvgR);
             }
-            // Sum One Row Value Before and One Row Value After
+            // Edge Case 2: COLUMN 6
+            else if (j == 6)
+            {
+                int blurAvgR = 0;
+                // --- Row Edge Cases ---
+                // Row Edge Case 1: COLUMN 6, ROW 1
+                if (i == 0)
+                {
+                    // Average current row and one row after
+                    for (int k = i; k <= i + 1; k++)
+                    {
+                        // Average one column before and current column
+                        for (int l = (j - 1); l <= j; l++)
+                        {
+                            blurAvgR += image[k][l].rgbtRed;
+                        }
+                    }
+                }
+                // Row Edge Case 2: COLUMN 6, ROW 6
+                else if (i == 6)
+                {
+                    // Average one row before and current row
+                    for (int k = (i - 1); k <= i; k++)
+                    {
+                        // Average one column before and current column
+                        for (int l = (j - 1); l <= j; l++)
+                        {
+                            blurAvgR += image[k][l].rgbtRed;
+                        }
+                    }
+                }
+                // --- All Other Row Cases ---
+                // COLUMN 6, ROWS 2-5
+                else
+                {
+                    // Average one row before, current row, and one row after
+                    for (int k = (i - 1); k <= (i + 1); k++)
+                    {
+                        // Average one column before and current column
+                        for (int l = (j - 1); l <= j; l++)
+                        {
+                            blurAvgR += image[k][l].rgbtRed;
+                        }
+                    }
+                }
+                printf("[%i] ", blurAvgR);
+            }
+            // --- All Other Column Cases ---
+            // COLUMNS 2-5
             else
             {
                 int blurAvgR = 0;
-                if (i == 0 || i == 6)
+                // --- Row Edge Cases ---
+                // Row Edge Case 1: COLUMNS 2-5, ROW 1
+                if (i == 0)
                 {
+                    // Average one row before, current row, and one row after
+                    for (int k = i; k <= (i + 1); k++)
+                    {
+                        // Average one column before, current column and one column after
+                        for (int l = (j - 1); l <= (j + 1); l++)
+                        {
+                            blurAvgR += image[k][l].rgbtRed;
+                        }
+                    }
                 }
+                // Row Edge Case 2: COLUMNS 2-5, ROW 6
+                else if (i == 6)
+                {
+                    // Average one row before, current row, and one row after
+                    for (int k = (i - 1); k <= i; k++)
+                    {
+                        // Average one column before, current column and one column after
+                        for (int l = (j - 1); l <= (j + 1); l++)
+                        {
+                            blurAvgR += image[k][l].rgbtRed;
+                        }
+                    }
+                }
+                // --- All Other Row Cases ---
+                // COLUMNS 2-5, ROWS 2-5
                 else
                 {
+                    // Average one row before, current row, and one row after
                     for (int k = (i - 1); k <= (i + 1); k++)
                     {
+                        // Average one column before, current column and one column after
                         for (int l = (j - 1); l <= (j + 1); l++)
                         {
                             blurAvgR += image[k][l].rgbtRed;
