@@ -89,7 +89,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     // Calculate blur average value
     for (int i = 0; i < height; i++)
     {
-        for (int j = 0; j < 300; j++)
+        for (int j = 0; j < width; j++)
         {
             int blurAvgR = 0;
             int blurAvgG = 0;
@@ -165,7 +165,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                 }
             }
             // Edge Case 2: LAST COLUMN
-            else if (j == (300 - 1))
+            else if (j == (width - 1))
             {
                 // --- Row Edge Cases ---
                 // Row Edge Case 1: LAST COLUMN, ROW 1
