@@ -63,32 +63,29 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
-    // int counter = (100 - 1);
     int reflectVal = (width - 1);
-    for (int i = 0; i < height; i++)
+    for (int i = 0; i < 100; i++)
     {
         for (int j = 0; j < width; j++)
         {
-            // printf("image[%i][%i].rgbtRed = %i\n", i, j, image[i][j].rgbtRed);
-            // printf("image[%i][%i].rgbtRed = %i\n", i, reflectVal, image[i][reflectVal].rgbtRed);
+            int tmpR = 0;
+            int tmpG = 0;
+            int tmpB = 0;
+
+            tmpR = image[i][j].rgbtRed;
+            tmpG = image[i][j].rgbtGreen;
+            tmpB = image[i][j].rgbtBlue;
+
             image[i][j].rgbtRed = image[i][reflectVal].rgbtRed;
             image[i][j].rgbtGreen = image[i][reflectVal].rgbtGreen;
             image[i][j].rgbtBlue = image[i][reflectVal].rgbtBlue;
-            // printf("AFTER: image[%i][%i].rgbtRed = %i\n", i, j, image[i][j].rgbtRed);
+
             if (reflectVal >= 0)
             {
                 reflectVal = reflectVal - 1;
             }
-            // do reflectVal = reflectVal - 1;
-            // while (reflectVal >= 0);
-            // return;
-            // printf("%i ", image[i][j].rgbtRed);
-            // image[i][j].rgbtRed = avg;
-            // image[i][j].rgbtGreen = avg;
-            // image[i][j].rgbtBlue = avg;
         }
         reflectVal = (width - 1);
-        // printf("\n");
     }
     return;
 }
