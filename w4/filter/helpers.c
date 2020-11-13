@@ -274,7 +274,24 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                         // Average one column before and current column
                         for (int l = (j - 1); l <= j; l++)
                         {
-                            // originalR[k][l] = image[k][l].rgbtRed;
+                            if (k == (i - 1))
+                            {
+                                blurAvgR = originalR[k][j - 1] + originalR[k][j];
+                                blurAvgG = originalG[k][j - 1] + originalR[k][j];
+                                blurAvgB = originalB[k][j - 1] + originalR[k][j];
+                                k++;
+                            }
+                            if (k == i && l == (j - 1))
+                            {
+                                blurAvgR += originalR[k][l];
+                                blurAvgG += originalG[k][l];
+                                blurAvgB += originalB[k][l];
+                                l++;
+                            }
+                            originalR[k][l] = image[k][l].rgbtRed;
+                            originalG[k][l] = image[k][l].rgbtGreen;
+                            originalB[k][l] = image[k][l].rgbtBlue;
+
                             blurAvgR += image[k][l].rgbtRed;
                             blurAvgG += image[k][l].rgbtGreen;
                             blurAvgB += image[k][l].rgbtBlue;
@@ -286,6 +303,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     image[i][j].rgbtRed = (int)blurAvgR;
                     image[i][j].rgbtGreen = (int)blurAvgG;
                     image[i][j].rgbtBlue = (int)blurAvgB;
+                    printf("[%i] ", blurAvgR);
                 }
             }
             // --- All Other Column Cases ---
@@ -386,7 +404,6 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     image[i][j].rgbtRed = (int)blurAvgR;
                     image[i][j].rgbtGreen = (int)blurAvgG;
                     image[i][j].rgbtBlue = (int)blurAvgB;
-                    printf("[%i] ", blurAvgR);
                 }
             }
         }
