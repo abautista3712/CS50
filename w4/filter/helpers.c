@@ -102,15 +102,15 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     int originalB[height][width];
 
     // Calculate blur average value
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < height; i++)
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < width; j++)
         {
             int blurAvgR = 0;
             int blurAvgG = 0;
             int blurAvgB = 0;
 
-            printf("%i ", image[i][j].rgbtRed);
+            // printf("%i ", image[i][j].rgbtRed);
             // --- Column Edge Cases ---
             // Edge Case 1: COLUMN 1
             if (j == 0)
@@ -141,7 +141,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     image[i][j].rgbtBlue = (int)blurAvgB;
                 }
                 // Row Edge Case 2: COLUMN 1, LAST ROW
-                else if (i == (6 - 1))
+                else if (i == (height - 1))
                 {
                     // Average one row before and current row
                     for (int k = (i - 1); k <= i; k++)
@@ -207,7 +207,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                 }
             }
             // Edge Case 2: LAST COLUMN
-            else if (j == (6 - 1))
+            else if (j == (width - 1))
             {
                 // --- Row Edge Cases ---
                 // Row Edge Case 1: LAST COLUMN, ROW 1
@@ -243,7 +243,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     image[i][j].rgbtBlue = (int)blurAvgB;
                 }
                 // Row Edge Case 2: LAST COLUMN, LAST ROW
-                else if (i == (6 - 1))
+                else if (i == (height - 1))
                 {
                     // Average one row before and current row
                     for (int k = (i - 1); k <= i; k++)
@@ -251,7 +251,24 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                         // Average one column before and current column
                         for (int l = (j - 1); l <= j; l++)
                         {
-                            // originalR[k][l] = image[k][l].rgbtRed;
+                            if (k == (i - 1))
+                            {
+                                blurAvgR = originalR[k][j - 1] + originalR[k][j];
+                                blurAvgG = originalG[k][j - 1] + originalG[k][j];
+                                blurAvgB = originalB[k][j - 1] + originalB[k][j];
+                                k++;
+                            }
+                            if (k == i && l == (j - 1))
+                            {
+                                blurAvgR += originalR[k][l];
+                                blurAvgG += originalG[k][l];
+                                blurAvgB += originalB[k][l];
+                                l++;
+                            }
+                            originalR[k][l] = image[k][l].rgbtRed;
+                            originalG[k][l] = image[k][l].rgbtGreen;
+                            originalB[k][l] = image[k][l].rgbtBlue;
+
                             blurAvgR += image[k][l].rgbtRed;
                             blurAvgG += image[k][l].rgbtGreen;
                             blurAvgB += image[k][l].rgbtBlue;
@@ -303,7 +320,6 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     image[i][j].rgbtRed = (int)blurAvgR;
                     image[i][j].rgbtGreen = (int)blurAvgG;
                     image[i][j].rgbtBlue = (int)blurAvgB;
-                    printf("[%i] ", blurAvgR);
                 }
             }
             // --- All Other Column Cases ---
@@ -344,7 +360,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     image[i][j].rgbtBlue = blurAvgB;
                 }
                 // Row Edge Case 2: MIDDLE COLUMNS, LAST ROW
-                else if (i == (6 - 1))
+                else if (i == (height - 1))
                 {
                     // Average one row before and current row
                     for (int k = (i - 1); k <= i; k++)
@@ -352,7 +368,24 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                         // Average one column before, current column and one column after
                         for (int l = (j - 1); l <= (j + 1); l++)
                         {
-                            // originalR[k][l] = image[k][l].rgbtRed;
+                            if (k == (i - 1))
+                            {
+                                blurAvgR = originalR[k][j - 1] + originalR[k][j] + originalR[k][j + 1];
+                                blurAvgG = originalG[k][j - 1] + originalG[k][j] + originalG[k][j + 1];
+                                blurAvgB = originalB[k][j - 1] + originalB[k][j] + originalB[k][j + 1];
+                                k++;
+                            }
+                            if (k == i && l == (j - 1))
+                            {
+                                blurAvgR += originalR[k][l];
+                                blurAvgG += originalG[k][l];
+                                blurAvgB += originalB[k][l];
+                                l++;
+                            }
+                            originalR[k][l] = image[k][l].rgbtRed;
+                            originalG[k][l] = image[k][l].rgbtGreen;
+                            originalB[k][l] = image[k][l].rgbtBlue;
+
                             blurAvgR += image[k][l].rgbtRed;
                             blurAvgG += image[k][l].rgbtGreen;
                             blurAvgB += image[k][l].rgbtBlue;
@@ -407,7 +440,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                 }
             }
         }
-        printf("\n");
+        // printf("\n");
     }
     return;
 }
