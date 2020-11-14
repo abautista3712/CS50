@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     }
 
     // Open File
-    FILE *file = fopen("argv[1]", "r");
+    FILE *file = fopen(argv[1], "r");
     if (file == NULL)
     {
         printf("Cannot open file\n");
@@ -25,18 +25,30 @@ int main(int argc, char *argv[])
 
     // Read/Recover JPEG Data
     while (fread(buffer, sizeof(buffer), 1, file) == 1)
-
+    {
         if (buffer[0] == 0xff &&
             buffer[1] == 0xd8 &&
             buffer[2] == 0xff &&
             (buffer[3] & 0xf0) == 0xe0)
         {
-            printf("Maybe\n");
+            printf("JPEG FOUND\n");
+            // if first JPEG
+            // fwrite(data, size, number, outptr);
+            // counter
+            // Filenames: ###.jpg, starting at 000.jpg
+            // sprintf(filename, "%03i.jpg", 2);
+            // FILE *img = fopen(filename, "w");
+            // keep writing for each block until start of new
+            // else
+            // close old
+            // write new
+            // printf("Maybe\n");
         }
         else
         {
             printf("No\n");
         }
+    }
 
     fclose(file);
 }
