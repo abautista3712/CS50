@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     bool JPEGfound = false;
 
     // Read/Recover JPEG Data
-    while (fread(buffer, sizeof(buffer), 1, file) == 1)
+    while (fread(&buffer, sizeof(buffer), 1, file) == 1)
     {
 
         if (buffer[0] == 0xff &&
@@ -39,11 +39,22 @@ int main(int argc, char *argv[])
         {
             if (JPEGcount == 0)
             {
+                // Make New JPEG
+                char filename[8];
+                sprintf(filename, "%03i.jpg", JPEGcount);
+                FILE *img = fopen(filename, "w");
+
+                // Write File
+                fwrite(&buffer, sizeof(buffer), 1, img);
+
                 printf("1st JPEG FOUND\n");
                 JPEGfound = true;
                 JPEGcount++;
-                printf("%i", JPEGcount);
-                // fwrite 512
+                // counter
+                // Filenames: ###.jpg, starting at 000.jpg
+                // sprintf(filename, "%03i.jpg", 2);
+                // FILE *img = fopen(filename, "w");
+                // keep writing for each block until start of new;
             }
             else
             {
@@ -53,11 +64,6 @@ int main(int argc, char *argv[])
                 printf("%i\n", JPEGcount);
                 // begin new fwrite 512
             }
-            // if (JPEGfound == true)
-            // {
-            //     check for
-            // }
-
             // if first JPEG
             // fwrite(data, size, number, outptr);
             // counter
