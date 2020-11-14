@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     typedef uint8_t BYTE;
     BYTE buffer[512];
 
-    // Require one command-line input
+    // Check Usage: Require one command-line input
     if (argc != 2)
     {
         printf("Usage: ./recover image\n");
@@ -29,22 +29,7 @@ int main(int argc, char *argv[])
         if (buffer[0] == 0xff &&
             buffer[1] == 0xd8 &&
             buffer[2] == 0xff &&
-            (buffer[3] == 0xe0 ||
-             buffer[3] == 0xe1 ||
-             buffer[3] == 0xe2 ||
-             buffer[3] == 0xe3 ||
-             buffer[3] == 0xe4 ||
-             buffer[3] == 0xe5 ||
-             buffer[3] == 0xe6 ||
-             buffer[3] == 0xe7 ||
-             buffer[3] == 0xe8 ||
-             buffer[3] == 0xe9 ||
-             buffer[3] == 0xea ||
-             buffer[3] == 0xeb ||
-             buffer[3] == 0xec ||
-             buffer[3] == 0xed ||
-             buffer[3] == 0xee ||
-             buffer[3] == 0xef))
+            (buffer[3] & 0xf0) == 0xe0)
         {
             printf("Maybe\n");
         }
