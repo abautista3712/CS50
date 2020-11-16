@@ -53,11 +53,13 @@ int main(int argc, char *argv[])
             }
             else
             {
+                // fclose(000.jpg);
                 // close old write
                 printf("JPEG FOUND\n");
                 JPEGcount++;
                 printf("%i\n", JPEGcount);
                 // begin new fwrite 512
+                break;
             }
             // if first JPEG
             // fwrite(data, size, number, outptr);
@@ -71,8 +73,8 @@ int main(int argc, char *argv[])
         {
             if (JPEGfound == true)
             {
-                FILE *img = fopen(filename, "w");
-
+                FILE *img = fopen("000.jpg", "a");
+                // sprintf (filename, "%03d.jpg", JPEGcount);
                 // Write File
                 fwrite(&buffer, sizeof(buffer), 1, img);
 
