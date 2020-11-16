@@ -9,6 +9,9 @@ int main(int argc, char *argv[])
     typedef uint8_t BYTE;
     BYTE buffer[512];
 
+    // Declare Target File
+    FILE *img;
+
     // Check Usage: Require one command-line input
     if (argc != 2)
     {
@@ -42,7 +45,7 @@ int main(int argc, char *argv[])
             {
                 // Make New JPEG
                 sprintf(filename, "%03i.jpg", JPEGcount);
-                FILE *img = fopen(filename, "w");
+                img = fopen(filename, "w");
 
                 // Write File
                 fwrite(&buffer, sizeof(buffer), 1, img);
@@ -73,9 +76,6 @@ int main(int argc, char *argv[])
         {
             if (JPEGfound == true)
             {
-                FILE *img = fopen("000.jpg", "a");
-                // sprintf (filename, "%03d.jpg", JPEGcount);
-                // Write File
                 fwrite(&buffer, sizeof(buffer), 1, img);
 
                 printf("...\n");
