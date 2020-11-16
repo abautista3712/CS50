@@ -56,21 +56,20 @@ int main(int argc, char *argv[])
             }
             else
             {
-                // fclose(000.jpg);
-                // close old write
-                printf("JPEG FOUND\n");
+                // Close Previous JPEG
+                fclose(img);
+
+                // Make New JPEG
+                sprintf(filename, "%03i.jpg", JPEGcount);
+                img = fopen(filename, "w");
+
+                // Write File
+                fwrite(&buffer, sizeof(buffer), 1, img);
+
                 JPEGcount++;
+                printf("JPEG FOUND\n");
                 printf("%i\n", JPEGcount);
-                // begin new fwrite 512
-                break;
             }
-            // if first JPEG
-            // fwrite(data, size, number, outptr);
-            // counter
-            // Filenames: ###.jpg, starting at 000.jpg
-            // sprintf(filename, "%03i.jpg", 2);
-            // FILE *img = fopen(filename, "w");
-            // keep writing for each block until start of new;
         }
         else
         {
