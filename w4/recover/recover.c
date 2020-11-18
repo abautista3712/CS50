@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 
                 printf("...\n");
             }
-            else
+            else if (fread(buffer, sizeof(buffer), 1, card.raw))
             {
                 printf("END\n");
             }
