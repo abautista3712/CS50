@@ -4,6 +4,7 @@
 #define DICTIONARY_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 // Maximum length for a word
 // (e.g., pneumonoultramicroscopicsilicovolcanoconiosis)
