@@ -34,13 +34,17 @@ unsigned int hash(const char *word)
 // Loads dictionary into memory, returning true if successful else false
 bool load(const char *dictionary)
 {
-    node *n = malloc(sizeof(node));
-    if (n == NULL)
+    node *wordList = malloc(sizeof(node));
+    if (wordList == NULL)
     {
         return 1;
     }
 
-    free(n);
+    wordList->word[0] = 'a';
+
+    printf("%c\n", wordList->word[0]);
+
+    free(wordList);
 
     return false;
 }
