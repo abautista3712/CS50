@@ -40,6 +40,14 @@ bool load(const char *dictionary)
         return 1;
     }
 
+    // Open File
+    FILE *file = fopen(dictionary, "r");
+    if (file == NULL)
+    {
+        printf("Cannot open file\n");
+        return 1;
+    }
+
     strcpy(wordList->word, "Test");
     wordList->next = NULL;
 
