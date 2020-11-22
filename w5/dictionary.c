@@ -40,6 +40,8 @@ bool load(const char *dictionary)
         return 1;
     }
 
+    free(n);
+
     return false;
 }
 
