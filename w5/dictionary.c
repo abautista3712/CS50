@@ -40,7 +40,8 @@ bool load(const char *dictionary)
         return 1;
     }
 
-    wordList->word[0] = 'a';
+    strcpy(wordList->word, "Test");
+    wordList->next = NULL;
 
     printf("%c\n", wordList->word[0]);
 
