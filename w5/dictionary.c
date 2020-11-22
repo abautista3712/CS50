@@ -48,10 +48,14 @@ bool load(const char *dictionary)
         return 1;
     }
 
+    char dictionaryWord[LENGTH];
+    fscanf(file, "%s", dictionaryWord);
+
+    printf("%s\n", dictionaryWord);
     strcpy(wordList->word, "Test");
     wordList->next = NULL;
 
-    printf("%c\n", wordList->word[0]);
+    // printf("%c\n", wordList->word[0]);
 
     free(wordList);
 
