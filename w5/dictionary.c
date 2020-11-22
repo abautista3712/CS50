@@ -34,32 +34,44 @@ unsigned int hash(const char *word)
 // Loads dictionary into memory, returning true if successful else false
 bool load(const char *dictionary)
 {
+    // Allocate Memory
     node *wordList = malloc(sizeof(node));
+
+    // End loading if no memory is available to allocate
     if (wordList == NULL)
     {
-        return 1;
+        return false;
     }
 
-    // Open File
+    // Open Dictionary File
     FILE *file = fopen(dictionary, "r");
     if (file == NULL)
     {
         printf("Cannot open file\n");
-        return 1;
+        return false;
     }
 
+    // Initialize buffer variable
     char dictionaryWord[LENGTH];
-    fscanf(file, "%s", dictionaryWord);
 
-    printf("%s\n", dictionaryWord);
-    strcpy(wordList->word, "Test");
-    wordList->next = NULL;
+    do
+    {
+        // Scan opened dictionary file
+        fscanf(file, "%s", dictionaryWord);
 
-    // printf("%c\n", wordList->word[0]);
+        // Copy scanned string into node 'word'
+        strcpy(wordList->word, dictionaryWord);
+        printf("%s\n", wordList->word);
+
+        // Set node 'next'
+        wordList->next = NULL;
+    }
+
+    while (fscanf(file, "%s", dictionaryWord) != EOF);
 
     free(wordList);
 
-    return false;
+    return true;
 }
 
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
