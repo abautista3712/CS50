@@ -68,23 +68,14 @@ bool load(const char *dictionary)
         // 2) Set node 'next' default value
         wordList->next = NULL;
 
-        if (head == NULL)
-        {
-            // Set 'head' to equal 'wordList'
-            head = wordList;
-        }
-        else
-        {
-            node *new_node = wordList;
-            wordList->next = head;
-            // for (node *new_node = head; new_node != NULL; new_node = new_node->next)
-            // {
-            // printf("%s\n", wordList->word->word);
-            // }
-        }
-
         // Call hash function
-        hash(dictionaryWord);
+        hash(wordList->word);
+
+        // Handle insertion of new nodes
+        for (node *new_node = wordList; new_node != NULL; new_node = new_node->next)
+        {
+            printf("%s\n", wordList->word);
+        }
     }
 
     while (fscanf(file, "%s", dictionaryWord) != EOF);
