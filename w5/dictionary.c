@@ -27,7 +27,9 @@ bool check(const char *word)
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    // TODO
+    int hashNum = (int)word[0];
+    printf("Word: %s\nHash Num: %i\n", word, hashNum);
+
     return 0;
 }
 
@@ -36,15 +38,6 @@ bool load(const char *dictionary)
 {
     // Initialize head pointer
     node *head = NULL;
-
-    // Allocate Memory
-    node *wordList = malloc(sizeof(node));
-
-    // End loading if no memory is available to allocate
-    if (wordList == NULL)
-    {
-        return false;
-    }
 
     // Open Dictionary File
     FILE *file = fopen(dictionary, "r");
@@ -62,7 +55,16 @@ bool load(const char *dictionary)
         // Scan opened dictionary file
         fscanf(file, "%s", dictionaryWord);
 
-        // Assign node values
+        // Allocate Memory
+        node *wordList = malloc(sizeof(node));
+
+        // End loading if no memory is available to allocate
+        if (wordList == NULL)
+        {
+            return false;
+        }
+
+        // Assign node values:
         // 1) Copy scanned string into node 'word'
         strcpy(wordList->word, dictionaryWord);
         // 2) Set node 'next' default value
@@ -76,11 +78,12 @@ bool load(const char *dictionary)
         {
             printf("%s\n", wordList->word);
         }
+
+        free(wordList);
+
     }
 
     while (fscanf(file, "%s", dictionaryWord) != EOF);
-
-    free(wordList);
 
     return true;
 }
