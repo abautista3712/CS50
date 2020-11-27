@@ -30,7 +30,7 @@ unsigned int hash(const char *word)
     int hashNum = (int)word[0];
     printf("Word: %s\nHash Num: %i\n", word, hashNum);
 
-    return 0;
+    return hashNum;
 }
 
 // Loads dictionary into memory, returning true if successful else false
