@@ -40,6 +40,15 @@ bool load(const char *dictionary)
     // Initialize head pointer
     node *head = NULL;
 
+    // Allocate Memory
+    node *wordList = malloc(sizeof(node));
+
+    // End loading if no memory is available to allocate
+    if (wordList == NULL)
+    {
+        return false;
+    }
+
     // Open Dictionary File
     FILE *file = fopen(dictionary, "r");
     if (file == NULL)
@@ -54,23 +63,11 @@ bool load(const char *dictionary)
     // While scanf != EOF, scan opened dictionary file
     do
     {
-        // Allocate Memory
-        node *wordList = malloc(sizeof(node));
-
-        // End loading if no memory is available to allocate
-        if (wordList == NULL)
-        {
-            return false;
-        }
-
         // Assign node values:
         // 1) Copy scanned string into node 'word'
         strcpy(wordList->word, dictionaryWord);
         // 2) Set node 'next' default value
         wordList->next = NULL;
-
-        // Call hash function
-        table[hash(wordList->word)] = head;
 
         // Handle assignment of head pointer
         if (head == NULL)
@@ -86,7 +83,10 @@ bool load(const char *dictionary)
             }
         }
 
-        printf("%s\n", head->word);
+        // Call hash function
+        table[hash(wordList->word)] = head;
+
+        printf("%s\n", table[0]->word);
 
         // Free allocated memory
         free(wordList);
