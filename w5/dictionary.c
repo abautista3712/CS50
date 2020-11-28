@@ -73,9 +73,20 @@ bool load(const char *dictionary)
         // Call hash function
         table[hash(wordList->word)] = head;
 
+        // Handle assignment of head pointer
+        if (head == NULL)
+        {
+            head = wordList;
+        }
+        else
+        {
+            wordList->next = head;
+        }
+
         // Handle insertion of new nodes
         for (node *new_node = wordList; new_node != NULL; new_node = new_node->next)
         {
+
             printf("%s\n", wordList->word);
         }
 
