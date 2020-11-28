@@ -70,15 +70,16 @@ bool load(const char *dictionary)
         // 2) Set node 'next' default value
         wordList->next = NULL;
 
+        // Call hash function
+        table[hash(wordList->word)] = head;
+
         // Handle insertion of new nodes
         for (node *new_node = wordList; new_node != NULL; new_node = new_node->next)
         {
             printf("%s\n", wordList->word);
         }
 
-        // Call hash function
-        table[hash(wordList->word)] = head;
-
+        // Free allocated memory
         free(wordList);
 
     }
