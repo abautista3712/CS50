@@ -83,11 +83,10 @@ bool load(const char *dictionary)
             // Handle insertion of new nodes
             for (node *new_node = wordList; new_node == NULL; new_node = new_node->next)
             {
-                printf("%s\n", wordList->word);
             }
         }
 
-        printf("%s\n", wordList->word);
+        printf("%s\n", head->word);
 
         // Free allocated memory
         free(wordList);
