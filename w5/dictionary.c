@@ -27,11 +27,8 @@ bool check(const char *word)
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    // int hashNum = (int) word[0];
-    // printf("Word: %s\nHash Num: %i\n", word, hashNum);
-
-    // return hashNum;
-    return 0;
+    int hashNum = (int)word[0];
+    return hashNum;
 }
 
 // Loads dictionary into memory, returning true if successful else false
@@ -41,7 +38,7 @@ bool load(const char *dictionary)
     char dictionaryWord[LENGTH] = "";
     *table = NULL;
     int hashInt = 0;
-    int wordCount = 0;
+    // int wordCount = 0;
 
     // Open Dictionary File
     FILE *file = fopen(dictionary, "r");
@@ -82,25 +79,25 @@ bool load(const char *dictionary)
             wordList->next = table[hashInt];
             table[hashInt] = wordList;
         }
+
+        // Read scanned and copied words using tmp variable loop
+        for (node *tmp = table[hashInt]; tmp != NULL; tmp = tmp->next)
+        {
+            printf("table[%i]\n", hashInt);
+            printf("%s\n", tmp->word);
+            // wordCount++;
+        }
+
+        // Free allocated memory
+        while (table[hashInt] != NULL)
+        {
+            node *tmp = table[hashInt]->next;
+            free(table[hashInt]);
+            table[hashInt] = tmp;
+        }
     } while (fscanf(file, "%s", dictionaryWord) != EOF);
 
-    // Read scanned and copied words using tmp variable loop
-    for (node *tmp = table[hashInt]; tmp != NULL; tmp = tmp->next)
-    {
-        printf("table[%i]\n", hashInt);
-        printf("%s\n", tmp->word);
-        wordCount++;
-    }
-
-    // Free allocated memory
-    while (table[hashInt] != NULL)
-    {
-        node *tmp = table[hashInt]->next;
-        free(table[hashInt]);
-        table[hashInt] = tmp;
-    }
-
-    printf("Word Count: %i\n", wordCount - 1);
+    // printf("Word Count: %i\n", wordCount - 1);
 
     return true;
 }
