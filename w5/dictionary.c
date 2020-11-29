@@ -38,8 +38,9 @@ unsigned int hash(const char *word)
 bool load(const char *dictionary)
 {
     // Initialize variables
-    *table = NULL;
     char dictionaryWord[LENGTH] = "";
+    *table = NULL;
+    int hashInt = 0;
     int wordCount = 0;
 
     // Open Dictionary File
@@ -68,34 +69,38 @@ bool load(const char *dictionary)
         // 2) Set node 'next' default value
         wordList->next = NULL;
 
+        hashInt = hash(wordList->word);
+
         // Handle assignment of head pointer
-        if (table[hash(wordList->word)] == NULL)
+        if (table[hashInt] == NULL)
         {
-            table[hash(wordList->word)] = wordList;
+            table[hashInt] = wordList;
         }
         else
         {
             node *new_node = wordList;
-            wordList->next = table[hash(wordList->word)];
-            table[hash(wordList->word)] = wordList;
-        }
-        // Read scanned and copied words using tmp variable loop
-        for (node *tmp = table[hash(wordList->word)]; tmp != NULL; tmp = tmp->next)
-        {
-            printf("%s\n", tmp->word);
-            wordCount++;
-        }
-
-        printf("Word Count: %i\n", wordCount - 1);
-
-        // Free allocated memory
-        while (table[hash(wordList->word)] != NULL)
-        {
-            node *tmp = table[hash(wordList->word)]->next;
-            free(table[hash(wordList->word)]);
-            table[hash(wordList->word)] = tmp;
+            wordList->next = table[hashInt];
+            table[hashInt] = wordList;
         }
     } while (fscanf(file, "%s", dictionaryWord) != EOF);
+
+    // Read scanned and copied words using tmp variable loop
+    for (node *tmp = table[hashInt]; tmp != NULL; tmp = tmp->next)
+    {
+        printf("table[%i]\n", hashInt);
+        printf("%s\n", tmp->word);
+        wordCount++;
+    }
+
+    // Free allocated memory
+    while (table[hashInt] != NULL)
+    {
+        node *tmp = table[hashInt]->next;
+        free(table[hashInt]);
+        table[hashInt] = tmp;
+    }
+
+    printf("Word Count: %i\n", wordCount - 1);
 
     return true;
 }
