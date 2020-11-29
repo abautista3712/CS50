@@ -38,7 +38,7 @@ unsigned int hash(const char *word)
 bool load(const char *dictionary)
 {
     // Initialize variables
-    node *head = NULL;
+    *table = NULL;
     char dictionaryWord[LENGTH] = "";
     int wordCount = 0;
 
@@ -62,9 +62,6 @@ bool load(const char *dictionary)
             return false;
         }
 
-        // Call hash function
-        // table[hash(wordList->word)] = head;
-
         // Assign node values:
         // 1) Copy scanned string into node 'word'
         strcpy(wordList->word, dictionaryWord);
@@ -72,34 +69,34 @@ bool load(const char *dictionary)
         wordList->next = NULL;
 
         // Handle assignment of head pointer
-        if (head == NULL)
+        if (table[hash(wordList->word)] == NULL)
         {
-            head = wordList;
+            table[hash(wordList->word)] = wordList;
         }
         else
         {
             node *new_node = wordList;
-            wordList->next = head;
-            head = wordList;
+            wordList->next = table[hash(wordList->word)];
+            table[hash(wordList->word)] = wordList;
+        }
+        // Read scanned and copied words using tmp variable loop
+        for (node *tmp = table[hash(wordList->word)]; tmp != NULL; tmp = tmp->next)
+        {
+            printf("%s\n", tmp->word);
+            wordCount++;
+        }
+
+        printf("Word Count: %i\n", wordCount - 1);
+
+        // Free allocated memory
+        while (table[hash(wordList->word)] != NULL)
+        {
+            node *tmp = table[hash(wordList->word)]->next;
+            free(table[hash(wordList->word)]);
+            table[hash(wordList->word)] = tmp;
         }
     } while (fscanf(file, "%s", dictionaryWord) != EOF);
 
-    // Read scanned and copied words using tmp variable loop
-    for (node *tmp = head; tmp != NULL; tmp = tmp->next)
-    {
-        printf("%s\n", tmp->word);
-        wordCount++;
-    }
-
-    printf("Word Count: %i\n", wordCount - 1);
-
-    // Free allocated memory
-    while (head != NULL)
-    {
-        node *tmp = head->next;
-        free(head);
-        head = tmp;
-    }
     return true;
 }
 
