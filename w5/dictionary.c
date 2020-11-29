@@ -55,73 +55,40 @@ bool load(const char *dictionary)
     }
 
     // While scanf != EOF, scan opened dictionary file
-    // do
-    // {
-    fscanf(file, "%s", dictionaryWord);
-    // Allocate Memory
-    node *wordList = malloc(sizeof(node));
-
-    // End loading if no memory is available to allocate
-    if (wordList == NULL)
+    do
     {
-        return false;
+        // Allocate Memory
+        node *wordList = malloc(sizeof(node));
+
+        // End loading if no memory is available to allocate
+        if (wordList == NULL)
+        {
+            return false;
+        }
+
+        // Assign node values:
+        // 1) Copy scanned string into node 'word'
+        strcpy(wordList->word, dictionaryWord);
+        // 2) Set node 'next' default value
+        wordList->next = NULL;
+
+        // Handle assignment of head pointer
+        if (head == NULL)
+        {
+            head = wordList;
+        }
+        else
+        {
+            node *new_node = wordList;
+            wordList->next = head;
+            head = wordList;
+        }
     }
 
-    // Assign node values:
-    // 1) Copy scanned string into node 'word'
-    strcpy(wordList->word, dictionaryWord);
-    // 2) Set node 'next' default value
-    wordList->next = NULL;
-    head = wordList;
-
-    fscanf(file, "%s", dictionaryWord);
-    // Allocate Memory
-    wordList = malloc(sizeof(node));
-
-    // End loading if no memory is available to allocate
-    if (wordList == NULL)
-    {
-        return false;
-    }
-
-    // Assign node values:
-    // 1) Copy scanned string into node 'word'
-    strcpy(wordList->word, dictionaryWord);
-    // 2) Set node 'next' default value
-    wordList->next = NULL;
-    head->next = wordList;
-
-    // Handle assignment of head pointer
-    // if (head == NULL)
-    // {
-    //     head = wordList;
-    //     printf("%s\n", head->word);
-    //     // head->next = wordList;
-    //     // head = ->word;
-    // }
-    // else
-    // {
-    //     printf("else\n");
-    //     wordList->next = head;
-
-    //     // Handle insertion of new nodes
-    //     // for (node *new_node = wordList; new_node == NULL; new_node = new_node->next)
-    //     // {
-    //         // ...toDo
-    //     // }
-    // }
-
-    // while (fscanf(file, "%s", dictionaryWord) != EOF);
-
-    // for (node *new_node = wordList; new_node == NULL; new_node = new_node->next)
-    // {
-    //     printf()
-    // }
+    while (fscanf(file, "%s", dictionaryWord) != EOF);
 
     // Call hash function
     // table[hash(wordList->word)] = head;
-
-    // printf("%s\n", table[0]->word);
 
     // }
 
