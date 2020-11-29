@@ -37,13 +37,9 @@ unsigned int hash(const char *word)
 // Loads dictionary into memory, returning true if successful else false
 bool load(const char *dictionary)
 {
-    // Initialize head pointer
+    // Initialize variables
     node *head = NULL;
-
-    // Initialize buffer variable
-    char dictionaryWord[LENGTH];
-
-    // Initialize count variable
+    char dictionaryWord[LENGTH] = "";
     int wordCount = 0;
 
     // Open Dictionary File
@@ -66,6 +62,9 @@ bool load(const char *dictionary)
             return false;
         }
 
+        // Call hash function
+        // table[hash(wordList->word)] = head;
+
         // Assign node values:
         // 1) Copy scanned string into node 'word'
         strcpy(wordList->word, dictionaryWord);
@@ -83,20 +82,16 @@ bool load(const char *dictionary)
             wordList->next = head;
             head = wordList;
         }
-    }
-
-    while (fscanf(file, "%s", dictionaryWord) != EOF);
-
-    // Call hash function
-    // table[hash(wordList->word)] = head;
-
-    // }
+    } while (fscanf(file, "%s", dictionaryWord) != EOF);
 
     // Read scanned and copied words using tmp variable loop
     for (node *tmp = head; tmp != NULL; tmp = tmp->next)
     {
         printf("%s\n", tmp->word);
+        wordCount++;
     }
+
+    printf("Word Count: %i\n", wordCount - 1);
 
     // Free allocated memory
     while (head != NULL)
