@@ -132,8 +132,12 @@ bool load(const char *dictionary)
     }
 
     // Free allocated memory
-    free(wordList);
-
+    while (head != NULL)
+    {
+        node *tmp = head->next;
+        free(head);
+        head = tmp;
+    }
     return true;
 }
 
