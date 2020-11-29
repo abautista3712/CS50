@@ -14,6 +14,9 @@ typedef struct node
 // Number of buckets in hash table
 const unsigned int N = 1;
 
+// Initialize Word Count Variable
+int wordCount = -1;
+
 // Hash table
 node *table[N];
 
@@ -38,7 +41,6 @@ bool load(const char *dictionary)
     char dictionaryWord[LENGTH] = "";
     *table = NULL;
     int hashInt = 0;
-    // int wordCount = 0;
 
     // Open Dictionary File
     FILE *file = fopen(dictionary, "r");
@@ -85,7 +87,7 @@ bool load(const char *dictionary)
         {
             printf("table[%i]\n", hashInt);
             printf("%s\n", tmp->word);
-            // wordCount++;
+            wordCount++;
         }
 
         // Free allocated memory
@@ -105,8 +107,8 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    printf("Words Counted: %i\n", wordCount);
+    return wordCount;
 }
 
 // Unloads dictionary from memory, returning true if successful else false
