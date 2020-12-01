@@ -1,7 +1,5 @@
 // Implements a dictionary's functionality
 
-#include <stdbool.h>
-
 #include "dictionary.h"
 
 // Represents a node in a hash table
@@ -12,7 +10,7 @@ typedef struct node
 } node;
 
 // Number of buckets in hash table
-const unsigned int N = 1;
+const unsigned int N = 2;
 
 // Initialize Word Count Variable
 int wordCount = -1;
@@ -23,7 +21,20 @@ node *table[N];
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
-    // TODO
+    for (node *cursor = table[hash(word)]; cursor != NULL; cursor = cursor->next)
+    {
+        // printf("table[%i]\n", hashInt);
+        printf("%s\n", cursor->word);
+        if (strcasecmp(cursor->word, word) == 0)
+        {
+            printf("MATCH: %s", cursor->word);
+            return true;
+        }
+        else
+        {
+            printf("No Match. Continuing search...");
+        }
+    }
     return false;
 }
 
@@ -31,7 +42,7 @@ bool check(const char *word)
 unsigned int hash(const char *word)
 {
     int hashNum = (int)word[0];
-    return hashNum;
+    return 0;
 }
 
 // Loads dictionary into memory, returning true if successful else false
@@ -82,24 +93,22 @@ bool load(const char *dictionary)
             table[hashInt] = wordList;
         }
 
-        // Read scanned and copied words using tmp variable loop
-        for (node *tmp = table[hashInt]; tmp != NULL; tmp = tmp->next)
-        {
-            printf("table[%i]\n", hashInt);
-            printf("%s\n", tmp->word);
-            wordCount++;
-        }
-
-        // Free allocated memory
-        while (table[hashInt] != NULL)
-        {
-            node *tmp = table[hashInt]->next;
-            free(table[hashInt]);
-            table[hashInt] = tmp;
-        }
+        // // Free allocated memory
+        // while (table[hashInt] != NULL)
+        // {
+        //     node *tmp = table[hashInt]->next;
+        //     free(table[hashInt]);
+        //     table[hashInt] = tmp;
+        // }
     } while (fscanf(file, "%s", dictionaryWord) != EOF);
 
-    // printf("Word Count: %i\n", wordCount - 1);
+    // Read scanned and copied words using tmp variable loop
+    for (node *tmp = table[hashInt]; tmp != NULL; tmp = tmp->next)
+    {
+        // printf("table[%i]\n", hashInt);
+        printf("%s\n", tmp->word);
+        wordCount++;
+    }
 
     return true;
 }
