@@ -23,16 +23,10 @@ bool check(const char *word)
 {
     for (node *cursor = table[hash(word)]; cursor != NULL; cursor = cursor->next)
     {
-        // printf("table[%i]\n", hashInt);
-        printf("%s\n", cursor->word);
         if (strcasecmp(cursor->word, word) == 0)
         {
-            printf("MATCH: %s", cursor->word);
+            // printf("MATCH: %s\n", cursor->word);
             return true;
-        }
-        else
-        {
-            printf("No Match. Continuing search...");
         }
     }
     return false;
