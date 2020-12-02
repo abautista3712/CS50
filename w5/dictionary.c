@@ -110,11 +110,11 @@ unsigned int size(void)
 bool unload(void)
 {
     // Free allocated memory
-    while (table[hashInt] != NULL)
+    while (table[0] != NULL)
     {
-        node *tmp = table[hashInt]->next;
-        free(table[hashInt]);
-        table[hashInt] = tmp;
+        node *tmp = table[0]->next;
+        free(table[0]);
+        table[0] = tmp;
     }
     return true;
 }
