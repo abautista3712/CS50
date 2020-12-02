@@ -10,7 +10,7 @@ typedef struct node
 } node;
 
 // Number of buckets in hash table
-const unsigned int N = 2;
+const unsigned int N = 27;
 
 // Initialize Word Count Variable
 int wordCount = -1;
@@ -35,8 +35,28 @@ bool check(const char *word)
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    int hashNum = (int)word[0];
-    return 0;
+    // int hashNum = (int) word[0];
+    // if()
+    // {
+    //     return
+    // }
+
+    int firstLetter = (int)word[0];
+
+    if (firstLetter >= 97 && firstLetter <= 122)
+    {
+        firstLetter = (firstLetter - 96);
+        return firstLetter;
+    }
+    else if (firstLetter >= 65 && firstLetter <= 90)
+    {
+        firstLetter = (firstLetter - 64);
+        return firstLetter;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 // Loads dictionary into memory, returning true if successful else false
@@ -86,12 +106,14 @@ bool load(const char *dictionary)
             wordList->next = table[hashInt];
             table[hashInt] = wordList;
         }
-    } while (fscanf(file, "%s", dictionaryWord) != EOF);
+    }
+
+    while (fscanf(file, "%s", dictionaryWord) != EOF);
 
     // Read scanned and copied words using tmp variable loop
     for (node *tmp = table[hashInt]; tmp != NULL; tmp = tmp->next)
     {
-        // printf("table[%i]\n", hashInt);
+        printf("table[%i]\n", hashInt);
         printf("%s\n", tmp->word);
         wordCount++;
     }
