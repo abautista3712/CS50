@@ -99,24 +99,26 @@ bool load(const char *dictionary)
         if (table[hashInt] == NULL)
         {
             table[hashInt] = wordList;
+            wordCount++;
         }
         else
         {
             node *new_node = wordList;
             wordList->next = table[hashInt];
             table[hashInt] = wordList;
+            wordCount++;
         }
     }
 
     while (fscanf(file, "%s", dictionaryWord) != EOF);
 
-    // Read scanned and copied words using tmp variable loop
-    for (node *tmp = table[hashInt]; tmp != NULL; tmp = tmp->next)
-    {
-        printf("table[%i]\n", hashInt);
-        printf("%s\n", tmp->word);
-        wordCount++;
-    }
+    // // Read scanned and copied words using tmp variable loop
+    // for (node *tmp = table[hashInt]; tmp != NULL; tmp = tmp->next)
+    // {
+    //     printf("table[%i]\n", hashInt);
+    //     printf("%s\n", tmp->word);
+    //     wordCount++;
+    // }
 
     return true;
 }
