@@ -86,14 +86,6 @@ bool load(const char *dictionary)
             wordList->next = table[hashInt];
             table[hashInt] = wordList;
         }
-
-        // // Free allocated memory
-        // while (table[hashInt] != NULL)
-        // {
-        //     node *tmp = table[hashInt]->next;
-        //     free(table[hashInt]);
-        //     table[hashInt] = tmp;
-        // }
     } while (fscanf(file, "%s", dictionaryWord) != EOF);
 
     // Read scanned and copied words using tmp variable loop
@@ -117,6 +109,12 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    // TODO
-    return false;
+    // Free allocated memory
+    while (table[hashInt] != NULL)
+    {
+        node *tmp = table[hashInt]->next;
+        free(table[hashInt]);
+        table[hashInt] = tmp;
+    }
+    return true;
 }
