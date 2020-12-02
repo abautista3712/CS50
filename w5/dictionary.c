@@ -112,13 +112,15 @@ bool load(const char *dictionary)
 
     while (fscanf(file, "%s", dictionaryWord) != EOF);
 
+    fclose(file);
+
     return true;
 }
 
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    printf("Words Counted: %i\n", wordCount);
+    // printf("Words Counted: %i\n", wordCount);
     return wordCount;
 }
 
