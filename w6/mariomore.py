@@ -12,7 +12,7 @@ while True:
 
             for k in range(i):
                 print("#", end="")
-            print("..", end="")
+            print("  ", end="")
 
             for l in range(i + 1):
                 print("#", end="")
