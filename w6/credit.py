@@ -11,6 +11,9 @@ while True:
         # Cards with 13, 15, 16 digits are VALID and will undergo further verification
         if counterDigits == 13 or counterDigits == 15 or counterDigits == 16:
             verifyCC(creditNum, counterDigits)
+        # Any other combination of numbers are invalid
+        else:
+            print("INVALID")
 
 # Function to count credit card digits
 def countDigits(numberToCount):
@@ -38,7 +41,7 @@ def verifyCC(ccNum, ccNumDigits):
             print("MASTERCARD")
 
         # VISA via First Number
-        elif floor(ccNum / (1 * (10 ** ccNumDigits - 1)) == 4)
+        elif floor(ccNum / (1 * (10 ** ccNumDigits - 1))) == 4:
             print("VISA")
 
         else:
