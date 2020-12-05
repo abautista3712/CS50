@@ -46,3 +46,41 @@ def verifyCC(ccNum, ccNumDigits):
 
         else:
             print("INVALID")
+
+# CheckSum Algorithm
+def luhnCheck(ccNum, ccNumDigits):
+    x = False
+    checkSum1 = 0
+    checkSum2 = 0
+    finalSum = 0
+
+    for i in range(ccNumDigits):
+        # Calculate checkSum1
+        if x == True:
+            x = False
+            digitValue = ccNum % 10
+            ccNum = ccNum / 10
+            doubleSum = digitValue * 2
+            counterDigits = countDigits(doubleSum)
+            if counterDigits < 2:
+                checkSum1 = checkSum1 + doubleSum
+            else:
+                for j in range(counterDigits):
+                    checkSum1 = checkSum1 + (doubleSum % 10)
+                    doubleSum = doubleSum / 10
+
+        # Calculate checkSum2
+        else:
+            x = True
+            digitValue = ccNum % 10
+            ccNum = ccNum / 10
+            checkSum2 = checkSum2 + digitValue
+
+    # finalSum Check
+    finalSum = checkSum1 + checkSum2
+    digitValue = finalSum % 10
+    finalSum = finalSum / 10
+    if digitValue == 0:
+        return True
+    else:
+        return False
