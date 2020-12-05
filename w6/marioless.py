@@ -4,5 +4,7 @@ while True:
     height = get_int("Height: ")
 
     if height >= 1 and height <= 8:
-        print("#" * height)
+        for i in range(height):
+            print("#", end="")
+        print()
         break
