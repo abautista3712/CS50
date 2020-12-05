@@ -7,19 +7,19 @@ while True:
         cents = round(change * 100)
 
         # Handle quarters
-        quarters = cents / 25
+        quarters = int(cents / 25)
         for i in range(quarters):
             numCoins += 1
             cents = cents - 25
 
         # Handle quarters
-        dimes = cents / 10
+        dimes = int(cents / 10)
         for j in range(dimes):
             numCoins += 1
             cents = cents - 10
 
         # Handle nickels
-        nickels = cents / 5
+        nickels = int(cents / 5)
         for k in range(nickels):
             numCoins += 1
             cents = cents - 5
