@@ -2,35 +2,37 @@ from cs50 import get_int
 from cs50 import get_string
 from math import floor
 
-while True:
-    creditNum = get_int("Input CC number to see if valid: ")
+def main():
+    while True:
+        creditNum = get_int("Input CC number to see if valid: ")
 
-    if creditNum > 0:
-        # Check number of digits
-        counterDigits = countDigits(creditNum)
-        # Cards with 13, 15, 16 digits are VALID and will undergo further verification
-        if counterDigits == 13 or counterDigits == 15 or counterDigits == 16:
-            verifyCC(creditNum, counterDigits)
-        # Any other combination of numbers are invalid
-        else:
-            print("INVALID")
+        if creditNum > 0:
+            # Check number of digits
+            counterDigits = countDigits(creditNum)
+            # Cards with 13, 15, 16 digits are VALID and will undergo further verification
+            if counterDigits == 13 or counterDigits == 15 or counterDigits == 16:
+                verifyCC(creditNum, counterDigits)
+            # Any other combination of numbers are invalid
+            else:
+                print("INVALID")
+            break
 
 # Function to count credit card digits
 def countDigits(numberToCount):
     counterDigits = 0
 
     while numberToCount != 0:
-        numberToCount = numberToCount / 10
+        numberToCount = numberToCount // 10
         counterDigits += 1
 
     return counterDigits
 
 # Function to verify CC and print which type of card
 def verifyCC(ccNum, ccNumDigits):
-    if luhnCheck(ccNum, ccNumDigits) == false:
+    if luhnCheck(ccNum, ccNumDigits) == False:
         print("INVALID")
     else:
-        firstTwoCheck = floor(ccNum / 1 * (10 ** ccNumDigits - 2))
+        firstTwoCheck = int(str(ccNum)[:2])
 
         # AMEX Verification via First Two Numbers
         if firstTwoCheck == 34 or firstTwoCheck == 37:
@@ -41,7 +43,7 @@ def verifyCC(ccNum, ccNumDigits):
             print("MASTERCARD")
 
         # VISA via First Number
-        elif floor(ccNum / (1 * (10 ** ccNumDigits - 1))) == 4:
+        elif int(str(ccNum)[:1]) == 4:
             print("VISA")
 
         else:
@@ -84,3 +86,5 @@ def luhnCheck(ccNum, ccNumDigits):
         return True
     else:
         return False
+
+main()
