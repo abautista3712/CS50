@@ -1,5 +1,7 @@
 from cs50 import get_float
 
+numCoins = 0
+
 while True:
     change = get_float("Input total change owed: ")
 
@@ -28,3 +30,5 @@ while True:
         numCoins = numCoins + cents
 
         print(f"{numCoins}")
+
+    break
