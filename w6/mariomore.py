@@ -12,6 +12,10 @@ while True:
 
             for k in range(i):
                 print("#", end="")
-            print("..")
+            print("..", end="")
+
+            for l in range(i + 1):
+                print("#", end="")
+            print()
 
         break
