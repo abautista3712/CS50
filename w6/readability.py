@@ -8,8 +8,9 @@ def main():
 def countLetters(inputText):
     letters = 0
     n = len(inputText)
-    for i in range(n):
-        letters += 1
+    for i in range(0, n):
+        if inputText[i].isalnum():
+            letters += 1
     return letters
 
 def countWords(inputText):
@@ -28,11 +29,12 @@ def countSentences(inputText):
     for i in range(0, n):
         if inputText[i] == "." or inputText[i] == "!" or inputText[i] == "?":
             sentences += 1
+    print(f"sentences = {sentences}")
     return sentences
 
 def colemanLiauIndex(letters, words, sentences):
     L = (letters / words) * 100
-    S = (letters / words) * 100
+    S = (sentences / words) * 100
     index = round(0.0588 * L - 0.296 * S - 15.8)
 
     # Special Cases
