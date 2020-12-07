@@ -5,6 +5,7 @@ def main():
     sentences = countSentences(inputText)
     colemanLiauIndex(letters, words, sentences)
 
+# Function to count letters
 def countLetters(inputText):
     letters = 0
     n = len(inputText)
@@ -13,6 +14,7 @@ def countLetters(inputText):
             letters += 1
     return letters
 
+# Function to count words
 def countWords(inputText):
     words = 0
     if str(inputText[:1]).isalnum():
@@ -23,15 +25,16 @@ def countWords(inputText):
             words += 1
     return words
 
+# Function to count sentences
 def countSentences(inputText):
     sentences = 0
     n = len(inputText)
     for i in range(0, n):
         if inputText[i] == "." or inputText[i] == "!" or inputText[i] == "?":
             sentences += 1
-    print(f"sentences = {sentences}")
     return sentences
 
+# Function to analyze grade of input text
 def colemanLiauIndex(letters, words, sentences):
     L = (letters / words) * 100
     S = (sentences / words) * 100
