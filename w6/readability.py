@@ -14,8 +14,10 @@ def countWords(inputText):
     words = 0
     if str(inputText[:1]).isalnum():
         words = 1
-    # n = len(inputText)
-    # for i in range(n):
-    #     if
+    n = len(inputText)
+    for i in range(0, n):
+        if inputText[i].isspace():
+            words += 1
+    return words
 
-# main()
+main()
