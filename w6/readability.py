@@ -3,6 +3,7 @@ def main():
     letters = countLetters(inputText)
     words = countWords(inputText)
     sentences = countSentences(inputText)
+    colemanLiauIndex(letters, words, sentences)
 
 def countLetters(inputText):
     letters = 0
@@ -20,7 +21,7 @@ def countWords(inputText):
         if inputText[i].isspace():
             words += 1
     return words
-    
+
 def countSentences(inputText):
     sentences = 0
     n = len(inputText)
@@ -29,7 +30,18 @@ def countSentences(inputText):
             sentences += 1
     return sentences
 
+def colemanLiauIndex(letters, words, sentences):
+    L = (letters / words) * 100
+    S = (letters / words) * 100
+    index = round(0.0588 * L - 0.296 * S - 15.8)
 
-
+    # Special Cases
+    # (1) Grade 16+
+    if index >= 16:
+        print("Grade 16+")
+    elif index < 1:
+        print("Before Grade 1")
+    else:
+        print(f"Grade {index}")
 
 main()
