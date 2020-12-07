@@ -2,6 +2,7 @@ def main():
     inputText = input("Text: ")
     letters = countLetters(inputText)
     words = countWords(inputText)
+    sentences = countSentences(inputText)
 
 def countLetters(inputText):
     letters = 0
@@ -19,5 +20,16 @@ def countWords(inputText):
         if inputText[i].isspace():
             words += 1
     return words
+    
+def countSentences(inputText):
+    sentences = 0
+    n = len(inputText)
+    for i in range(0, n):
+        if inputText[i] == "." or inputText[i] == "!" or inputText[i] == "?":
+            sentences += 1
+    return sentences
+
+
+
 
 main()
