@@ -8,61 +8,63 @@ if len(argv) != 3:
 # Open CSV file
 with open(f"./{argv[1]}") as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=",")
+
+    dna_db = {}
+    str_max_match = {}
     line_count = 0
+
     for csv_row in csv_reader:
         if line_count == 0:
             # Save STR and STR length into variables
-            str = csv_row[1]
-            str_length = len(str)
+            for i in range(1, len(csv_row)):
+                str = csv_row[i]
+                str_length = len(str)
 
-            print(str)
+                print(str)
 
-            # Open DNA Sequence txt file
-            with open(f"./{argv[2]}") as sequence_file:
-                dna = sequence_file.read()
+                # Open DNA Sequence txt file
+                with open(f"./{argv[2]}") as sequence_file:
+                    dna = sequence_file.read()
 
-                # Compare STR to DNA Sequence
-                # Declare empty dictionary and max_consecutive variable
-                str_match = {}
-                max_consecutive = 0
+                    # Compare STR to DNA Sequence
+                    # Declare empty dictionary and max_consecutive_match variable
+                    str_match = {}
+                    max_consecutive_match = 0
 
-                # Loop through every DNA base
-                for i in range(len(dna)):
-                    # Initialize default value of str_match[i] to 0
-                    str_match[i] = 0
+                    # Loop through every DNA base
+                    for j in range(len(dna)):
+                        # Initialize default value of str_match[j] to 0
+                        str_match[j] = 0
 
-                    # Check STR against DNA sequence and count consecutive occurances
-                    if dna[i:(len(str) + i)] == str:
-                        if str_match[i - len(str)] > 0:
-                            str_match[i] = str_match[i - len(str)] + 1
-                        else:
-                            str_match[i] = 1
+                        # Check STR against DNA sequence and count consecutive occurances
+                        if dna[j:(len(str) + j)] == str:
+                            if str_match[j - len(str)] > 0:
+                                str_match[j] = str_match[j - len(str)] + 1
+                            else:
+                                str_match[j] = 1
 
-                    # Keep track of max number of consecutive STR matches
-                    if str_match[i] > max_consecutive:
-                        max_consecutive = str_match[i]
+                        # Keep track of max number of consecutive STR matches
+                        if str_match[j] > max_consecutive_match:
+                            max_consecutive_match = str_match[j]
 
-                print(str_match)
-                print(f"max_consecutive = {max_consecutive}")
-            # for i in range(len(Full DNA Sequence)):
-            #     if STR Segment == DNA Sequence Segment:
-            #         STR Count += 1
-            #         i += 1
-            #     else:
-            #         i += 1wha
+                    str_max_match[f"STR{i}"] = max_consecutive_match
 
-            # print(f'Columns Titles: {", ".join(row)}')
-
-                # for i in (len(row)):
-                    # if row[i] == "AGATC":
-                #         print("MATCH")
-            line_count += 1
+                    # print(str_match)
+                    # str_max_match.f"STR[i]" = max_consecutive_match
+                print(f"max_consecutive_match = {max_consecutive_match}")
+                line_count += 1
         else:
-            print(f"Row {line_count}: ", end="")
+            for i in range(len(csv_row)):
+                if i == 0:
+                    dna_db["Name"] = csv_row[i]
+                else:
+                    dna_db[f"STR{i}"] = int(csv_row[i])
             print(f'{", ".join(csv_row)}')
+            print(str_max_match)
+            print(dna_db)
+            # # print(f"Row {line_count}: ", end="")
             line_count += 1
     print(f"Processed {line_count} lines.")
-
 
 # for row in sequence_reader:
 # with open(f"./{argv[2]}") as sequence_file:
