@@ -9,8 +9,11 @@ if len(argv) != 3:
 with open(f"./{argv[1]}") as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=",")
 
+    # Declare empty dictionaries to handle comparison between STR max match and DNA db
     dna_db = {}
     str_max_match = {}
+
+    # Variable to count lines
     line_count = 0
 
     for csv_row in csv_reader:
@@ -47,29 +50,21 @@ with open(f"./{argv[1]}") as csv_file:
                         if str_match[j] > max_consecutive_match:
                             max_consecutive_match = str_match[j]
 
+                    # Insert max consecutive STR matches into str_max_match dictionary
                     str_max_match[f"STR{i}"] = max_consecutive_match
 
-                    # print(str_match)
-                    # str_max_match.f"STR[i]" = max_consecutive_match
-                print(f"max_consecutive_match = {max_consecutive_match}")
-                line_count += 1
+            line_count += 1
         else:
+            # Insert data into DNA db dictionary
             for i in range(len(csv_row)):
                 if i == 0:
                     dna_db["Name"] = csv_row[i]
                 else:
                     dna_db[f"STR{i}"] = int(csv_row[i])
-            print(f'{", ".join(csv_row)}')
-            print(str_max_match)
-            print(dna_db)
-            # # print(f"Row {line_count}: ", end="")
+            # print(f'{", ".join(csv_row)}')
+            # print(str_max_match)
+            # print(dna_db)
             line_count += 1
     print(f"Processed {line_count} lines.")
-
-# for row in sequence_reader:
-# with open(f"./{argv[2]}") as sequence_file:
-#     print(sequence_file.read())
-    # print(f'DNA Sequence: {", ".join(row)}')
-    # print(f"{len(sequence_reader)}")
 
 exit(0)
