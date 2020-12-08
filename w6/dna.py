@@ -23,7 +23,7 @@ with open(f"./{argv[1]}") as csv_file:
                 str = csv_row[i]
                 str_length = len(str)
 
-                print(str)
+                # print(str)
 
                 # Open DNA Sequence txt file
                 with open(f"./{argv[2]}") as sequence_file:
@@ -61,10 +61,16 @@ with open(f"./{argv[1]}") as csv_file:
                     dna_db["Name"] = csv_row[i]
                 else:
                     dna_db[f"STR{i}"] = int(csv_row[i])
-            # print(f'{", ".join(csv_row)}')
-            # print(str_max_match)
-            # print(dna_db)
-            line_count += 1
+            if str_max_match["STR1"] != dna_db["STR1"]:
+                print(f"Not {dna_db['Name']}. Advancing line_count")
+                line_count += 1
+            else:
+                print(f"STR MATCH: {dna_db['Name']}")
+                exit(0)
+
+        # print(str_max_match)
+        # print(dna_db)
+
     print(f"Processed {line_count} lines.")
 
 exit(0)
