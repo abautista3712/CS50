@@ -68,20 +68,14 @@ with open(f"./{argv[1]}") as csv_file:
                     print(f"STR MATCH @ j = {j}: {dna_db['Name']}")
                     dna_db["max_match_ratio"] += 1
                 if j == len(csv_row) - 1:
-                    dna_db["max_match_ratio"] = (dna_db["max_match_ratio"] / (len(csv_row) - 1))
+                    if (dna_db["max_match_ratio"] / (len(csv_row) - 1)) == 1:
+                        print(dna_db["Name"])
+                        exit(0)
+                    else:
+                        dna_db["max_match_ratio"] = (dna_db["max_match_ratio"] / (len(csv_row) - 1))
 
             print(dna_db)
             print(str_max_match)
-
-            # if str_max_match[f"STR{line_count}"] != dna_db[f"STR{line_count}"]:
-            #     print(f"Not {dna_db['Name']}. Advancing line_count.")
-            #     print(f"line_count = {line_count}")
-            #     line_count += 1
-            # if str_max_match[f"STR{line_count}"] == dna_db[f"STR{line_count}"]:
-            #     print(f"STR MATCH @ j = {j}: {dna_db['Name']}")
-                # exit(0)
-
-
 
     print(f"Processed {line_count} lines.")
 
