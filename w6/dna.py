@@ -41,7 +41,7 @@ with open(f"./{argv[1]}") as csv_file:
 
                         # Check STR against DNA sequence and count consecutive occurances
                         if dna[j:(len(str) + j)] == str:
-                            if str_match[j - len(str)] > 0:
+                            if j >= len(str) and str_match[j - len(str)] > 0:
                                 str_match[j] = str_match[j - len(str)] + 1
                             else:
                                 str_match[j] = 1
@@ -83,5 +83,5 @@ with open(f"./{argv[1]}") as csv_file:
 
     # print(f"Processed {line_count} lines.")
 
-print("No Match")
+print("No match")
 exit(0)
