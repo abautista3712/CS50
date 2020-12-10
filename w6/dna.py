@@ -61,15 +61,24 @@ with open(f"./{argv[1]}") as csv_file:
                     dna_db["Name"] = csv_row[i]
                 else:
                     dna_db[f"STR{i}"] = int(csv_row[i])
-            if str_max_match["STR1"] != dna_db["STR1"]:
-                print(f"Not {dna_db['Name']}. Advancing line_count")
-                line_count += 1
-            else:
-                print(f"STR MATCH: {dna_db['Name']}")
-                exit(0)
 
-        # print(str_max_match)
-        # print(dna_db)
+            print(dna_db)
+            print(str_max_match)
+            # print(f"line_count = {line_count}")
+
+            for j in range(1, len(csv_row)):
+                if str_max_match[f"STR{j}"] == dna_db[f"STR{j}"]:
+                    print(f"STR MATCH @ j = {j}: {dna_db['Name']}")
+
+            # if str_max_match[f"STR{line_count}"] != dna_db[f"STR{line_count}"]:
+            #     print(f"Not {dna_db['Name']}. Advancing line_count.")
+            #     print(f"line_count = {line_count}")
+            #     line_count += 1
+            # if str_max_match[f"STR{line_count}"] == dna_db[f"STR{line_count}"]:
+            #     print(f"STR MATCH @ j = {j}: {dna_db['Name']}")
+                # exit(0)
+
+
 
     print(f"Processed {line_count} lines.")
 
