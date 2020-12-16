@@ -1,5 +1,13 @@
-SELECT movies.title, people.name, people.birth FROM movies
-JOIN stars ON movies.id = stars.movie_id
-JOIN people ON stars.person_id = people.id
+SELECT people.name FROM people
+WHERE people.id IN (
+SELECT stars.person_id FROM stars
+WHERE stars.movie_id IN (
+-- Select movies.id
+SELECT movies.id FROM movies
+WHERE movies.id IN (
+SELECT stars.movie_id FROM stars
+WHERE person_id IN (
+-- Select people.id for Kevin Bacon born in 1958
+SELECT people.id FROM people
 WHERE people.name = "Kevin Bacon"
-AND people.birth = 1958;
+AND people.birth = 1958))));
