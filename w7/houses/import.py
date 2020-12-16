@@ -39,11 +39,10 @@ with open(f"{argv[1]}", "r") as csv_file:
             # Insert names into SQL
             db.execute("INSERT INTO students (id, first, middle, last, birth) VALUES(?, ?, ?, ?, ?)", line_count, first, middle, last, csv_row[2])
 
-        # print(f"Line count: {line_count}")
         line_count += 1
 
-    db_info = db.execute("SELECT * FROM students")
-
-    print(f"{db_info}")
+    # Handle printing from db
+    # db_info = db.execute("SELECT * FROM students")
+    # print(f"{db_info}")
 
 
