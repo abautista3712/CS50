@@ -21,6 +21,7 @@ with open(f"{argv[1]}", "r") as csv_file:
     line_count = 0
 
     for csv_row in csv_reader:
-        print(f"{csv_row[0]}")
         print(f"{line_count}")
+        name_split = csv_row[0].split()
+        print(f"{name_split}")
         line_count += 1
