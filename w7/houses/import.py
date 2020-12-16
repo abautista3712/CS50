@@ -44,5 +44,3 @@ with open(f"{argv[1]}", "r") as csv_file:
     # Handle printing from db
     # db_info = db.execute("SELECT * FROM students")
     # print(f"{db_info}")
-
-
