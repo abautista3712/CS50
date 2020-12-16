@@ -10,13 +10,11 @@ if len(argv) != 2:
 db = SQL("sqlite:///students.db")
 
 # Assign data from db to variables
-db_first = db.execute("SELECT first FROM students")
-db_middle = db.execute("SELECT middle FROM students")
-db_last = db.execute("SELECT last FROM students")
+db_name = db.execute("SELECT first, middle, last FROM students ORDER BY last, first ASC")
 db_birth = db.execute("SELECT birth FROM students")
 
 # Print to console
 student_length = len(db.execute("SELECT * FROM students"))
 
 for i in range(student_length):
-    print(f"{db_first[i]['FIRST']} {db_middle[i]['middle']} {db_last[i]['LAST']}, born {db_birth[i]['birth']}")
+    print(f"{db_name[i]['FIRST']} {db_name[i]['middle']} {db_name[i]['LAST']}, born {db_birth[i]['birth']}")
