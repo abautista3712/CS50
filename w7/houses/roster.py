@@ -9,6 +9,11 @@ if len(argv) != 2:
 # Connect to DB
 db = SQL("sqlite:///students.db")
 
-db_info = db.execute("SELECT * FROM students")
+# Assign data from db to variables
+db_first = db.execute("SELECT first FROM students")
+db_middle = db.execute("SELECT middle FROM students")
+db_last = db.execute("SELECT last FROM students")
+db_birth = db.execute("SELECT birth FROM students")
 
-print(f"{db_info}")
+# Print to console
+print(f"{db_first[0]['FIRST']} {db_middle[0]['middle']} {db_last[0]['LAST']}, born {db_birth[0]['birth']}")
