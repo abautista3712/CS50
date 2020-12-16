@@ -11,4 +11,5 @@ WHERE person_id IN (
 -- From selection where people.id is Kevin Bacon born in 1958
 SELECT people.id FROM people
 WHERE people.name = "Kevin Bacon"
-AND people.birth = 1958))));
+AND people.birth = 1958))))
+AND NOT people.name = "Kevin Bacon";
