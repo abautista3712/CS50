@@ -37,7 +37,7 @@ with open(f"{argv[1]}", "r") as csv_file:
                 last = name_split[2]
 
             # Insert data into SQL
-            db.execute("INSERT INTO students (id, first, middle, last, house, birth) VALUES(?, ?, ?, ?, ?)", line_count, first, middle, last, csv_row[1], csv_row[2])
+            db.execute("INSERT INTO students (id, first, middle, last, house, birth) VALUES(?, ?, ?, ?, ?, ?)", line_count, first, middle, last, csv_row[1], csv_row[2])
 
         line_count += 1
 
