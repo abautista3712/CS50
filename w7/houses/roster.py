@@ -16,4 +16,7 @@ db_last = db.execute("SELECT last FROM students")
 db_birth = db.execute("SELECT birth FROM students")
 
 # Print to console
-print(f"{db_first[0]['FIRST']} {db_middle[0]['middle']} {db_last[0]['LAST']}, born {db_birth[0]['birth']}")
+student_length = len(db.execute("SELECT * FROM students"))
+
+for i in range(student_length):
+    print(f"{db_first[i]['FIRST']} {db_middle[i]['middle']} {db_last[i]['LAST']}, born {db_birth[i]['birth']}")
