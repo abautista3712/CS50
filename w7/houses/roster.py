@@ -17,4 +17,10 @@ db_birth = db.execute("SELECT birth FROM students")
 student_length = len(db.execute("SELECT * FROM students"))
 
 for i in range(student_length):
-    print(f"{db_name[i]['FIRST']} {db_name[i]['middle']} {db_name[i]['LAST']}, born {db_birth[i]['birth']}")
+    # Handle Special Case: Null value of middle name
+    if db_name[i]['middle'] == None:
+        db_name[i]['middle'] = " "
+    else:
+        db_name[i]['middle'] = " " + db_name[i]['middle'] + " "
+
+    print(f"{db_name[i]['FIRST']}{db_name[i]['middle']}{db_name[i]['LAST']}, born {db_birth[i]['birth']}")
