@@ -11,7 +11,7 @@ open(f"students.db", "w").close()
 db = cs50.SQL("sqlite:///students.db")
 
 # Create tables
-db.execute("CREATE TABLE students (id INT, first TEXT, middle TEXT, last TEXT, birth INT, PRIMARY KEY(id))")
+db.execute("CREATE TABLE students (id INT, first TEXT, middle TEXT, last TEXT, house TEXT, birth INT, PRIMARY KEY(id))")
 
 # Open CSV file
 with open(f"{argv[1]}", "r") as csv_file:
@@ -36,8 +36,8 @@ with open(f"{argv[1]}", "r") as csv_file:
                 middle = name_split[1]
                 last = name_split[2]
 
-            # Insert names into SQL
-            db.execute("INSERT INTO students (id, first, middle, last, birth) VALUES(?, ?, ?, ?, ?)", line_count, first, middle, last, csv_row[2])
+            # Insert data into SQL
+            db.execute("INSERT INTO students (id, first, middle, last, house, birth) VALUES(?, ?, ?, ?, ?)", line_count, first, middle, last, csv_row[1], csv_row[2])
 
         line_count += 1
 
