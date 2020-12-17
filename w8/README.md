@@ -1,7 +1,6 @@
-# Problem Set 8 - iOS
+# Problem Set 8 - Games
 
 ## What to Do
 
-1. After watching Lessons 1, 2, and 3, submit [Pokedex](https://cs50.harvard.edu/x/2020/tracks/mobile/ios/pokedex/)
-2. After watching Lesson 4, submit [Fiftygram](https://cs50.harvard.edu/x/2020/tracks/mobile/ios/fiftygram/)
-3. After watching Lesson 5, submit [Notes](https://cs50.harvard.edu/x/2020/tracks/mobile/ios/notes/)
+1. After watching all of the Pong videos, submit [Pong](https://cs50.harvard.edu/x/2020/tracks/games/pong/)
+2. After watching all of the Mario videos, submit [Mario](https://cs50.harvard.edu/x/2020/tracks/games/mario/)
