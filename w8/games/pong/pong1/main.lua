@@ -21,6 +21,8 @@ function love.keypressed(key)
 end
 
 function love.draw()
+    love.graphics.setDefaultFilter('nearest', 'nearest')
+
     push:apply('start')
 
     love.graphics.printf(
