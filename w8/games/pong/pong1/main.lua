@@ -18,8 +18,17 @@ function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     end
-end    
+end
 
 function love.draw()
-    love.graphics.printf("Hello Pong!", 0, WINDOW_HEIGHT / 2 - 6, WINDOW_WIDTH, 'center')
+    push:apply('start')
+
+    love.graphics.printf(
+        'Hello Pong!', 
+        0, 
+        VIRTUAL_HEIGHT / 2 - 6, 
+        VIRTUAL_WIDTH, 
+        'center')
+
+    push:apply('end')
 end
