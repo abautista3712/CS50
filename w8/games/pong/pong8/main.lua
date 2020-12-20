@@ -87,6 +87,19 @@ function love.update(dt)
 
     if gameState == 'play' then
         ball:update(dt)
+
+        if ball.x <= 0 then
+            player2Score = player2Score + 1
+            ball:reset()
+            gameState = 'start'
+        end
+
+        if ball.x >= VIRTUAL_WIDTH - 4 then
+            player1Score = player1Score + 1
+            ball:reset()
+            gameState = 'start'
+        end
+
     end
 end
 
@@ -98,9 +111,6 @@ function love.keypressed(key)
     elseif key == 'enter' or key == 'return' then
         if gameState == 'start' then
             gameState = 'play'
-        elseif gameState == 'play' then
-            gameState = 'start'
-            ball:reset()
         end
     end
 end
@@ -111,13 +121,6 @@ function love.draw()
     -- Render Background Color
     love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
 
-    -- Render Welcome Message
-    love.graphics.setFont(smallFont)
-    if gameState == 'start' then
-        love.graphics.printf('Hello Start State!', 0, 20, VIRTUAL_WIDTH, 'center')
-    elseif gameState == 'play' then
-        love.graphics.printf('Hello Play State!', 0, 20, VIRTUAL_WIDTH, 'center')
-    end
     -- Render Score
     love.graphics.setFont(scoreFont)
     love.graphics.print(player1Score, VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
