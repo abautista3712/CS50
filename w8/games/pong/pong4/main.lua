@@ -29,13 +29,17 @@ function love.load()
     player1Y = 30
     player2Y = VIRTUAL_HEIGHT - 40
 
-    ballX = VIRTUAL_WIDTH / 2 - 2
-    ballY = VIRTUAL_HEIGHT / 2 - 2
+    function initializeBall()
+        ballX = VIRTUAL_WIDTH / 2 - 2
+        ballY = VIRTUAL_HEIGHT / 2 - 2
 
-    ballDX = math.random(2) == 1 and -100 or 100
-    ballDY = math.random(-50, 50)
+        ballDX = math.random(2) == 1 and -100 or 100
+        ballDY = math.random(-50, 50)
+    end
 
-    gameState = 'play'
+    initializeBall()
+
+    gameState = 'start'
 end
 
 function love.update(dt)
@@ -63,6 +67,14 @@ function love.keypressed(key)
     -- Escape game using ESC key
     if key == 'escape' then
         love.event.quit()
+    -- Change game state from 'start' to 'play'
+    elseif key == 'enter' or key == 'return' then
+        if gameState == 'start' then
+            gameState = 'play'
+        elseif gameState == 'play' then
+            gameState = 'start'
+            initializeBall()
+        end
     end
 end
 
