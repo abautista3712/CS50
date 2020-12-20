@@ -32,6 +32,9 @@ function love.draw()
 
     love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 5, 5)
 
+    love.graphics.rectangle('fill', 5, 20, 5, 20)
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 40, 5, 20)
+
     love.graphics.printf(
         'Hello Pong!', 
         0, 
