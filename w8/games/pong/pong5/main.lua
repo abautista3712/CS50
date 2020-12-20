@@ -32,16 +32,7 @@ function love.load()
 
     paddle1 = Paddle(5, 20, 5, 20)
     paddle2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
-
-    function initializeBall()
-        ballX = VIRTUAL_WIDTH / 2 - 2
-        ballY = VIRTUAL_HEIGHT / 2 - 2
-
-        ballDX = math.random(2) == 1 and -100 or 100
-        ballDY = math.random(-50, 50)
-    end
-
-    initializeBall()
+    ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 5, 5)
 
     gameState = 'start'
 end
@@ -70,8 +61,7 @@ function love.update(dt)
     end
 
     if gameState == 'play' then
-        ballX = ballX + ballDX * dt
-        ballY = ballY + ballDY * dt
+        ball:update(dt)
     end
 end
 
@@ -85,7 +75,7 @@ function love.keypressed(key)
             gameState = 'play'
         elseif gameState == 'play' then
             gameState = 'start'
-            initializeBall()
+            ball:reset()
         end
     end
 end
@@ -108,12 +98,12 @@ function love.draw()
     love.graphics.print(player1Score, VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
     love.graphics.print(player2Score, VIRTUAL_WIDTH / 2 + 30, VIRTUAL_HEIGHT / 3)
     
-    -- Render Paddles via Class
+    -- Render Paddles
     paddle1:render()
     paddle2:render()
     
     -- Render Ball (Center)
-    love.graphics.rectangle('fill', ballX, ballY, 5, 5)
+    ball:render()
     
     push:apply('end')
 end
