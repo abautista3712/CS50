@@ -7,6 +7,11 @@ VIRTUAL_HEIGHT = 243
 push = require 'push'
 
 function love.load()
+    love.graphics.setDefaultFilter('nearest', 'nearest')
+
+    smallFont = love.graphics.newFont('font.ttf', 8)
+    love.graphics.setFont(smallFont)
+
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         vsync = true,
@@ -21,11 +26,6 @@ function love.keypressed(key)
 end
 
 function love.draw()
-    love.graphics.setDefaultFilter('nearest', 'nearest')
-
-    smallFont = love.graphics.newFont('font.ttf', 8)
-    love.graphics.setFont(smallFont)
-
     push:apply('start')
 
     love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
