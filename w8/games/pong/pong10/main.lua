@@ -142,6 +142,8 @@ function love.keypressed(key)
             gameState = 'serve'
         elseif gameState == 'victory' then
             gameState = 'start'
+            player1Score = 0
+            player2Score = 0
         elseif gameState == 'serve' then
             gameState = 'play'
         end
