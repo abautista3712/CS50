@@ -118,7 +118,7 @@ function love.update(dt)
     if gameState == 'serve' then
         -- before switching to play, initialize ball's velocity based
         -- on player who last scored
-        player2.dy = 0
+        player2:reset()
         ball.dy = math.random(-50, 50)
         if servingPlayer == 1 then
             ball.dx = math.random(140, 200)
@@ -225,14 +225,17 @@ function love.update(dt)
     -- scale the velocity by dt so movement is framerate-independent
     if gameState == 'play' then
         ball:update(dt)
-        if ball.dx > 0 then
-            player2.dy = -100
-        elseif player2.y == math.max(0, player2.y + player2.dy * dt) then
-            player2.dy = -player2.dy
-            -- elseif player2.y == math.min(VIRTUAL_HEIGHT - player2.height, player2.y + player2.dy * dt) then
-            --     player2.dy = -player2.dy
+        if player2.y == 25 then
+            -- if ball.dx > 0 and ball.y < VIRTUAL_HEIGHT / 2 then
+                player2.dy = -player2.dy
+            -- else
+            --     player2.dy = 100
+            -- end
+            -- player2.dy = -player2.dy
+        -- elseif player2.y == math.min(VIRTUAL_HEIGHT - player2.height, player2.y + player2.dy * dt) then
+        --     player2.dy = -player2.dy
         else
-            player2.dy = 0
+            player2.dy = -100
         end
     end
 

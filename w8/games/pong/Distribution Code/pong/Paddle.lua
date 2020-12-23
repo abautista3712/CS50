@@ -36,12 +36,13 @@ function Paddle:init(x, y, width, height)
 end
 
 function Paddle:reset()
-    -- if self.y > VIRTUAL_HEIGHT / 2 - 10 then
-    --     self.dy = -100
-    -- elseif self.y > VIRTUAL_HEIGHT / 2 - 10 then
-    --     self.dy = 100
-    -- self.y = VIRTUAL_HEIGHT / 2 - 10
-    -- end
+    if self.y > VIRTUAL_HEIGHT / 2 + 5 then
+        self.dy = -200
+    elseif self.y < VIRTUAL_HEIGHT / 2 - 5 then
+        self.dy = 200
+    else
+        self.dy = 0
+    end
 end
 
 function Paddle:update(dt)
