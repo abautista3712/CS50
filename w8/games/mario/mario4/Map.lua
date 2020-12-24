@@ -1,5 +1,7 @@
 require 'Util'
 
+require 'Player'
+
 Map = Class{}
 
 TILE_BRICK = 1
@@ -27,6 +29,8 @@ function Map:init()
     self.mapWidth = 30
     self.mapHeight = 28
     self.tiles = {}
+
+    self.player = Player(self)
 
     self.camX = 0
     self.camY = -3
@@ -113,6 +117,8 @@ function Map:update(dt)
         -- right movemenet
         self.camX = math.min(self.mapWidthPixels - VIRTUAL_WIDTH, math.floor(self.camX + SCROLL_SPEED * dt))
     end
+
+    self.player:update(dt)
 end
 
 function Map:getTile(x, y)
@@ -133,4 +139,6 @@ function Map:render()
             end
         end
     end
+
+    self.player:render()
 end
