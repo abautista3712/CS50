@@ -7,6 +7,8 @@ VIRTUAL_HEIGHT = 243
 Class = require 'class'
 push = require 'push'
 
+require 'Util'
+
 require 'Map'
 
 function love.load()
