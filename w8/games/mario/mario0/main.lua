@@ -29,7 +29,6 @@ end
 function love.draw()
     push:apply('start')
     love.graphics.clear(108/255, 140/255, 255/255, 255/255)
-    love.graphics.print("Hello, world!")
     map:render()
     push:apply('end')
 end
