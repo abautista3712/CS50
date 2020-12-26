@@ -103,6 +103,10 @@ function Map:init()
             x = x + 2
         end
     end
+
+    self.music:setLooping(true)
+    self.music:setVolume(0.25)
+    self.music:play()
 end
 
 function Map:collides(tile)
