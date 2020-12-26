@@ -24,6 +24,7 @@ local SCROLL_SPEED = 62
 function Map:init()
     self.spritesheet = love.graphics.newImage('graphics/spritesheet.png')
     self.sprites = generateQuads(self.spritesheet, 16, 16)
+    self.music = love.audio.newSource('sounds/music.wav', 'static')
 
     self.tileWidth = 16
     self.tileHeight = 16
