@@ -44,6 +44,8 @@ function Player:init(map)
             elseif love.keyboard.isDown('d') then
                 self.x = self.x + MOVE_SPEED * dt
                 self.animation = self.animations['walking']
+            else
+                self.animation = self.animations['idle']
             end
         end,
         ['walking'] = function(dt)
@@ -53,6 +55,8 @@ function Player:init(map)
             elseif love.keyboard.isDown('d') then
                 self.x = self.x + MOVE_SPEED * dt
                 self.animation = self.animations['walking']
+            else
+                self.animation = self.animations['idle']
             end
         end
     }
