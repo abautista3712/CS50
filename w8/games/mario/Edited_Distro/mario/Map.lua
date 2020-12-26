@@ -38,7 +38,7 @@ function Map:init()
 
     self.tileWidth = 16
     self.tileHeight = 16
-    self.mapWidth = 30
+    self.mapWidth = 100
     self.mapHeight = 28
     self.tiles = {}
 
