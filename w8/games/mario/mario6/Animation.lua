@@ -17,7 +17,7 @@ function Animation:restart()
     self.currentFrame = 1
 end
 
-function Aniation:update(dt)
+function Animation:update(dt)
     self.timer = self.timer + dt
 
     if #self.frames == 1 then
