@@ -35,7 +35,7 @@ FLAG_TOP = 8
 local SCROLL_SPEED = 62
 
 local PYRAMID_END = 25
-local PYRAMID_HEIGHT = 5
+local PYRAMID_HEIGHT = 6
 
 -- constructor for our map object
 function Map:init()
@@ -90,7 +90,7 @@ function Map:init()
                 self:setTile(x, y, TILE_BRICK)
             end
             
-            if x == PYRAMID_END + 10 then
+            if x == PYRAMID_END + 7 then
                 self:setTile(x, self.mapHeight / 2 - 11, FLAG_TOP)
 
                 for y = self.mapHeight / 2 - 10, self.mapHeight / 2 - 2 do
