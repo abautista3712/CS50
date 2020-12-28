@@ -26,10 +26,15 @@ MUSHROOM_BOTTOM = 11
 JUMP_BLOCK = 5
 JUMP_BLOCK_HIT = 9
 
+-- flag blocks
+FLAG_BOT = 16
+FLAG_MID = 12
+FLAG_TOP = 8
+
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
-local PYRAMID_END = 10
+local PYRAMID_END = 25
 local PYRAMID_HEIGHT = 5
 
 -- constructor for our map object
@@ -71,6 +76,7 @@ function Map:init()
     -- begin generating the terrain using vertical scan lines
     local x = 1
     while x < self.mapWidth do
+        -- Generate pyramid
         if x >= PYRAMID_END - PYRAMID_HEIGHT and x <= PYRAMID_END then
             for i = 0, PYRAMID_HEIGHT do   
                 for y = self.mapHeight / 2 - i, self.mapHeight do
@@ -78,10 +84,22 @@ function Map:init()
                 end
                 x = x + 1
             end
+        -- Prepare end of level with no pitfalls
         elseif x > PYRAMID_END then
             for y = self.mapHeight / 2, self.mapHeight do
                 self:setTile(x, y, TILE_BRICK)
             end
+            
+            if x == PYRAMID_END + 10 then
+                self:setTile(x, self.mapHeight / 2 - 11, FLAG_TOP)
+
+                for y = self.mapHeight / 2 - 10, self.mapHeight / 2 - 2 do
+                    self:setTile(x, y, FLAG_MID)
+                end
+
+                self:setTile(x, self.mapHeight / 2 - 1, FLAG_BOT)
+            end
+
             x = x + 1
         else
             -- 2% chance to generate a cloud
