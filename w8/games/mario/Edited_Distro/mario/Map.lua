@@ -72,10 +72,12 @@ function Map:init()
     local x = 1
     while x < self.mapWidth do
         if x >= PYRAMID_END - PYRAMID_HEIGHT and x <= PYRAMID_END then
-            for y = self.mapHeight / 2 - PYRAMID_HEIGHT, self.mapHeight do
-                self:setTile(x, y, TILE_BRICK)
+            for i = 0, PYRAMID_HEIGHT do   
+                for y = self.mapHeight / 2 - i, self.mapHeight do
+                    self:setTile(x, y, TILE_BRICK)
+                end
+                x = x + 1
             end
-            x = x + 1
         else
             -- 2% chance to generate a cloud
             -- make sure we're 2 tiles from edge at least
