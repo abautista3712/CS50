@@ -4,7 +4,7 @@ PYRAMID_END = 25
 PYRAMID_HEIGHT = 6
 
 FLAGPOLE_DIST = 7
-FLAG_TOP = 2
+FLAG_TOP = 1
 
 function Flag:init(map)
     self.width = 16

@@ -96,9 +96,9 @@ function Map:init()
             end
             
             if x == PYRAMID_END + FLAGPOLE_DIST then
-                self:setTile(x, self.mapHeight / 2 - 11, FLAGPOLE_TOP)
+                self:setTile(x, self.mapHeight / 2 - 12, FLAGPOLE_TOP)
 
-                for y = self.mapHeight / 2 - 10, self.mapHeight / 2 - 2 do
+                for y = self.mapHeight / 2 - 11, self.mapHeight / 2 - 2 do
                     self:setTile(x, y, FLAGPOLE_MID)
                 end
 
