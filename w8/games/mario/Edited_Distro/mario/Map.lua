@@ -29,7 +29,8 @@ JUMP_BLOCK_HIT = 9
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
-local PYRAMID_START = 10
+local PYRAMID_END = 10
+local PYRAMID_HEIGHT = 5
 
 -- constructor for our map object
 function Map:init()
@@ -70,17 +71,16 @@ function Map:init()
     -- begin generating the terrain using vertical scan lines
     local x = 1
     while x < self.mapWidth do
-        if x == PYRAMID_START then
-            for y = self.mapHeight / 2 - 5, self.mapHeight do
+        if x >= PYRAMID_END - PYRAMID_HEIGHT and x <= PYRAMID_END then
+            for y = self.mapHeight / 2 - PYRAMID_HEIGHT, self.mapHeight do
                 self:setTile(x, y, TILE_BRICK)
             end
             x = x + 1
-
         else
             -- 2% chance to generate a cloud
             -- make sure we're 2 tiles from edge at least
             if x < self.mapWidth - 2 then
-                if math.random(20) == 1 and x ~= PYRMID_START then
+                if math.random(20) == 1 then
                     
                     -- choose a random vertical spot above where blocks/pipes generate
                     local cloudStart = math.random(self.mapHeight / 2 - 6)
