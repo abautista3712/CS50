@@ -126,7 +126,7 @@ function Player:init(map)
                 self.animation = self.animations['idle']
             end
 
-            -- check for s moving left and right
+            -- check for collisions moving left and right
             self:checkRightCollision()
             self:checkLeftCollision()
 

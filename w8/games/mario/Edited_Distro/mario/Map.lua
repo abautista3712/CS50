@@ -5,6 +5,8 @@
 
 require 'Util'
 
+require 'Flag'
+
 Map = Class{}
 
 TILE_BRICK = 1
@@ -34,8 +36,10 @@ FLAG_TOP = 8
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
-local PYRAMID_END = 25
-local PYRAMID_HEIGHT = 6
+PYRAMID_END = 25
+PYRAMID_HEIGHT = 6
+
+FLAG_DIST = 7
 
 -- constructor for our map object
 function Map:init()
@@ -55,6 +59,7 @@ function Map:init()
 
     -- associate player with map
     self.player = Player(self)
+    self.flag = Flag(self)
 
     -- camera offsets
     self.camX = 0
@@ -90,7 +95,7 @@ function Map:init()
                 self:setTile(x, y, TILE_BRICK)
             end
             
-            if x == PYRAMID_END + 7 then
+            if x == PYRAMID_END + FLAG_DIST then
                 self:setTile(x, self.mapHeight / 2 - 11, FLAG_TOP)
 
                 for y = self.mapHeight / 2 - 10, self.mapHeight / 2 - 2 do
@@ -194,6 +199,7 @@ end
 -- function to update camera offset with delta time
 function Map:update(dt)
     self.player:update(dt)
+    self.flag:update(dt)
     
     -- keep camera's X coordinate following the player, preventing camera from
     -- scrolling past 0 to the left and the map's width
@@ -233,4 +239,5 @@ function Map:render()
     end
 
     self.player:render()
+    self.flag:render()
 end
