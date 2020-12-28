@@ -29,9 +29,9 @@ JUMP_BLOCK = 5
 JUMP_BLOCK_HIT = 9
 
 -- flag blocks
-FLAG_BOT = 16
-FLAG_MID = 12
-FLAG_TOP = 8
+FLAGPOLE_BOT = 16
+FLAGPOLE_MID = 12
+FLAGPOLE_TOP = 8
 
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
@@ -39,7 +39,7 @@ local SCROLL_SPEED = 62
 PYRAMID_END = 25
 PYRAMID_HEIGHT = 6
 
-FLAG_DIST = 7
+FLAGPOLE_DIST = 7
 
 -- constructor for our map object
 function Map:init()
@@ -95,14 +95,14 @@ function Map:init()
                 self:setTile(x, y, TILE_BRICK)
             end
             
-            if x == PYRAMID_END + FLAG_DIST then
-                self:setTile(x, self.mapHeight / 2 - 11, FLAG_TOP)
+            if x == PYRAMID_END + FLAGPOLE_DIST then
+                self:setTile(x, self.mapHeight / 2 - 11, FLAGPOLE_TOP)
 
                 for y = self.mapHeight / 2 - 10, self.mapHeight / 2 - 2 do
-                    self:setTile(x, y, FLAG_MID)
+                    self:setTile(x, y, FLAGPOLE_MID)
                 end
 
-                self:setTile(x, self.mapHeight / 2 - 1, FLAG_BOT)
+                self:setTile(x, self.mapHeight / 2 - 1, FLAGPOLE_BOT)
             end
 
             x = x + 1

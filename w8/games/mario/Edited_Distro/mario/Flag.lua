@@ -1,14 +1,20 @@
 Flag = Class{}
 
+PYRAMID_END = 25
+PYRAMID_HEIGHT = 6
+
+FLAGPOLE_DIST = 7
+FLAG_TOP = 2
+
 function Flag:init(map)
     self.width = 16
     self.height = 16
 
     self.map = map
 
-    self.x = map.tileWidth * 10
-    self.y = map.tileHeight * (map.mapHeight / 2 - 1) - self.height
-
+    self.x = map.tileWidth * (PYRAMID_END + FLAGPOLE_DIST) - (map.tileWidth * 0.5)
+    self.y = (map.tileHeight * (FLAG_TOP)) + 5
+ 
     self.texture = love.graphics.newImage('graphics/spritesheet.png')
     self.frames = generateQuads(self.texture, 16, 16)
 
