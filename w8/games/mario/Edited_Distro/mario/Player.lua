@@ -129,6 +129,7 @@ function Player:init(map)
             -- check for collisions moving left and right
             self:checkRightCollision()
             self:checkLeftCollision()
+            self:checkEndLevel()
 
             -- check if there's a tile directly beneath us
             if not self.map:collides(self.map:tileAt(self.x, self.y + self.height)) and
@@ -170,6 +171,7 @@ function Player:init(map)
             -- check for collisions moving left and right
             self:checkRightCollision()
             self:checkLeftCollision()
+            self:checkEndLevel()
         end
     }
 end
@@ -248,6 +250,18 @@ function Player:checkRightCollision()
             -- if so, reset velocity and position and change state
             self.dx = 0
             self.x = (self.map:tileAt(self.x + self.width, self.y).x - 1) * self.map.tileWidth - self.width
+        end
+    end
+end
+
+function Player:checkEndLevel()
+    if self.dx > 0 then
+        if self.map:end_trigger(self.map:tileAt(self.x + self.width * 0.5, self.y)) or
+            self.map:end_trigger(self.map:tileAt(self.x + self.width * 0.5, self.y + self.height - 1)) then
+            
+            -- if so, reset velocity and position and change state
+            self.dx = 0
+            self.x = (self.map:tileAt(self.x + self.width * 0.5, self.y).x - 1) * self.map.tileWidth - self.width * 0.5
         end
     end
 end
