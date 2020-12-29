@@ -39,7 +39,7 @@ function Player:init(map)
     self.state = 'idle'
 
     -- determines sprite flipping
-    self.direction = 'left'
+    self.direction = 'right'
 
     -- x and y velocity
     self.dx = 0
@@ -91,7 +91,7 @@ function Player:init(map)
                 self.dy = -JUMP_VELOCITY
                 self.state = 'jumping'
                 self.animation = self.animations['jumping']
-                self.sounds['jump']:play()
+                -- self.sounds['jump']:play()
             elseif love.keyboard.isDown('left') then
                 self.direction = 'left'
                 self.dx = -WALKING_SPEED
@@ -116,7 +116,7 @@ function Player:init(map)
                 self.dy = -JUMP_VELOCITY
                 self.state = 'jumping'
                 self.animation = self.animations['jumping']
-                self.sounds['jump']:play()
+                -- self.sounds['jump']:play()
             elseif love.keyboard.isDown('left') then
                 self.direction = 'left'
                 self.dx = -WALKING_SPEED
@@ -224,11 +224,11 @@ function Player:calculateJumps()
                 playHit = true
             end
 
-            if playCoin then
-                self.sounds['coin']:play()
-            elseif playHit then
-                self.sounds['hit']:play()
-            end
+            -- if playCoin then
+            --     self.sounds['coin']:play()
+            -- elseif playHit then
+            --     self.sounds['hit']:play()
+            -- end
         end
     end
 end
