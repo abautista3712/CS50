@@ -5,7 +5,7 @@
 Player = Class{}
 
 local WALKING_SPEED = 140
-local JUMP_VELOCITY = 200
+local BOOST_VELOCITY = 125
 
 function Player:init(map)
     
@@ -39,7 +39,7 @@ function Player:init(map)
     self.state = 'flying'
 
     -- determines sprite flipping
-    self.direction = 'right'
+    -- self.direction = 'right'
 
     -- x and y velocity
     self.dx = 0
@@ -114,7 +114,7 @@ function Player:init(map)
             -- keep track of input to switch movement while flying, or reset
             -- to idle if we're not moving
             if love.keyboard.wasPressed('space') then
-                self.dy = -JUMP_VELOCITY
+                self.dy = -BOOST_VELOCITY
                 self.animation = self.animations['flying']
                 -- self.sounds['jump']:play()
             -- elseif love.keyboard.isDown('left') then
@@ -287,17 +287,17 @@ end
 -- end
 
 function Player:render()
-    local scaleX
+    local scale = 2
 
     -- set negative x scale factor if facing left, which will flip the sprite
     -- when applied
-    if self.direction == 'right' then
-        scaleX = 1
-    else
-        scaleX = -1
-    end
+    -- if self.direction == 'right' then
+    --     scaleX = 1
+    -- else
+    --     scaleX = -1
+    -- end
 
     -- draw sprite with scale factor and offsets
     love.graphics.draw(self.texture, self.currentFrame, math.floor(self.x + self.xOffset),
-        math.floor(self.y + self.yOffset), 0, scaleX, 1, self.xOffset, self.yOffset)
+        math.floor(self.y + self.yOffset), 0, scale, scale, self.xOffset, self.yOffset)
 end
