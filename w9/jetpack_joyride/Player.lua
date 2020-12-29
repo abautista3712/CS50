@@ -132,11 +132,11 @@ end
 -- jumping and block hitting logic
 function Player:calculateJumps()
     
-    -- if we have negative y velocity (jumping), check if we collide
+    -- if we have negative y velocity (flying), check if we collide
     -- with any blocks above us
     if self.dy < 0 then
         if self.map:tileAt(self.x, self.y).id ~= TILE_EMPTY or
-            self.map:tileAt(self.x + self.width - 1, self.y).id ~= TILE_EMPTY then
+            self.map:tileAt(self.x + self.width - 1, self.y - 10).id ~= TILE_EMPTY then
             -- reset y velocity
             self.dy = 0
 

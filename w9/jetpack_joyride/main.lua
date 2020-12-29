@@ -2,7 +2,6 @@ Class = require 'class'
 push = require 'push'
 
 require 'Animation'
--- require 'Flag'
 require 'Map'
 require 'Player'
 
