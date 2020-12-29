@@ -55,7 +55,7 @@ function Map:init()
     self.tiles = {}
 
     -- applies positive Y influence on anything affected
-    self.gravity = 15
+    self.gravity = 1
 
     -- associate player with map
     self.player = Player(self)
