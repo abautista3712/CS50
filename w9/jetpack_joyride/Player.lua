@@ -39,7 +39,7 @@ function Player:init(map)
     self.state = 'flying'
 
     -- determines sprite flipping
-    -- self.direction = 'right'
+    self.direction = 'right'
 
     -- x and y velocity
     self.dx = 0
@@ -54,12 +54,12 @@ function Player:init(map)
 
     -- initialize all player animations
     self.animations = {
-        -- ['idle'] = Animation({
-        --     texture = self.texture,
-        --     frames = {
-        --         love.graphics.newQuad(0, 0, 16, 20, self.texture:getDimensions())
-        --     }
-        -- }),
+        ['idle'] = Animation({
+            texture = self.texture,
+            frames = {
+                love.graphics.newQuad(0, 0, 16, 20, self.texture:getDimensions())
+            }
+        }),
         ['flying'] = Animation({
             texture = self.texture,
             frames = {
@@ -68,7 +68,7 @@ function Player:init(map)
                 love.graphics.newQuad(32, 0, 16, 20, self.texture:getDimensions()),
                 love.graphics.newQuad(16, 0, 16, 20, self.texture:getDimensions()),
             },
-            interval = 0.25
+            interval = 0.05
         })
         -- ,
         -- ['jumping'] = Animation({
@@ -80,18 +80,21 @@ function Player:init(map)
     }
 
     -- initialize animation and current frame we should render
-    self.animation = self.animations['flying']
+    self.animation = self.animations['idle']
     self.currentFrame = self.animation:getCurrentFrame()
 
     -- behavior map we can call based on player state
     self.behaviors = {
-        -- ['idle'] = function(dt)
-            
-        --     -- add spacebar functionality to trigger jump state
-        --     if love.keyboard.wasPressed('space') then
-        --         self.dy = -JUMP_VELOCITY
-        --         self.state = 'jumping'
-        --         self.animation = self.animations['jumping']
+        ['idle'] = function(dt)
+            -- add spacebar functionality to trigger jump state
+            if love.keyboard.wasPressed('space') then
+                self.dy = -BOOST_VELOCITY
+                self.state = 'flying'
+                self.animation = self.animations['flying']
+            else
+                self.dy = self.dy + self.map.gravity
+            end
+        end,
         --         -- self.sounds['jump']:play()
         --     elseif love.keyboard.isDown('left') then
         --         self.direction = 'left'
@@ -113,7 +116,7 @@ function Player:init(map)
             
             -- keep track of input to switch movement while flying, or reset
             -- to idle if we're not moving
-            if love.keyboard.wasPressed('space') then
+            if love.keyboard.isDown('space') then
                 self.dy = -BOOST_VELOCITY
                 self.animation = self.animations['flying']
                 -- self.sounds['jump']:play()
@@ -125,8 +128,8 @@ function Player:init(map)
             --     self.dx = WALKING_SPEED
             else
                 self.dx = 0
-                self.state = 'flying'
-                self.animation = self.animations['flying']
+                self.state = 'idle'
+                self.animation = self.animations['idle']
             end
 
             -- check for collisions moving left and right
@@ -135,13 +138,13 @@ function Player:init(map)
             -- self:checkEndLevel()
 
             -- check if there's a tile directly beneath us
-            if not self.map:collides(self.map:tileAt(self.x, self.y + self.height)) and
-                not self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+            -- if not self.map:collides(self.map:tileAt(self.x, self.y + self.height)) and
+            --     not self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
                 
-                -- if so, reset velocity and position and change state
-                self.state = 'flying'
-                self.animation = self.animations['flying']
-            end
+            --     -- if so, reset velocity and position and change state
+            --     self.state = 'idle'
+            --     self.animation = self.animations['idle']
+            -- end
 
             self.dy = self.dy + self.map.gravity
         end
