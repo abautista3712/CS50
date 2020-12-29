@@ -70,13 +70,6 @@ function Player:init(map)
             },
             interval = 0.05
         })
-        -- ,
-        -- ['jumping'] = Animation({
-        --     texture = self.texture,
-        --     frames = {
-        --         love.graphics.newQuad(32, 0, 16, 20, self.texture:getDimensions())
-        --     }
-        -- })
     }
 
     -- initialize animation and current frame we should render
@@ -86,7 +79,7 @@ function Player:init(map)
     -- behavior map we can call based on player state
     self.behaviors = {
         ['idle'] = function(dt)
-            -- add spacebar functionality to trigger jump state
+            -- add spacebar functionality to trigger flying state
             if love.keyboard.wasPressed('space') then
                 self.dy = -BOOST_VELOCITY
                 self.state = 'flying'
@@ -95,37 +88,12 @@ function Player:init(map)
                 self.dy = self.dy + self.map.gravity
             end
         end,
-        --         -- self.sounds['jump']:play()
-        --     elseif love.keyboard.isDown('left') then
-        --         self.direction = 'left'
-        --         self.dx = -WALKING_SPEED
-        --         self.state = 'flying'
-        --         self.animations['flying']:restart()
-        --         self.animation = self.animations['flying']
-        --     elseif love.keyboard.isDown('right') then
-        --         self.direction = 'right'
-        --         self.dx = WALKING_SPEED
-        --         self.state = 'flying'
-        --         self.animations['flying']:restart()
-        --         self.animation = self.animations['flying']
-        --     else
-        --         self.dx = 0
-        --     end
-        -- end,
         ['flying'] = function(dt)
-            
-            -- keep track of input to switch movement while flying, or reset
-            -- to idle if we're not moving
+            -- handle transition from flying to idle states
             if love.keyboard.isDown('space') then
                 self.dy = -BOOST_VELOCITY
                 self.animation = self.animations['flying']
                 -- self.sounds['jump']:play()
-            -- elseif love.keyboard.isDown('left') then
-            --     self.direction = 'left'
-            --     self.dx = -WALKING_SPEED
-            -- elseif love.keyboard.isDown('right') then
-            --     self.direction = 'right'
-            --     self.dx = WALKING_SPEED
             else
                 self.dx = 0
                 self.state = 'idle'
@@ -134,8 +102,6 @@ function Player:init(map)
 
             -- check for collisions moving left and right
             self:checkRightCollision()
-            -- self:checkLeftCollision()
-            -- self:checkEndLevel()
 
             -- check if there's a tile directly beneath us
             -- if not self.map:collides(self.map:tileAt(self.x, self.y + self.height)) and
@@ -148,44 +114,6 @@ function Player:init(map)
 
             self.dy = self.dy + self.map.gravity
         end
-        -- ,
-        -- ['jumping'] = function(dt)
-        --     -- break if we go below the surface
-        --     if self.y > 300 then
-        --         return
-        --     end
-
-        --     if love.keyboard.isDown('left') then
-        --         self.direction = 'left'
-        --         self.dx = -WALKING_SPEED
-        --     elseif love.keyboard.isDown('right') then
-        --         self.direction = 'right'
-        --         self.dx = WALKING_SPEED
-        --     end
-
-        --     -- apply map's gravity before y velocity
-        --     self.dy = self.dy + self.map.gravity
-
-        --     -- check if there's a tile directly beneath us
-        --     if self.map:collides(self.map:tileAt(self.x, self.y + self.height)) or
-        --         self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
-                
-        --         -- if so, reset velocity and position and change state
-        --         self.dy = 0
-        --         self.state = 'idle'
-        --         self.animation = self.animations['idle']
-        --         self.y = (self.map:tileAt(self.x, self.y + self.height).y - 1) * self.map.tileHeight - self.height
-        --     end
-
-        --     -- check for collisions moving left and right
-        --     self:checkRightCollision()
-        --     -- self:checkLeftCollision()
-
-        --     -- if self:checkEndLevel() then
-        --     --     love.graphics.setFont(retroFont)
-        --     --     love.graphics.printf('TEST', 0, 10, VIRTUAL_WIDTH, 'center')
-        --     -- end
-        -- end
     }
 end
 
@@ -213,22 +141,22 @@ function Player:calculateJumps()
             self.dy = 0
 
             -- change block to different block
-            local playCoin = false
-            local playHit = false
-            if self.map:tileAt(self.x, self.y).id == JUMP_BLOCK then
-                self.map:setTile(math.floor(self.x / self.map.tileWidth) + 1,
-                    math.floor(self.y / self.map.tileHeight) + 1, JUMP_BLOCK_HIT)
-                playCoin = true
-            else
-                playHit = true
-            end
-            if self.map:tileAt(self.x + self.width - 1, self.y).id == JUMP_BLOCK then
-                self.map:setTile(math.floor((self.x + self.width - 1) / self.map.tileWidth) + 1,
-                    math.floor(self.y / self.map.tileHeight) + 1, JUMP_BLOCK_HIT)
-                playCoin = true
-            else
-                playHit = true
-            end
+            -- local playCoin = false
+            -- local playHit = false
+            -- if self.map:tileAt(self.x, self.y).id == JUMP_BLOCK then
+            --     self.map:setTile(math.floor(self.x / self.map.tileWidth) + 1,
+            --         math.floor(self.y / self.map.tileHeight) + 1, JUMP_BLOCK_HIT)
+            --     playCoin = true
+            -- else
+            --     playHit = true
+            -- end
+            -- if self.map:tileAt(self.x + self.width - 1, self.y).id == JUMP_BLOCK then
+            --     self.map:setTile(math.floor((self.x + self.width - 1) / self.map.tileWidth) + 1,
+            --         math.floor(self.y / self.map.tileHeight) + 1, JUMP_BLOCK_HIT)
+            --     playCoin = true
+            -- else
+            --     playHit = true
+            -- end
 
             -- if playCoin then
             --     self.sounds['coin']:play()
@@ -238,20 +166,6 @@ function Player:calculateJumps()
         end
     end
 end
-
--- checks two tiles to our left to see if a collision occurred
--- function Player:checkLeftCollision()
---     if self.dx < 0 then
---         -- check if there's a tile directly beneath us
---         if self.map:collides(self.map:tileAt(self.x - 1, self.y)) or
---             self.map:collides(self.map:tileAt(self.x - 1, self.y + self.height - 1)) then
-            
---             -- if so, reset velocity and position and change state
---             self.dx = 0
---             self.x = self.map:tileAt(self.x - 1, self.y).x * self.map.tileWidth
---         end
---     end
--- end
 
 -- checks two tiles to our right to see if a collision occurred
 function Player:checkRightCollision()
@@ -266,28 +180,6 @@ function Player:checkRightCollision()
         end
     end
 end
-
--- function Player:checkEndLevel()
---     if self.dx > 0 then
---         if self.map:end_trigger(self.map:tileAt(self.x + self.width * 0.5, self.y)) or
---             self.map:end_trigger(self.map:tileAt(self.x + self.width * 0.5, self.y + self.height - 1)) then
-            
---             -- if so, reset velocity and position and change state
---             self.dx = 0
---             self.x = (self.map:tileAt(self.x + self.width * 0.5, self.y).x - 1) * self.map.tileWidth - self.width * 0.5
---             function love.draw()
---                 push:apply('start')
---                 love.graphics.setFont(retroFont)
---                 love.graphics.printf('CONGRATULATIONS!', 0, VIRTUAL_HEIGHT / 2 - 20, VIRTUAL_WIDTH, 'center')
---                 love.graphics.printf('SIMULATION COMPLETE', 0, VIRTUAL_HEIGHT / 2 - 10, VIRTUAL_WIDTH, 'center')
---                 love.graphics.printf('YOU ARE NOW READY FOR... EARTH!', 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
---                 push:apply('end')
---             end
-
---             love.audio.stop()
---         end
---     end
--- end
 
 function Player:render()
     local scale = 2
