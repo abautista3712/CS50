@@ -36,7 +36,7 @@ FLAGPOLE_TOP = 8
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
-PYRAMID_END = 25
+PYRAMID_END = 75
 PYRAMID_HEIGHT = 6
 
 FLAGPOLE_DIST = 7

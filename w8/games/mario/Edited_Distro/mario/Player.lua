@@ -277,6 +277,8 @@ function Player:checkEndLevel()
                 love.graphics.printf('YOU ARE NOW READY FOR... EARTH!', 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
                 push:apply('end')
             end
+
+            love.audio.stop()
         end
     end
 end
