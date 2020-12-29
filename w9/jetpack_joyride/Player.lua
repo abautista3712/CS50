@@ -1,7 +1,3 @@
---[[
-    Represents our player in the game, with its own sprite.
-]]
-
 Player = Class{}
 
 local WALKING_SPEED = 140
@@ -20,7 +16,7 @@ function Player:init(map)
 
     -- reference to map for checking tiles
     self.map = map
-    self.texture = love.graphics.newImage('graphics/blue_alien.png')
+    self.texture = love.graphics.newImage('graphics/jetpack_crewmate.png')
 
     -- sound effects
     self.sounds = {

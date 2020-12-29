@@ -1,11 +1,3 @@
---[[
-    Super Mario Bros. Demo
-    Author: Colton Ogden
-    Original Credit: Nintendo
-
-    Demonstrates rendering a screen of tiles.
-]]
-
 Class = require 'class'
 push = require 'push'
 
@@ -44,7 +36,7 @@ function love.load()
         resizable = true
     })
 
-    love.window.setTitle('Super Mario 50')
+    love.window.setTitle('Jetpack Joyride')
 
     love.keyboard.keysPressed = {}
     love.keyboard.keysReleased = {}
