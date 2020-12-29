@@ -36,7 +36,7 @@ function Player:init(map)
     self.currentFrame = nil
 
     -- used to determine behavior and animations
-    self.state = 'idle'
+    self.state = 'flying'
 
     -- determines sprite flipping
     self.direction = 'right'
@@ -46,21 +46,21 @@ function Player:init(map)
     self.dy = 0
 
     -- position on top of map tiles
-    self.y = map.tileHeight * ((map.mapHeight - 2) / 2) - self.height
-    self.x = map.tileWidth * 10
+    self.y = map.tileHeight * ((map.mapHeight - 2) / 4)
+    self.x = map.tileWidth * 5
 
     retroFont = love.graphics.newFont('fonts/font.ttf', 8)
     love.graphics.setFont(retroFont)
 
     -- initialize all player animations
     self.animations = {
-        ['idle'] = Animation({
-            texture = self.texture,
-            frames = {
-                love.graphics.newQuad(0, 0, 16, 20, self.texture:getDimensions())
-            }
-        }),
-        ['walking'] = Animation({
+        -- ['idle'] = Animation({
+        --     texture = self.texture,
+        --     frames = {
+        --         love.graphics.newQuad(0, 0, 16, 20, self.texture:getDimensions())
+        --     }
+        -- }),
+        ['flying'] = Animation({
             texture = self.texture,
             frames = {
                 love.graphics.newQuad(0, 0, 16, 20, self.texture:getDimensions()),
@@ -69,117 +69,120 @@ function Player:init(map)
                 love.graphics.newQuad(16, 0, 16, 20, self.texture:getDimensions()),
             },
             interval = 0.25
-        }),
-        ['jumping'] = Animation({
-            texture = self.texture,
-            frames = {
-                love.graphics.newQuad(32, 0, 16, 20, self.texture:getDimensions())
-            }
         })
+        -- ,
+        -- ['jumping'] = Animation({
+        --     texture = self.texture,
+        --     frames = {
+        --         love.graphics.newQuad(32, 0, 16, 20, self.texture:getDimensions())
+        --     }
+        -- })
     }
 
     -- initialize animation and current frame we should render
-    self.animation = self.animations['idle']
+    self.animation = self.animations['flying']
     self.currentFrame = self.animation:getCurrentFrame()
 
     -- behavior map we can call based on player state
     self.behaviors = {
-        ['idle'] = function(dt)
+        -- ['idle'] = function(dt)
             
-            -- add spacebar functionality to trigger jump state
-            if love.keyboard.wasPressed('space') then
-                self.dy = -JUMP_VELOCITY
-                self.state = 'jumping'
-                self.animation = self.animations['jumping']
-                -- self.sounds['jump']:play()
-            elseif love.keyboard.isDown('left') then
-                self.direction = 'left'
-                self.dx = -WALKING_SPEED
-                self.state = 'walking'
-                self.animations['walking']:restart()
-                self.animation = self.animations['walking']
-            elseif love.keyboard.isDown('right') then
-                self.direction = 'right'
-                self.dx = WALKING_SPEED
-                self.state = 'walking'
-                self.animations['walking']:restart()
-                self.animation = self.animations['walking']
-            else
-                self.dx = 0
-            end
-        end,
-        ['walking'] = function(dt)
+        --     -- add spacebar functionality to trigger jump state
+        --     if love.keyboard.wasPressed('space') then
+        --         self.dy = -JUMP_VELOCITY
+        --         self.state = 'jumping'
+        --         self.animation = self.animations['jumping']
+        --         -- self.sounds['jump']:play()
+        --     elseif love.keyboard.isDown('left') then
+        --         self.direction = 'left'
+        --         self.dx = -WALKING_SPEED
+        --         self.state = 'flying'
+        --         self.animations['flying']:restart()
+        --         self.animation = self.animations['flying']
+        --     elseif love.keyboard.isDown('right') then
+        --         self.direction = 'right'
+        --         self.dx = WALKING_SPEED
+        --         self.state = 'flying'
+        --         self.animations['flying']:restart()
+        --         self.animation = self.animations['flying']
+        --     else
+        --         self.dx = 0
+        --     end
+        -- end,
+        ['flying'] = function(dt)
             
-            -- keep track of input to switch movement while walking, or reset
+            -- keep track of input to switch movement while flying, or reset
             -- to idle if we're not moving
             if love.keyboard.wasPressed('space') then
                 self.dy = -JUMP_VELOCITY
-                self.state = 'jumping'
-                self.animation = self.animations['jumping']
+                self.animation = self.animations['flying']
                 -- self.sounds['jump']:play()
-            elseif love.keyboard.isDown('left') then
-                self.direction = 'left'
-                self.dx = -WALKING_SPEED
-            elseif love.keyboard.isDown('right') then
-                self.direction = 'right'
-                self.dx = WALKING_SPEED
+            -- elseif love.keyboard.isDown('left') then
+            --     self.direction = 'left'
+            --     self.dx = -WALKING_SPEED
+            -- elseif love.keyboard.isDown('right') then
+            --     self.direction = 'right'
+            --     self.dx = WALKING_SPEED
             else
                 self.dx = 0
-                self.state = 'idle'
-                self.animation = self.animations['idle']
+                self.state = 'flying'
+                self.animation = self.animations['flying']
             end
 
             -- check for collisions moving left and right
             self:checkRightCollision()
-            self:checkLeftCollision()
-            self:checkEndLevel()
+            -- self:checkLeftCollision()
+            -- self:checkEndLevel()
 
             -- check if there's a tile directly beneath us
             if not self.map:collides(self.map:tileAt(self.x, self.y + self.height)) and
                 not self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
                 
                 -- if so, reset velocity and position and change state
-                self.state = 'jumping'
-                self.animation = self.animations['jumping']
-            end
-        end,
-        ['jumping'] = function(dt)
-            -- break if we go below the surface
-            if self.y > 300 then
-                return
+                self.state = 'flying'
+                self.animation = self.animations['flying']
             end
 
-            if love.keyboard.isDown('left') then
-                self.direction = 'left'
-                self.dx = -WALKING_SPEED
-            elseif love.keyboard.isDown('right') then
-                self.direction = 'right'
-                self.dx = WALKING_SPEED
-            end
-
-            -- apply map's gravity before y velocity
             self.dy = self.dy + self.map.gravity
-
-            -- check if there's a tile directly beneath us
-            if self.map:collides(self.map:tileAt(self.x, self.y + self.height)) or
-                self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
-                
-                -- if so, reset velocity and position and change state
-                self.dy = 0
-                self.state = 'idle'
-                self.animation = self.animations['idle']
-                self.y = (self.map:tileAt(self.x, self.y + self.height).y - 1) * self.map.tileHeight - self.height
-            end
-
-            -- check for collisions moving left and right
-            self:checkRightCollision()
-            self:checkLeftCollision()
-
-            if self:checkEndLevel() then
-                love.graphics.setFont(retroFont)
-                love.graphics.printf('TEST', 0, 10, VIRTUAL_WIDTH, 'center')
-            end
         end
+        -- ,
+        -- ['jumping'] = function(dt)
+        --     -- break if we go below the surface
+        --     if self.y > 300 then
+        --         return
+        --     end
+
+        --     if love.keyboard.isDown('left') then
+        --         self.direction = 'left'
+        --         self.dx = -WALKING_SPEED
+        --     elseif love.keyboard.isDown('right') then
+        --         self.direction = 'right'
+        --         self.dx = WALKING_SPEED
+        --     end
+
+        --     -- apply map's gravity before y velocity
+        --     self.dy = self.dy + self.map.gravity
+
+        --     -- check if there's a tile directly beneath us
+        --     if self.map:collides(self.map:tileAt(self.x, self.y + self.height)) or
+        --         self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+                
+        --         -- if so, reset velocity and position and change state
+        --         self.dy = 0
+        --         self.state = 'idle'
+        --         self.animation = self.animations['idle']
+        --         self.y = (self.map:tileAt(self.x, self.y + self.height).y - 1) * self.map.tileHeight - self.height
+        --     end
+
+        --     -- check for collisions moving left and right
+        --     self:checkRightCollision()
+        --     -- self:checkLeftCollision()
+
+        --     -- if self:checkEndLevel() then
+        --     --     love.graphics.setFont(retroFont)
+        --     --     love.graphics.printf('TEST', 0, 10, VIRTUAL_WIDTH, 'center')
+        --     -- end
+        -- end
     }
 end
 
@@ -234,18 +237,18 @@ function Player:calculateJumps()
 end
 
 -- checks two tiles to our left to see if a collision occurred
-function Player:checkLeftCollision()
-    if self.dx < 0 then
-        -- check if there's a tile directly beneath us
-        if self.map:collides(self.map:tileAt(self.x - 1, self.y)) or
-            self.map:collides(self.map:tileAt(self.x - 1, self.y + self.height - 1)) then
+-- function Player:checkLeftCollision()
+--     if self.dx < 0 then
+--         -- check if there's a tile directly beneath us
+--         if self.map:collides(self.map:tileAt(self.x - 1, self.y)) or
+--             self.map:collides(self.map:tileAt(self.x - 1, self.y + self.height - 1)) then
             
-            -- if so, reset velocity and position and change state
-            self.dx = 0
-            self.x = self.map:tileAt(self.x - 1, self.y).x * self.map.tileWidth
-        end
-    end
-end
+--             -- if so, reset velocity and position and change state
+--             self.dx = 0
+--             self.x = self.map:tileAt(self.x - 1, self.y).x * self.map.tileWidth
+--         end
+--     end
+-- end
 
 -- checks two tiles to our right to see if a collision occurred
 function Player:checkRightCollision()
@@ -261,27 +264,27 @@ function Player:checkRightCollision()
     end
 end
 
-function Player:checkEndLevel()
-    if self.dx > 0 then
-        if self.map:end_trigger(self.map:tileAt(self.x + self.width * 0.5, self.y)) or
-            self.map:end_trigger(self.map:tileAt(self.x + self.width * 0.5, self.y + self.height - 1)) then
+-- function Player:checkEndLevel()
+--     if self.dx > 0 then
+--         if self.map:end_trigger(self.map:tileAt(self.x + self.width * 0.5, self.y)) or
+--             self.map:end_trigger(self.map:tileAt(self.x + self.width * 0.5, self.y + self.height - 1)) then
             
-            -- if so, reset velocity and position and change state
-            self.dx = 0
-            self.x = (self.map:tileAt(self.x + self.width * 0.5, self.y).x - 1) * self.map.tileWidth - self.width * 0.5
-            function love.draw()
-                push:apply('start')
-                love.graphics.setFont(retroFont)
-                love.graphics.printf('CONGRATULATIONS!', 0, VIRTUAL_HEIGHT / 2 - 20, VIRTUAL_WIDTH, 'center')
-                love.graphics.printf('SIMULATION COMPLETE', 0, VIRTUAL_HEIGHT / 2 - 10, VIRTUAL_WIDTH, 'center')
-                love.graphics.printf('YOU ARE NOW READY FOR... EARTH!', 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
-                push:apply('end')
-            end
+--             -- if so, reset velocity and position and change state
+--             self.dx = 0
+--             self.x = (self.map:tileAt(self.x + self.width * 0.5, self.y).x - 1) * self.map.tileWidth - self.width * 0.5
+--             function love.draw()
+--                 push:apply('start')
+--                 love.graphics.setFont(retroFont)
+--                 love.graphics.printf('CONGRATULATIONS!', 0, VIRTUAL_HEIGHT / 2 - 20, VIRTUAL_WIDTH, 'center')
+--                 love.graphics.printf('SIMULATION COMPLETE', 0, VIRTUAL_HEIGHT / 2 - 10, VIRTUAL_WIDTH, 'center')
+--                 love.graphics.printf('YOU ARE NOW READY FOR... EARTH!', 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
+--                 push:apply('end')
+--             end
 
-            love.audio.stop()
-        end
-    end
-end
+--             love.audio.stop()
+--         end
+--     end
+-- end
 
 function Player:render()
     local scaleX
