@@ -49,6 +49,9 @@ function Player:init(map)
     self.y = map.tileHeight * ((map.mapHeight - 2) / 2) - self.height
     self.x = map.tileWidth * 10
 
+    retroFont = love.graphics.newFont('fonts/font.ttf', 8)
+    love.graphics.setFont(retroFont)
+
     -- initialize all player animations
     self.animations = {
         ['idle'] = Animation({
@@ -171,7 +174,11 @@ function Player:init(map)
             -- check for collisions moving left and right
             self:checkRightCollision()
             self:checkLeftCollision()
-            self:checkEndLevel()
+
+            if self:checkEndLevel() then
+                love.graphics.setFont(retroFont)
+                love.graphics.printf('TEST', 0, 10, VIRTUAL_WIDTH, 'center')
+            end
         end
     }
 end
@@ -262,6 +269,14 @@ function Player:checkEndLevel()
             -- if so, reset velocity and position and change state
             self.dx = 0
             self.x = (self.map:tileAt(self.x + self.width * 0.5, self.y).x - 1) * self.map.tileWidth - self.width * 0.5
+            function love.draw()
+                push:apply('start')
+                love.graphics.setFont(retroFont)
+                love.graphics.printf('CONGRATULATIONS!', 0, VIRTUAL_HEIGHT / 2 - 20, VIRTUAL_WIDTH, 'center')
+                love.graphics.printf('SIMULATION COMPLETE', 0, VIRTUAL_HEIGHT / 2 - 10, VIRTUAL_WIDTH, 'center')
+                love.graphics.printf('YOU ARE NOW READY FOR... EARTH!', 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
+                push:apply('end')
+            end
         end
     end
 end

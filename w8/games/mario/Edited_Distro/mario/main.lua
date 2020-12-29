@@ -35,7 +35,8 @@ map = Map()
 function love.load()
 
     -- sets up a different, better-looking retro font as our default
-    love.graphics.setFont(love.graphics.newFont('fonts/font.ttf', 8))
+    retroFont = love.graphics.newFont('fonts/font.ttf', 8)
+    love.graphics.setFont(retroFont)
 
     -- sets up virtual screen resolution for an authentic retro feel
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
