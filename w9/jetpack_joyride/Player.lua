@@ -1,3 +1,7 @@
+--[[
+    Represents our player in the game, with its own sprite.
+]]
+
 Player = Class{}
 
 local WALKING_SPEED = 140
@@ -19,11 +23,11 @@ function Player:init(map)
     self.texture = love.graphics.newImage('graphics/jetpack_crewmate.png')
 
     -- sound effects
-    self.sounds = {
-        ['jump'] = love.audio.newSource('sounds/jump.wav', 'static'),
-        ['hit'] = love.audio.newSource('sounds/hit.wav', 'static'),
-        ['coin'] = love.audio.newSource('sounds/coin.wav', 'static')
-    }
+    -- self.sounds = {
+    --     ['jump'] = love.audio.newSource('sounds/jump.wav', 'static'),
+    --     ['hit'] = love.audio.newSource('sounds/hit.wav', 'static'),
+    --     ['coin'] = love.audio.newSource('sounds/coin.wav', 'static')
+    -- }
 
     -- animation frames
     self.frames = {}
@@ -59,12 +63,12 @@ function Player:init(map)
         ['walking'] = Animation({
             texture = self.texture,
             frames = {
-                love.graphics.newQuad(128, 0, 16, 20, self.texture:getDimensions()),
-                love.graphics.newQuad(144, 0, 16, 20, self.texture:getDimensions()),
-                love.graphics.newQuad(160, 0, 16, 20, self.texture:getDimensions()),
-                love.graphics.newQuad(144, 0, 16, 20, self.texture:getDimensions()),
+                love.graphics.newQuad(0, 0, 16, 20, self.texture:getDimensions()),
+                love.graphics.newQuad(16, 0, 16, 20, self.texture:getDimensions()),
+                love.graphics.newQuad(32, 0, 16, 20, self.texture:getDimensions()),
+                love.graphics.newQuad(16, 0, 16, 20, self.texture:getDimensions()),
             },
-            interval = 0.15
+            interval = 0.25
         }),
         ['jumping'] = Animation({
             texture = self.texture,
