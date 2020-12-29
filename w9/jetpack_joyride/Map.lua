@@ -46,7 +46,7 @@ function Map:init()
 
     self.spritesheet = love.graphics.newImage('graphics/spritesheet.png')
     self.sprites = generateQuads(self.spritesheet, 16, 16)
-    self.music = love.audio.newSource('sounds/music.wav', 'static')
+    -- self.music = love.audio.newSource('sounds/music.wav', 'static')
 
     self.tileWidth = 16
     self.tileHeight = 16
@@ -59,7 +59,7 @@ function Map:init()
 
     -- associate player with map
     self.player = Player(self)
-    self.flag = Flag(self)
+    -- self.flag = Flag(self)
 
     -- camera offsets
     self.camX = 0
@@ -174,8 +174,8 @@ function Map:init()
     end
 
     -- start the background music
-    self.music:setLooping(true)
-    self.music:play()
+    -- self.music:setLooping(true)
+    -- self.music:play()
 end
 
 -- return whether a given tile is collidable
@@ -216,7 +216,7 @@ end
 -- function to update camera offset with delta time
 function Map:update(dt)
     self.player:update(dt)
-    self.flag:update(dt)
+    -- self.flag:update(dt)
     
     -- keep camera's X coordinate following the player, preventing camera from
     -- scrolling past 0 to the left and the map's width
@@ -256,5 +256,5 @@ function Map:render()
     end
 
     self.player:render()
-    self.flag:render()
+    -- self.flag:render()
 end

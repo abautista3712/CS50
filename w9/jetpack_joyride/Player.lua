@@ -42,7 +42,7 @@ function Player:init(map)
     self.direction = 'right'
 
     -- x and y velocity
-    self.dx = 0
+    self.dx = 60 * 2
     self.dy = 0
 
     -- position on top of map tiles
@@ -95,7 +95,6 @@ function Player:init(map)
                 self.animation = self.animations['flying']
                 -- self.sounds['jump']:play()
             else
-                self.dx = 0
                 self.state = 'idle'
                 self.animation = self.animations['idle']
             end
@@ -175,7 +174,6 @@ function Player:checkRightCollision()
             self.map:collides(self.map:tileAt(self.x + self.width, self.y + self.height - 1)) then
             
             -- if so, reset velocity and position and change state
-            self.dx = 0
             self.x = (self.map:tileAt(self.x + self.width, self.y).x - 1) * self.map.tileWidth - self.width
         end
     end
