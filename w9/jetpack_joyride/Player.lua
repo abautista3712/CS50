@@ -4,7 +4,7 @@
 
 Player = Class{}
 
-local WALKING_SPEED = 140
+-- local WALKING_SPEED = 140
 local BOOST_VELOCITY = 125
 
 function Player:init(map)
@@ -43,6 +43,7 @@ function Player:init(map)
 
     -- x and y velocity
     self.dx = 60 * 2
+    -- self.dx = 0
     self.dy = 0
 
     -- position on top of map tiles
@@ -135,7 +136,7 @@ function Player:calculateJumps()
     -- with any blocks above us
     if self.dy < 0 then
         if self.map:tileAt(self.x, self.y).id ~= TILE_EMPTY or
-            self.map:tileAt(self.x + self.width - 1, self.y - 10).id ~= TILE_EMPTY then
+            self.map:tileAt(self.x + self.width - 1, self.y).id ~= TILE_EMPTY then
             -- reset y velocity
             self.dy = 0
 
@@ -175,22 +176,15 @@ function Player:checkRightCollision()
             
             -- if so, reset velocity and position and change state
             self.x = (self.map:tileAt(self.x + self.width, self.y).x - 1) * self.map.tileWidth - self.width
+            self.dx = 0
         end
     end
 end
 
 function Player:render()
-    local scale = 2
-
-    -- set negative x scale factor if facing left, which will flip the sprite
-    -- when applied
-    -- if self.direction == 'right' then
-    --     scaleX = 1
-    -- else
-    --     scaleX = -1
-    -- end
-
     -- draw sprite with scale factor and offsets
+    local scale = 3
+
     love.graphics.draw(self.texture, self.currentFrame, math.floor(self.x + self.xOffset),
         math.floor(self.y + self.yOffset), 0, scale, scale, self.xOffset, self.yOffset)
 end

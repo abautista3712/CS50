@@ -90,22 +90,22 @@ function Map:init()
                 x = x + 1
             end
         -- Prepare end of level with no pitfalls
-        elseif x > PYRAMID_END then
-            for y = self.mapHeight / 2, self.mapHeight do
-                self:setTile(x, y, TILE_BRICK)
-            end
+        -- elseif x > PYRAMID_END then
+            -- for y = self.mapHeight / 2, self.mapHeight do
+            --     self:setTile(x, y, TILE_BRICK)
+            -- end
             
-            if x == PYRAMID_END + FLAGPOLE_DIST then
-                self:setTile(x, self.mapHeight / 2 - 12, FLAGPOLE_TOP)
+            -- if x == PYRAMID_END + FLAGPOLE_DIST then
+            --     self:setTile(x, self.mapHeight / 2 - 12, FLAGPOLE_TOP)
 
-                for y = self.mapHeight / 2 - 11, self.mapHeight / 2 - 2 do
-                    self:setTile(x, y, FLAGPOLE_MID)
-                end
+            --     for y = self.mapHeight / 2 - 11, self.mapHeight / 2 - 2 do
+            --         self:setTile(x, y, FLAGPOLE_MID)
+            --     end
 
-                self:setTile(x, self.mapHeight / 2 - 1, FLAGPOLE_BOT)
-            end
+            --     self:setTile(x, self.mapHeight / 2 - 1, FLAGPOLE_BOT)
+            -- end
 
-            x = x + 1
+            -- x = x + 1
         else
             -- 2% chance to generate a cloud
             -- make sure we're 2 tiles from edge at least
