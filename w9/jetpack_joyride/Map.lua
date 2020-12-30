@@ -10,11 +10,29 @@ require 'Flag'
 Map = Class{}
 
 TILE_BRICK = 1
+
+-- utility tiles
 TILE_EMPTY = -1
 
--- cloud tiles
-CLOUD_LEFT = 6
-CLOUD_RIGHT = 7
+-- star tiles
+SINGLE_STAR = 2
+SHOOTING_STAR_LEFT = 14
+SHOOTING_STAR_RIGHT = 15
+TWINKLE_STAR_1 = 5
+TWINKLE_STAR_2 = 6
+TWINKLE_STAR_3 = 9
+
+-- asteroid tiles
+ASTEROID_TOP_LEFT = 3
+ASTEROID_TOP_RIGHT = 4
+ASTEROID_BOT_LEFT = 7
+ASTEROID_BOT_RIGHT = 8
+
+-- miscellaneous space tiles
+GALAXY = 10
+PLANETS = 11
+ALIEN = 12
+ROCKET = 13
 
 -- bush tiles
 BUSH_LEFT = 2
@@ -107,69 +125,156 @@ function Map:init()
 
             -- x = x + 1
         else
-            -- 2% chance to generate a cloud
-            -- make sure we're 2 tiles from edge at least
-            if x < self.mapWidth - 2 then
-                if math.random(20) == 1 then
+            -- 1% chance to generate shooting star 
+            if math.random(100) == 1 then
                     
-                    -- choose a random vertical spot above where blocks/pipes generate
-                    local cloudStart = math.random(self.mapHeight / 2 - 6)
+                -- choose a random vertical spot in view
+                local spriteStart = math.random(self.mapHeight / 2)
 
-                    self:setTile(x, cloudStart, CLOUD_LEFT)
-                    self:setTile(x + 1, cloudStart, CLOUD_RIGHT)
-                end
-            end
+                self:setTile(x, spriteStart, SHOOTING_STAR_LEFT)
+                self:setTile(x + 1, spriteStart, SHOOTING_STAR_RIGHT)
 
-            -- 5% chance to generate a mushroom
-            if math.random(20) == 1 then
-                -- left side of pipe
-                self:setTile(x, self.mapHeight / 2 - 2, MUSHROOM_TOP)
-                self:setTile(x, self.mapHeight / 2 - 1, MUSHROOM_BOTTOM)
-
-                -- creates column of tiles going to bottom of map
-                for y = self.mapHeight / 2, self.mapHeight do
-                    self:setTile(x, y, TILE_BRICK)
-                end
-
-                -- next vertical scan line
-                x = x + 1
-
-            -- 10% chance to generate bush, being sure to generate away from edge
-            elseif math.random(10) == 1 and x < self.mapWidth - 3 then
-                local bushLevel = self.mapHeight / 2 - 1
-
-                -- place bush component and then column of bricks
-                self:setTile(x, bushLevel, BUSH_LEFT)
-                for y = self.mapHeight / 2, self.mapHeight do
-                    self:setTile(x, y, TILE_BRICK)
-                end
-                x = x + 1
-                self:setTile(x, bushLevel, BUSH_RIGHT)
-                for y = self.mapHeight / 2, self.mapHeight do
-                    self:setTile(x, y, TILE_BRICK)
-                end
-                x = x + 1
-                
-            -- 10% chance to not generate anything, creating a gap
-            elseif math.random(10) ~= 1 then
-                
-                -- creates column of tiles going to bottom of map
-                for y = self.mapHeight / 2, self.mapHeight do
-                    self:setTile(x, y, TILE_BRICK)
-                end
-
-                -- chance to create a block for Mario to hit
-                if math.random(15) == 1 then
-                    self:setTile(x, self.mapHeight / 2 - 4, JUMP_BLOCK)
-                end
-
-                -- next vertical scan line
-                x = x + 1
-
-            else
-                -- increment X so we skip two scanlines, creating a 2-tile gap
                 x = x + 2
+
+            -- 1% chance to generate galaxy
+            elseif math.random(250) == 1 then
+                                    
+                -- choose a random vertical spot in view
+                local spriteStart = math.random(self.mapHeight / 2)
+
+                self:setTile(x, spriteStart, GALAXY)
+
+                x = x + 1
+
+            -- 1% chance to generate planets
+            elseif math.random(250) == 1 then
+                                    
+                -- choose a random vertical spot in view
+                local spriteStart = math.random(self.mapHeight / 2)
+
+                self:setTile(x, spriteStart, PLANETS)
+
+                x = x + 1
+
+            -- 1% chance to generate alien
+            elseif math.random(250) == 1 then
+                                    
+                -- choose a random vertical spot in view
+                local spriteStart = math.random(self.mapHeight / 2)
+
+                self:setTile(x, spriteStart, ALIEN)
+
+                x = x + 1
+
+            -- 1% chance to generate rocket
+            elseif math.random(250) == 1 then
+                                    
+                -- choose a random vertical spot in view
+                local spriteStart = math.random(self.mapHeight / 2)
+
+                self:setTile(x, spriteStart, ROCKET)
+
+                x = x + 1
+
+                
+                -- 5% chance to generate single star
+            elseif math.random(200) == 1 then
+                    
+                -- choose a random vertical spot in view
+                local spriteStart = math.random(self.mapHeight / 2)
+                    
+                self:setTile(x, spriteStart, SINGLE_STAR)
+                    
+                x = x + 1
+                    
             end
+
+            -- 5% chance to generate twinkle star 1
+            if math.random(25) == 1 then
+                    
+                -- choose a random vertical spot in view
+                local spriteStart = math.random(self.mapHeight / 2)
+
+                self:setTile(x, spriteStart, TWINKLE_STAR_1)
+
+                -- x = x + 1
+
+            -- 10% chance to generate twinkle star 2
+            elseif math.random(7) == 1 then
+                    
+                -- choose a random vertical spot in view
+                local spriteStart = math.random(self.mapHeight / 2)
+
+                self:setTile(x, spriteStart, TWINKLE_STAR_2)
+
+                -- x = x + 1
+
+            -- 10% chance to generate twinkle star 3
+            elseif math.random(7) == 1 then
+                    
+                -- choose a random vertical spot in view
+                local spriteStart = math.random(self.mapHeight / 2)
+
+                self:setTile(x, spriteStart, TWINKLE_STAR_3)
+
+                -- x = x + 1
+                
+            else
+
+                x = x + 1
+
+            end
+            -- 5% chance to generate a mushroom
+            -- if math.random(20) == 1 then
+            --     -- left side of pipe
+            --     self:setTile(x, self.mapHeight / 2 - 2, MUSHROOM_TOP)
+            --     self:setTile(x, self.mapHeight / 2 - 1, MUSHROOM_BOTTOM)
+
+            --     -- creates column of tiles going to bottom of map
+            --     for y = self.mapHeight / 2, self.mapHeight do
+            --         self:setTile(x, y, TILE_BRICK)
+            --     end
+
+            -- else
+            --     -- next vertical scan line
+            --     x = x + 1
+            -- end
+
+            -- -- 10% chance to generate bush, being sure to generate away from edge
+            -- elseif math.random(10) == 1 and x < self.mapWidth - 3 then
+            --     local bushLevel = self.mapHeight / 2 - 1
+
+            --     -- place bush component and then column of bricks
+            --     self:setTile(x, bushLevel, BUSH_LEFT)
+            --     for y = self.mapHeight / 2, self.mapHeight do
+            --         self:setTile(x, y, TILE_BRICK)
+            --     end
+            --     x = x + 1
+            --     self:setTile(x, bushLevel, BUSH_RIGHT)
+            --     for y = self.mapHeight / 2, self.mapHeight do
+            --         self:setTile(x, y, TILE_BRICK)
+            --     end
+            --     x = x + 1
+                
+            -- -- 10% chance to not generate anything, creating a gap
+            -- elseif math.random(10) ~= 1 then
+                
+            --     -- creates column of tiles going to bottom of map
+            --     for y = self.mapHeight / 2, self.mapHeight do
+            --         self:setTile(x, y, TILE_BRICK)
+            --     end
+
+            --     -- chance to create a block for Mario to hit
+            --     if math.random(15) == 1 then
+            --         self:setTile(x, self.mapHeight / 2 - 4, JUMP_BLOCK)
+            --     end
+
+            --     -- next vertical scan line
+            --     x = x + 1
+
+            -- else
+            --     -- increment X so we skip two scanlines, creating a 2-tile gap
+            --     x = x + 2
         end
     end
 
