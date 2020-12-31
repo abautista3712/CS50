@@ -42,8 +42,8 @@ function Player:init(map)
     self.direction = 'right'
 
     -- x and y velocity
-    -- self.dx = 60 * 2
-    self.dx = 20
+    self.dx = 60 * 2
+    -- self.dx = 20
     self.dy = 0
 
     -- position on top of map tiles
@@ -125,7 +125,7 @@ function Player:update(dt)
     self.currentFrame = self.animation:getCurrentFrame()
     self.x = self.x + self.dx * dt
 
-    self:calculateJumps()
+    self:calculateUpDownCollision()
     self:calculateOOB()
 
     -- apply velocity
@@ -133,18 +133,21 @@ function Player:update(dt)
 end
 
 -- jumping and block hitting logic
-function Player:calculateJumps()
+function Player:calculateUpDownCollision()
     
-    -- if we have negative y velocity (flying), check if we collide
-    -- with any blocks above us
-    -- if self.dy < 0 then
+    if self.dy < 0 or self.dy > 0 then
         if self.map:collides(self.map:tileAt(self.x, self.y + self.height)) or
-            self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
-            -- self.map:tileAt(self.x, self.y).id ~= TILE_EMPTY or
-            -- self.map:tileAt(self.x + self.width - 1, self.y).id ~= TILE_EMPTY then
-            -- reset y velocity
+        self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+
             self.dx = 0
             self.dy = 0
+            function love.draw()
+                push:apply('start')
+                love.graphics.setFont(retroFont)
+                love.graphics.printf('YOU CRASHED INTO AN ASTEROID', 0, VIRTUAL_HEIGHT / 2 - 20, VIRTUAL_WIDTH, 'center')
+                love.graphics.printf('RESTART TO PLAY AGAIN!', 0, VIRTUAL_HEIGHT / 2 - 10, VIRTUAL_WIDTH, 'center')
+                push:apply('end')
+            end
         
 
             -- change block to different block
@@ -171,7 +174,7 @@ function Player:calculateJumps()
             --     self.sounds['hit']:play()
             -- end
         end
-    -- end
+    end
 end
 
 -- Out of bounds logic
@@ -179,6 +182,8 @@ function Player:calculateOOB()
     if self.map:tileAt(self.x, self.y).id == OOB or
         self.map:tileAt(self.x + self.width - 1, self.y).id == OOB 
     then
+        self.dx = 0
+        self.dy = 0
         function love.draw()
             push:apply('start')
             love.graphics.setFont(retroFont)
