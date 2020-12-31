@@ -22,12 +22,15 @@ function Player:init(map)
     self.map = map
     self.texture = love.graphics.newImage('graphics/jetpack_crewmate.png')
 
-    self.music = love.audio.newSource('music/yoitrax-long-way.wav', 'static')
+    self.music = {
+        ['death'] = love.audio.newSource('music/yoitrax-long-way.wav', 'stream'),
+        ['victory'] = love.audio.newSource('music/fsm-team-inspirational-audio-logo.wav', 'static')
+    }
 
     -- sound effects
     self.sounds = {
         ['boost'] = love.audio.newSource('sounds/boost.wav', 'static'),
-        ['death'] = love.audio.newSource('sounds/death.wav', 'static'),
+        -- ['death'] = love.audio.newSource('sounds/death.wav', 'static'),
     --     ['coin'] = love.audio.newSource('sounds/coin.wav', 'static')
     }
 
@@ -111,10 +114,15 @@ function Player:init(map)
             self.dx = 0
             self.dy = 0
 
-            
+            self.music['death']:setLooping(true)
+            self.music['death']:play()
+        end,
+        ['victory'] = function(dt)
+            self.dx = 0
+            self.dy = 0
 
-            self.music:setLooping(true)
-            self.music:play()
+            self.music['victory']:setLooping(false)
+            self.music['victory']:play()
         end
     }
 end
@@ -126,8 +134,8 @@ function Player:update(dt)
     self.x = self.x + self.dx * dt
 
     -- End Level Conditions
+    self:handleEndGame()
     self:calculateUpDownCollision()
-    self:calculateOOB()
 
     -- apply velocity
     self.y = self.y + self.dy * dt
@@ -140,7 +148,7 @@ function Player:calculateUpDownCollision()
         if self.map:collides(self.map:tileAt(self.x, self.y + self.height)) or
         self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
 
-            love.audio.stop()
+            self.map.music:stop()
 
             function love.draw()
                 push:apply('start')
@@ -180,13 +188,13 @@ function Player:calculateUpDownCollision()
     end
 end
 
--- Out of bounds logic
-function Player:calculateOOB()
+-- End game logic
+function Player:handleEndGame()
     if self.map:tileAt(self.x, self.y).id == OOB or
-        self.map:tileAt(self.x + self.width - 1, self.y).id == OOB 
-    then
-        self.dx = 0
-        self.dy = 0
+        self.map:tileAt(self.x + self.width - 1, self.y + self.height - 1).id == OOB then
+
+        self.map.music:stop()
+
         function love.draw()
             push:apply('start')
             love.graphics.setFont(retroFont)
@@ -194,7 +202,25 @@ function Player:calculateOOB()
             love.graphics.printf('RESTART TO PLAY AGAIN!', 0, VIRTUAL_HEIGHT / 2 - 10, VIRTUAL_WIDTH, 'center')
             push:apply('end')
         end
+        
+        self.state = 'death'
+    
+    elseif self.map:tileAt(self.x, self.y).id == FINISH or
+        self.map:tileAt(self.x + self.width - 1, self.y + self.height - 1).id == FINISH then
 
+        self.map.music:stop()
+
+        function love.draw()
+            push:apply('start')
+            love.graphics.setFont(retroFont)
+            love.graphics.printf('CONGRATULATIONS! YOU ESCAPED THE ASTEROID FIELD!', 0, VIRTUAL_HEIGHT / 2 - 20, VIRTUAL_WIDTH, 'center')
+            love.graphics.printf('RESTART TO PLAY AGAIN!', 0, VIRTUAL_HEIGHT / 2 - 10, VIRTUAL_WIDTH, 'center')
+            push:apply('end')
+        end
+
+        self.state = 'victory'
+
+    end
             -- change block to different block
             -- local playCoin = false
             -- local playHit = false
@@ -218,7 +244,7 @@ function Player:calculateOOB()
             -- elseif playHit then
             --     self.sounds['hit']:play()
             -- end
-    end
+    -- end
 end
 
 -- checks two tiles to our right to see if a collision occurred

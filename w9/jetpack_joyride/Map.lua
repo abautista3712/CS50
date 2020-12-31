@@ -32,6 +32,9 @@ ROCKET = 13
 -- OOB Tile
 OOB = 16
 
+-- Finish Tile
+FINISH = 1
+
 local SCROLL_SPEED = 62
 
 -- Constructor for map object
@@ -39,7 +42,7 @@ function Map:init()
 
     self.spritesheet = love.graphics.newImage('graphics/spritesheet.png')
     self.sprites = generateQuads(self.spritesheet, 16, 16)
-    self.music = love.audio.newSource('music/electronic-senses-in-orbit.wav', 'static')
+    self.music = love.audio.newSource('music/electronic-senses-in-orbit.wav', 'stream')
 
     self.tileWidth = 16
     self.tileHeight = 16
@@ -151,13 +154,17 @@ function Map:init()
         end
     end
 
-    -- Generate Out of Bounds tiles
+    -- Generate End tiles
         for x = 1, self.mapWidth do
             self:setTile(x, 0, OOB)
         end
 
         for x = 1, self.mapWidth do
             self:setTile(x, self.mapHeight / 2 + 1, OOB)
+        end
+
+        for y = 0, self.mapHeight do
+            self:setTile(self.mapWidth, y, FINISH)
         end
 
     -- Start the background music
