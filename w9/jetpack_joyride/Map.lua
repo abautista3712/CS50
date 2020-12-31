@@ -39,7 +39,7 @@ function Map:init()
 
     self.spritesheet = love.graphics.newImage('graphics/spritesheet.png')
     self.sprites = generateQuads(self.spritesheet, 16, 16)
-    -- self.music = love.audio.newSource('sounds/music.wav', 'static')
+    self.music = love.audio.newSource('music/electronic-senses-in-orbit.wav', 'static')
 
     self.tileWidth = 16
     self.tileHeight = 16
@@ -87,7 +87,7 @@ function Map:init()
             x = x + 2
         else
             -- Generate shooting star 
-            if math.random(200) == 1 then
+            if math.random(50) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, SHOOTING_STAR_LEFT)
                 self:setTile(x + 1, spriteStart, SHOOTING_STAR_RIGHT)
@@ -96,53 +96,57 @@ function Map:init()
                 end
 
             -- Generate galaxy
-            elseif math.random(200) == 1 then
+            elseif math.random(50) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, GALAXY)
                 x = x + 1
 
             -- Generate planets
-            elseif math.random(200) == 1 then
+            elseif math.random(50) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, PLANETS)
                 x = x + 1
 
             -- Generate alien
-            elseif math.random(200) == 1 then
+            elseif math.random(50) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, ALIEN)
                 x = x + 1
 
             -- Generate rocket
-            elseif math.random(200) == 1 then
+            elseif math.random(50) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, ROCKET)
                 x = x + 1
                 
             -- Generate single star
-            elseif math.random(200) == 1 then
+            elseif math.random(10) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, SINGLE_STAR)
                 x = x + 1
-            end
+
+            -- end
 
 
             -- Generate twinkle star 1
-            if math.random(25) == 1 then
+            elseif math.random(25) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, TWINKLE_STAR_1)
+                x = x + 1
 
             -- Generate twinkle star 2
             elseif math.random(4) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, TWINKLE_STAR_2)
+                x = x + 1
 
             -- Generate twinkle star 3
             elseif math.random(4) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, TWINKLE_STAR_3)
-            else
                 x = x + 1
+            -- else
+            --     x = x + 1
             end
         end
     end
@@ -156,9 +160,9 @@ function Map:init()
             self:setTile(x, self.mapHeight / 2 + 1, OOB)
         end
 
-    -- start the background music
-    -- self.music:setLooping(true)
-    -- self.music:play()
+    -- Start the background music
+    self.music:setLooping(true)
+    self.music:play()
 end
 
 -- Return whether a given tile is collidable

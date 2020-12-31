@@ -22,12 +22,14 @@ function Player:init(map)
     self.map = map
     self.texture = love.graphics.newImage('graphics/jetpack_crewmate.png')
 
+    self.music = love.audio.newSource('music/yoitrax-long-way.wav', 'static')
+
     -- sound effects
-    -- self.sounds = {
-    --     ['jump'] = love.audio.newSource('sounds/jump.wav', 'static'),
-    --     ['hit'] = love.audio.newSource('sounds/hit.wav', 'static'),
+    self.sounds = {
+        ['boost'] = love.audio.newSource('sounds/boost.wav', 'static'),
+        ['death'] = love.audio.newSource('sounds/death.wav', 'static'),
     --     ['coin'] = love.audio.newSource('sounds/coin.wav', 'static')
-    -- }
+    }
 
     -- animation frames
     self.frames = {}
@@ -85,6 +87,7 @@ function Player:init(map)
                 self.dy = -BOOST_VELOCITY
                 self.state = 'flying'
                 self.animation = self.animations['flying']
+                self.sounds['boost']:play()
             else
                 self.dy = self.dy + self.map.gravity
             end
@@ -102,19 +105,16 @@ function Player:init(map)
 
             -- check for collisions moving right
             self:checkRightCollision()
-
-            -- check if there's a tile directly beneath us
-            -- if self.map:collides(self.map:tileAt(self.x + self.width, self.y)) and
-            --    self.map:collides(self.map:tileAt(self.x + self.width, self.y + self.height)) then
-                
-                -- if so, reset velocity and position and change state
-                -- self.state = 'idle'
-                -- self.animation = self.animations['idle']
-
-            --     self.dx = 0
-            -- end
-
             self.dy = self.dy + self.map.gravity
+        end,
+        ['death'] = function(dt)
+            self.dx = 0
+            self.dy = 0
+
+            
+
+            self.music:setLooping(true)
+            self.music:play()
         end
     }
 end
@@ -140,8 +140,8 @@ function Player:calculateUpDownCollision()
         if self.map:collides(self.map:tileAt(self.x, self.y + self.height)) or
         self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
 
-            self.dx = 0
-            self.dy = 0
+            love.audio.stop()
+
             function love.draw()
                 push:apply('start')
                 love.graphics.setFont(retroFont)
@@ -149,6 +149,8 @@ function Player:calculateUpDownCollision()
                 love.graphics.printf('RESTART TO PLAY AGAIN!', 0, VIRTUAL_HEIGHT / 2 - 10, VIRTUAL_WIDTH, 'center')
                 push:apply('end')
             end
+
+            self.state = 'death'
         
 
             -- change block to different block
