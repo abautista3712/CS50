@@ -32,6 +32,9 @@ PLANETS = 11
 ALIEN = 12
 ROCKET = 13
 
+-- OOB tile
+OOB = 16
+
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
@@ -144,6 +147,17 @@ function Map:init()
             end
         end
     end
+
+    -- first, fill map with empty tiles
+    -- if y == self.mapHeight / 2 - 2 then
+        for x = 1, self.mapWidth do
+            self:setTile(x, 0, OOB)
+        end
+
+        for x = 1, self.mapWidth do
+            self:setTile(x, self.mapHeight / 2 + 1, OOB)
+        end
+    -- end
 
     -- start the background music
     -- self.music:setLooping(true)

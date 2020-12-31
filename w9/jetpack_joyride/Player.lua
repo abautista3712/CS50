@@ -42,16 +42,16 @@ function Player:init(map)
     self.direction = 'right'
 
     -- x and y velocity
-    self.dx = 60 * 2
-    -- self.dx = 0
+    -- self.dx = 60 * 2
+    self.dx = 20
     self.dy = 0
 
     -- position on top of map tiles
     self.y = map.tileHeight * ((map.mapHeight - 2) / 4)
     self.x = map.tileWidth * 5
 
-    retroFont = love.graphics.newFont('fonts/font.ttf', 8)
-    love.graphics.setFont(retroFont)
+    -- retroFont = love.graphics.newFont('fonts/font.ttf', 8)
+    -- love.graphics.setFont(retroFont)
 
     -- initialize all player animations
     self.animations = {
@@ -100,16 +100,18 @@ function Player:init(map)
                 self.animation = self.animations['idle']
             end
 
-            -- check for collisions moving left and right
+            -- check for collisions moving right
             self:checkRightCollision()
 
             -- check if there's a tile directly beneath us
-            -- if not self.map:collides(self.map:tileAt(self.x, self.y + self.height)) and
-            --     not self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+            -- if self.map:collides(self.map:tileAt(self.x + self.width, self.y)) and
+            --    self.map:collides(self.map:tileAt(self.x + self.width, self.y + self.height)) then
                 
-            --     -- if so, reset velocity and position and change state
-            --     self.state = 'idle'
-            --     self.animation = self.animations['idle']
+                -- if so, reset velocity and position and change state
+                -- self.state = 'idle'
+                -- self.animation = self.animations['idle']
+
+            --     self.dx = 0
             -- end
 
             self.dy = self.dy + self.map.gravity
@@ -124,6 +126,7 @@ function Player:update(dt)
     self.x = self.x + self.dx * dt
 
     self:calculateJumps()
+    self:calculateOOB()
 
     -- apply velocity
     self.y = self.y + self.dy * dt
@@ -134,11 +137,15 @@ function Player:calculateJumps()
     
     -- if we have negative y velocity (flying), check if we collide
     -- with any blocks above us
-    if self.dy < 0 then
-        if self.map:tileAt(self.x, self.y).id ~= TILE_EMPTY or
-            self.map:tileAt(self.x + self.width - 1, self.y).id ~= TILE_EMPTY then
+    -- if self.dy < 0 then
+        if self.map:collides(self.map:tileAt(self.x, self.y + self.height)) or
+            self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+            -- self.map:tileAt(self.x, self.y).id ~= TILE_EMPTY or
+            -- self.map:tileAt(self.x + self.width - 1, self.y).id ~= TILE_EMPTY then
             -- reset y velocity
+            self.dx = 0
             self.dy = 0
+        
 
             -- change block to different block
             -- local playCoin = false
@@ -164,6 +171,45 @@ function Player:calculateJumps()
             --     self.sounds['hit']:play()
             -- end
         end
+    -- end
+end
+
+-- Out of bounds logic
+function Player:calculateOOB()
+    if self.map:tileAt(self.x, self.y).id == OOB or
+        self.map:tileAt(self.x + self.width - 1, self.y).id == OOB 
+    then
+        function love.draw()
+            push:apply('start')
+            love.graphics.setFont(retroFont)
+            love.graphics.printf('YOU GOT SUCKED OUT INTO THE VOID', 0, VIRTUAL_HEIGHT / 2 - 20, VIRTUAL_WIDTH, 'center')
+            love.graphics.printf('RESTART TO PLAY AGAIN!', 0, VIRTUAL_HEIGHT / 2 - 10, VIRTUAL_WIDTH, 'center')
+            push:apply('end')
+        end
+
+            -- change block to different block
+            -- local playCoin = false
+            -- local playHit = false
+            -- if self.map:tileAt(self.x, self.y).id == JUMP_BLOCK then
+            --     self.map:setTile(math.floor(self.x / self.map.tileWidth) + 1,
+            --         math.floor(self.y / self.map.tileHeight) + 1, JUMP_BLOCK_HIT)
+            --     playCoin = true
+            -- else
+            --     playHit = true
+            -- end
+            -- if self.map:tileAt(self.x + self.width - 1, self.y).id == JUMP_BLOCK then
+            --     self.map:setTile(math.floor((self.x + self.width - 1) / self.map.tileWidth) + 1,
+            --         math.floor(self.y / self.map.tileHeight) + 1, JUMP_BLOCK_HIT)
+            --     playCoin = true
+            -- else
+            --     playHit = true
+            -- end
+
+            -- if playCoin then
+            --     self.sounds['coin']:play()
+            -- elseif playHit then
+            --     self.sounds['hit']:play()
+            -- end
     end
 end
 
@@ -175,15 +221,16 @@ function Player:checkRightCollision()
             self.map:collides(self.map:tileAt(self.x + self.width, self.y + self.height - 1)) then
             
             -- if so, reset velocity and position and change state
-            self.x = (self.map:tileAt(self.x + self.width, self.y).x - 1) * self.map.tileWidth - self.width
             self.dx = 0
+            self.dy = 0
+            -- self.x = (self.map:tileAt(self.x + self.width, self.y).x - 2) * self.map.tileWidth - self.width
         end
     end
 end
 
 function Player:render()
     -- draw sprite with scale factor and offsets
-    local scale = 2
+    local scale = 1
 
     love.graphics.draw(self.texture, self.currentFrame, math.floor(self.x + self.xOffset),
         math.floor(self.y + self.yOffset), 0, scale, scale, self.xOffset, self.yOffset)
