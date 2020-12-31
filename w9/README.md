@@ -2,7 +2,7 @@
 
 Created by abautista3712 | https://github.com/abautista3712/CS50/tree/master/w9/jetpack_joyride
 
-![Jetpack Joyride_Screenshot](./jetpack_joyride/assets/Jetpack_Joyride_Screenshot.PNG?raw=true "Playscreen")
+![Jetpack Joyride_Screenshot](./jetpack_joyride/assets/Jetpack_Joyride_Screenshot.png?raw=true "Playscreen")
 
 ## Description
 
