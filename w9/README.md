@@ -11,6 +11,7 @@ Jetpack Joyride is a game developed in LÖVE2D that is largely inspired by the o
 ## Table of Contents
 
 - [Usage](#usage)
+- [Demo](#demo)
 - [License](#license)
 - [Credits](#credits)
 - [Contributing](#contributing)
@@ -19,6 +20,11 @@ Jetpack Joyride is a game developed in LÖVE2D that is largely inspired by the o
 ## Usage
 
 Code can be run by downloading and running on LÖVE2D (https://love2d.org/)
+
+## Demo
+
+Demo of the game can be found:
+https://www.youtube.com/watch?v=1d5uX7WIPj4&feature=youtu.be
 
 ## License
 
