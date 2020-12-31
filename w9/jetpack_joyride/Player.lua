@@ -5,7 +5,7 @@
 Player = Class{}
 
 -- local WALKING_SPEED = 140
-local BOOST_VELOCITY = 125
+local BOOST_VELOCITY = 100
 
 function Player:init(map)
     
@@ -43,7 +43,7 @@ function Player:init(map)
 
     -- x and y velocity
     self.dx = 60 * 2
-    -- self.dx = 20
+    -- self.dx = 5
     self.dy = 0
 
     -- position on top of map tiles
@@ -125,6 +125,7 @@ function Player:update(dt)
     self.currentFrame = self.animation:getCurrentFrame()
     self.x = self.x + self.dx * dt
 
+    -- End Level Conditions
     self:calculateUpDownCollision()
     self:calculateOOB()
 
@@ -235,7 +236,7 @@ end
 
 function Player:render()
     -- draw sprite with scale factor and offsets
-    local scale = 1
+    local scale = 2
 
     love.graphics.draw(self.texture, self.currentFrame, math.floor(self.x + self.xOffset),
         math.floor(self.y + self.yOffset), 0, scale, scale, self.xOffset, self.yOffset)
