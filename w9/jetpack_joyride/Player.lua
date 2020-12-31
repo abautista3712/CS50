@@ -30,8 +30,6 @@ function Player:init(map)
     -- sound effects
     self.sounds = {
         ['boost'] = love.audio.newSource('sounds/boost.wav', 'static'),
-        -- ['death'] = love.audio.newSource('sounds/death.wav', 'static'),
-    --     ['coin'] = love.audio.newSource('sounds/coin.wav', 'static')
     }
 
     -- animation frames
@@ -48,15 +46,11 @@ function Player:init(map)
 
     -- x and y velocity
     self.dx = 60 * 2
-    -- self.dx = 5
     self.dy = 0
 
     -- position on top of map tiles
     self.y = map.tileHeight * ((map.mapHeight - 2) / 4)
     self.x = map.tileWidth * 5
-
-    -- retroFont = love.graphics.newFont('fonts/font.ttf', 8)
-    -- love.graphics.setFont(retroFont)
 
     -- initialize all player animations
     self.animations = {
@@ -141,12 +135,12 @@ function Player:update(dt)
     self.y = self.y + self.dy * dt
 end
 
--- jumping and block hitting logic
+-- Logic for up/down collision
 function Player:calculateUpDownCollision()
     
     if self.dy < 0 or self.dy > 0 then
-        if self.map:collides(self.map:tileAt(self.x, self.y + self.height)) or
-        self.map:collides(self.map:tileAt(self.x + self.width - 1, self.y + self.height)) then
+        if self.map:collides(self.map:tileAt(self.x + self.width + 1, self.y)) or
+        self.map:collides(self.map:tileAt(self.x + self.width + 1, self.y + self.height)) then
 
             self.map.music:stop()
 
@@ -160,30 +154,20 @@ function Player:calculateUpDownCollision()
 
             self.state = 'death'
         
+        end
+    end
+end
 
-            -- change block to different block
-            -- local playCoin = false
-            -- local playHit = false
-            -- if self.map:tileAt(self.x, self.y).id == JUMP_BLOCK then
-            --     self.map:setTile(math.floor(self.x / self.map.tileWidth) + 1,
-            --         math.floor(self.y / self.map.tileHeight) + 1, JUMP_BLOCK_HIT)
-            --     playCoin = true
-            -- else
-            --     playHit = true
-            -- end
-            -- if self.map:tileAt(self.x + self.width - 1, self.y).id == JUMP_BLOCK then
-            --     self.map:setTile(math.floor((self.x + self.width - 1) / self.map.tileWidth) + 1,
-            --         math.floor(self.y / self.map.tileHeight) + 1, JUMP_BLOCK_HIT)
-            --     playCoin = true
-            -- else
-            --     playHit = true
-            -- end
-
-            -- if playCoin then
-            --     self.sounds['coin']:play()
-            -- elseif playHit then
-            --     self.sounds['hit']:play()
-            -- end
+-- Logic for right collision
+function Player:checkRightCollision()
+    if self.dx > 0 then
+        -- check if there's a tile directly beneath us
+        if self.map:collides(self.map:tileAt(self.x + self.width, self.y + 1)) or
+            self.map:collides(self.map:tileAt(self.x + self.width, self.y + self.height + 1)) then
+            
+            -- if so, reset velocity and position and change state
+            self.dx = 0
+            self.dy = 0
         end
     end
 end
@@ -220,45 +204,6 @@ function Player:handleEndGame()
 
         self.state = 'victory'
 
-    end
-            -- change block to different block
-            -- local playCoin = false
-            -- local playHit = false
-            -- if self.map:tileAt(self.x, self.y).id == JUMP_BLOCK then
-            --     self.map:setTile(math.floor(self.x / self.map.tileWidth) + 1,
-            --         math.floor(self.y / self.map.tileHeight) + 1, JUMP_BLOCK_HIT)
-            --     playCoin = true
-            -- else
-            --     playHit = true
-            -- end
-            -- if self.map:tileAt(self.x + self.width - 1, self.y).id == JUMP_BLOCK then
-            --     self.map:setTile(math.floor((self.x + self.width - 1) / self.map.tileWidth) + 1,
-            --         math.floor(self.y / self.map.tileHeight) + 1, JUMP_BLOCK_HIT)
-            --     playCoin = true
-            -- else
-            --     playHit = true
-            -- end
-
-            -- if playCoin then
-            --     self.sounds['coin']:play()
-            -- elseif playHit then
-            --     self.sounds['hit']:play()
-            -- end
-    -- end
-end
-
--- checks two tiles to our right to see if a collision occurred
-function Player:checkRightCollision()
-    if self.dx > 0 then
-        -- check if there's a tile directly beneath us
-        if self.map:collides(self.map:tileAt(self.x + self.width, self.y)) or
-            self.map:collides(self.map:tileAt(self.x + self.width, self.y + self.height - 1)) then
-            
-            -- if so, reset velocity and position and change state
-            self.dx = 0
-            self.dy = 0
-            -- self.x = (self.map:tileAt(self.x + self.width, self.y).x - 2) * self.map.tileWidth - self.width
-        end
     end
 end
 
