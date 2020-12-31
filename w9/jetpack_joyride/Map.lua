@@ -9,8 +9,6 @@ require 'Flag'
 
 Map = Class{}
 
--- TILE_BRICK = 1
-
 -- utility tiles
 TILE_EMPTY = -1
 
@@ -34,30 +32,8 @@ PLANETS = 11
 ALIEN = 12
 ROCKET = 13
 
--- bush tiles
--- BUSH_LEFT = 2
--- BUSH_RIGHT = 3
-
--- -- mushroom tiles
--- MUSHROOM_TOP = 10
--- MUSHROOM_BOTTOM = 11
-
--- -- jump block
--- JUMP_BLOCK = 5
--- JUMP_BLOCK_HIT = 9
-
--- -- flag blocks
--- FLAGPOLE_BOT = 16
--- FLAGPOLE_MID = 12
--- FLAGPOLE_TOP = 8
-
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
-
--- PYRAMID_END = 75
--- PYRAMID_HEIGHT = 6
-
--- FLAGPOLE_DIST = 7
 
 -- constructor for our map object
 function Map:init()
@@ -109,38 +85,40 @@ function Map:init()
             x = x + 2
         else
             -- Generate shooting star 
-            if math.random(10) == 1 then
+            if math.random(200) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, SHOOTING_STAR_LEFT)
                 self:setTile(x + 1, spriteStart, SHOOTING_STAR_RIGHT)
-                x = x + 2
+                if (x + 1) % 10 ~= 0 then
+                    x = x + 2
+                end
 
             -- Generate galaxy
-            elseif math.random(150) == 1 then
+            elseif math.random(200) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, GALAXY)
                 x = x + 1
 
             -- Generate planets
-            elseif math.random(150) == 1 then
+            elseif math.random(200) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, PLANETS)
                 x = x + 1
 
             -- Generate alien
-            elseif math.random(150) == 1 then
+            elseif math.random(200) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, ALIEN)
                 x = x + 1
 
             -- Generate rocket
-            elseif math.random(150) == 1 then
+            elseif math.random(200) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, ROCKET)
                 x = x + 1
                 
             -- Generate single star
-            elseif math.random(150) == 1 then
+            elseif math.random(200) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, SINGLE_STAR)
                 x = x + 1
