@@ -9,7 +9,7 @@ require 'Flag'
 
 Map = Class{}
 
-TILE_BRICK = 1
+-- TILE_BRICK = 1
 
 -- utility tiles
 TILE_EMPTY = -1
@@ -35,29 +35,29 @@ ALIEN = 12
 ROCKET = 13
 
 -- bush tiles
-BUSH_LEFT = 2
-BUSH_RIGHT = 3
+-- BUSH_LEFT = 2
+-- BUSH_RIGHT = 3
 
--- mushroom tiles
-MUSHROOM_TOP = 10
-MUSHROOM_BOTTOM = 11
+-- -- mushroom tiles
+-- MUSHROOM_TOP = 10
+-- MUSHROOM_BOTTOM = 11
 
--- jump block
-JUMP_BLOCK = 5
-JUMP_BLOCK_HIT = 9
+-- -- jump block
+-- JUMP_BLOCK = 5
+-- JUMP_BLOCK_HIT = 9
 
--- flag blocks
-FLAGPOLE_BOT = 16
-FLAGPOLE_MID = 12
-FLAGPOLE_TOP = 8
+-- -- flag blocks
+-- FLAGPOLE_BOT = 16
+-- FLAGPOLE_MID = 12
+-- FLAGPOLE_TOP = 8
 
 -- a speed to multiply delta time to scroll map; smooth value
 local SCROLL_SPEED = 62
 
-PYRAMID_END = 75
-PYRAMID_HEIGHT = 6
+-- PYRAMID_END = 75
+-- PYRAMID_HEIGHT = 6
 
-FLAGPOLE_DIST = 7
+-- FLAGPOLE_DIST = 7
 
 -- constructor for our map object
 function Map:init()
@@ -77,7 +77,6 @@ function Map:init()
 
     -- associate player with map
     self.player = Player(self)
-    -- self.flag = Flag(self)
 
     -- camera offsets
     self.camX = 0
@@ -99,48 +98,49 @@ function Map:init()
     -- begin generating the terrain using vertical scan lines
     local x = 1
     while x < self.mapWidth do
-        -- Generate pyramid
-        if x >= PYRAMID_END - PYRAMID_HEIGHT and x <= PYRAMID_END then
-            for i = 0, PYRAMID_HEIGHT do   
-                for y = self.mapHeight / 2 - i, self.mapHeight do
-                    self:setTile(x, y, TILE_BRICK)
-                end
-                x = x + 1
+        -- Generate asteroid belts
+        if x % 10 == 0 then
+            for y = 0, self.mapHeight / 2, 2 do
+                self:setTile(x, y, ASTEROID_TOP_LEFT)
+                self:setTile(x, y + 1, ASTEROID_BOT_LEFT)
+                self:setTile(x + 1, y, ASTEROID_TOP_RIGHT)
+                self:setTile(x + 1, y + 1, ASTEROID_BOT_RIGHT)
             end
+            x = x + 2
         else
             -- Generate shooting star 
-            if math.random(100) == 1 then
+            if math.random(10) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, SHOOTING_STAR_LEFT)
                 self:setTile(x + 1, spriteStart, SHOOTING_STAR_RIGHT)
                 x = x + 2
 
             -- Generate galaxy
-            elseif math.random(250) == 1 then
+            elseif math.random(150) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, GALAXY)
                 x = x + 1
 
             -- Generate planets
-            elseif math.random(250) == 1 then
+            elseif math.random(150) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, PLANETS)
                 x = x + 1
 
             -- Generate alien
-            elseif math.random(250) == 1 then
+            elseif math.random(150) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, ALIEN)
                 x = x + 1
 
             -- Generate rocket
-            elseif math.random(250) == 1 then
+            elseif math.random(150) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, ROCKET)
                 x = x + 1
                 
             -- Generate single star
-            elseif math.random(200) == 1 then
+            elseif math.random(150) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, SINGLE_STAR)
                 x = x + 1
@@ -153,12 +153,12 @@ function Map:init()
                 self:setTile(x, spriteStart, TWINKLE_STAR_1)
 
             -- Generate twinkle star 2
-            elseif math.random(7) == 1 then
+            elseif math.random(4) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, TWINKLE_STAR_2)
 
             -- Generate twinkle star 3
-            elseif math.random(7) == 1 then
+            elseif math.random(4) == 1 then
                 local spriteStart = math.random(self.mapHeight / 2)
                 self:setTile(x, spriteStart, TWINKLE_STAR_3)
             else

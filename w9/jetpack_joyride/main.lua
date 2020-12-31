@@ -18,7 +18,7 @@ math.randomseed(os.time())
 
 -- makes upscaling look pixel-y instead of blurry
 love.graphics.setDefaultFilter('nearest', 'nearest')
-
+ 
 -- an object to contain our map data
 map = Map()
 

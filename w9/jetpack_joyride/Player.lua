@@ -183,7 +183,7 @@ end
 
 function Player:render()
     -- draw sprite with scale factor and offsets
-    local scale = 3
+    local scale = 2
 
     love.graphics.draw(self.texture, self.currentFrame, math.floor(self.x + self.xOffset),
         math.floor(self.y + self.yOffset), 0, scale, scale, self.xOffset, self.yOffset)
