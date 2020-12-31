@@ -2,7 +2,7 @@
 
 Created by abautista3712 | https://github.com/abautista3712/CS50/tree/master/w9/jetpack_joyride
 
-![Jetpack Joyride_Screenshot](./assets/images/Jetpack_Joyride_Screenshot.PNG?raw=true "Playscreen")
+![Jetpack Joyride_Screenshot](./jetpack_joyride/assets/Jetpack_Joyride_Screenshot.PNG?raw=true "Playscreen")
 
 ## Description
 
@@ -30,17 +30,17 @@ Background Music
 -In Orbit by Electronic Senses | https://soundcloud.com/electronicsenses  
 Music promoted by https://www.free-stock-music.com  
 Creative Commons Attribution-ShareAlike 3.0 Unported  
-https://creativecommons.org/licenses/by-sa/3.0/deed.en_US  
-  
+https://creativecommons.org/licenses/by-sa/3.0/deed.en_US
+
 Death Screen Music  
 -Long Way by yoitrax | https://soundcloud.com/yoitrax  
 Music promoted by https://www.free-stock-music.com  
 Creative Commons Attribution 3.0 Unported License  
-https://creativecommons.org/licenses/by/3.0/deed.en_US  
-  
+https://creativecommons.org/licenses/by/3.0/deed.en_US
+
 Victory Screen Music  
--Music by https://www.free-stock-music.com  
-  
+-Music by https://www.free-stock-music.com
+
 ## Contributing
 
 Contact information can be found below, if interested.
