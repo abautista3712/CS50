@@ -26,6 +26,12 @@ map = Map()
 function love.load()
 
     -- sets up a different, better-looking retro font as our default
+    bigHelsinkiFont = love.graphics.newFont('fonts/helsinki.ttf', 24)
+    love.graphics.setFont(bigHelsinkiFont)
+
+    helsinkiFont = love.graphics.newFont('fonts/helsinki.ttf', 8)
+    love.graphics.setFont(helsinkiFont)
+    
     retroFont = love.graphics.newFont('fonts/font.ttf', 8)
     love.graphics.setFont(retroFont)
 
@@ -39,6 +45,8 @@ function love.load()
 
     love.keyboard.keysPressed = {}
     love.keyboard.keysReleased = {}
+
+    gameState = 'start'
 end
 
 -- called whenever window is resized
@@ -68,6 +76,10 @@ end
 function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
+    elseif key == 'enter' or key == 'return' then
+        if gameState == 'start' then
+            gameState = 'play'
+        end
     end
 
     love.keyboard.keysPressed[key] = true
@@ -80,11 +92,12 @@ end
 
 -- called every frame, with dt passed in as delta in time since last frame
 function love.update(dt)
-    map:update(dt)
-
-    -- reset all keys pressed and released this frame
-    love.keyboard.keysPressed = {}
-    love.keyboard.keysReleased = {}
+    if gameState == 'play' then
+        map:update(dt)
+        -- reset all keys pressed and released this frame
+        love.keyboard.keysPressed = {}
+        love.keyboard.keysReleased = {}
+    end
 end
 
 -- called each frame, used to render to the screen
@@ -92,12 +105,25 @@ function love.draw()
     -- begin virtual resolution drawing
     push:apply('start')
 
-    -- clear screen using Mario background blue
-    love.graphics.clear(22/255, 7/255, 71/255, 255/255)
+    if gameState == 'start' then
+        love.graphics.setFont(bigHelsinkiFont)
+        love.graphics.printf('JETPACK JOYRIDE', 0, VIRTUAL_HEIGHT / 3, VIRTUAL_WIDTH, 'center')
 
-    -- renders our map object onto the screen
-    love.graphics.translate(math.floor(-map.camX + 0.5), math.floor(-map.camY + 0.5))
-    map:render()
+        love.graphics.setFont(helsinkiFont)
+        love.graphics.printf('by Abelard Bautista', 0, VIRTUAL_HEIGHT / 2.25, VIRTUAL_WIDTH, 'center')
+
+        love.graphics.setFont(retroFont)
+        love.graphics.printf('OH NO! YOU ARE LOST IN SPACE AND HAVE HIT AN ASTEROID FIELD!\n\n<Press [SPACE] to use your jetpack to escape>\nPress [Enter] to begin', 0, VIRTUAL_HEIGHT / 1.75, VIRTUAL_WIDTH, 'center')
+    elseif gameState == 'play' then
+        -- clear screen using Mario background blue
+        love.graphics.clear(22/255, 7/255, 71/255, 255/255)
+
+        -- renders our map object onto the screen
+        love.graphics.translate(math.floor(-map.camX + 0.5), math.floor(-map.camY + 0.5))
+        map:render()
+    end
+
+    
 
     -- end virtual resolution
     push:apply('end')

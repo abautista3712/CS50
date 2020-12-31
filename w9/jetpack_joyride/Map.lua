@@ -2,8 +2,6 @@
 
 require 'Util'
 
-require 'Flag'
-
 Map = Class{}
 
 -- Utility Tiles
@@ -189,27 +187,9 @@ function Map:collides(tile)
     return false
 end
 
--- return whether a given tile is end level trigger
-function Map:end_trigger(tile)
-    -- define our collidable tiles
-    local end_trigger = {
-        FLAGPOLE_BOT, FLAGPOLE_MID, FLAGPOLE_TOP
-    }
-
-    -- iterate and return true if our tile type matches
-    for _, v in ipairs(end_trigger) do
-        if tile.id == v then
-            return true
-        end
-    end
-
-    return false
-end
-
 -- Function to update camera offset with delta time
 function Map:update(dt)
     self.player:update(dt)
-    -- self.flag:update(dt)
     
     -- Keep camera's X coordinate following the player, preventing camera from
     -- scrolling past 0 to the left and the map's width
